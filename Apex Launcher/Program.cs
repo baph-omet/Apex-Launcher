@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
 
 namespace Apex_Launcher {
     static class Program {
@@ -34,6 +35,8 @@ namespace Apex_Launcher {
 
             // if updates are completed
             //launcher.EnableLaunch();
+
+            GetLatestVersionNumber();
 
             return true;
 
@@ -80,7 +83,13 @@ namespace Apex_Launcher {
         }
 
         public static string GetLatestVersionNumber() {
+            /*WebRequest req = WebRequest.Create("https://www.dropbox.com/s/o2ow9jst9ivqs6i/shortcuts.xml");
+            WebResponse resp = req.GetResponse();
+            Console.WriteLine(new StreamReader(resp.GetResponseStream()).ReadToEnd());*/
 
+            WebClient wc = new WebClient();
+            wc.DownloadFile("https://raw.githubusercontent.com/griffenx/Apex-Launcher/master/Apex%20Launcher/config.txt", "shortcuts.xml");
+            return "";
         }
     }
 }
