@@ -1,0 +1,3 @@
+﻿currentversion=a0.0
+installpath=
+leaveLauncherOpen=false
