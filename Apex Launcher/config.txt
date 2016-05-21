@@ -1,3 +1,4 @@
-﻿currentversion=a0.0
+﻿currentversion=ALPHA 0.0
+currentlauncherversion=0.0.1
 installpath=
-leaveLauncherOpen=false
+keepLauncherOpen=false

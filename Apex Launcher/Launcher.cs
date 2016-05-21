@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,13 @@ namespace Apex_Launcher {
 
         public Launcher() {
             InitializeComponent();
-            if (Program.initialize()) EnableLaunch();
+        }
+
+        private void Launcher_Shown(object sender, EventArgs e) {
+            TumblrBrowser.IsWebBrowserContextMenuEnabled = false;
+            RedditBrowser.IsWebBrowserContextMenuEnabled = false;
+            Program.initialize();
+            EnableLaunch();
         }
 
         private void DiscordLogo_Click(object sender, EventArgs e) {
@@ -41,12 +48,38 @@ namespace Apex_Launcher {
         }
 
         private void LaunchButton_Click(object sender, EventArgs e) {
-            string launchpath = Program.GetParameter("installpath") + "\\versions\\" + Program.GetParameter("currentversion") + "\\Game.exe";
+            string launchpath = Program.GetInstallPath() + "\\Versions\\" + Program.GetParameter("currentversion") + "\\Game.exe";
+
+            if (!File.Exists(launchpath)) {
+                DialogResult res = MessageBox.Show("Cannot find the game in your install path. It might be moved or deleted.\nCheck " + launchpath + " for your files, or redownload them.\nWould you like to redownload?", "Game not found", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes) {
+                    Program.DownloadVersion(Program.GetCurrentVersion());
+                } else return;
+            }
             Process.Start(launchpath);
+            if (!Convert.ToBoolean(Program.GetParameter("keepLauncherOpen"))) Close();
         }
 
-        private void EnableLaunch() {
+        public void EnableLaunch() {
             LaunchButton.Enabled = true;
+            UpdateStatus("Ready to launch");
+        }
+
+        public void UpdateStatus(string message) {
+            StatusLabel.Text = message;
+        }
+
+        public void SetGameVersion(Version v) {
+            GameVersionLabel.Text = "Build: " + v.ToString();
+        }
+
+        public void SetLauncherVersion(string versionText) {
+            LauncherVersionLabel.Text = "Launcher v" + versionText;
+        }
+
+        private void SettingsButton_Click(object sender, EventArgs e) {
+            SettingsForm settings = new SettingsForm();
+            settings.ShowDialog();
         }
     }
 }
