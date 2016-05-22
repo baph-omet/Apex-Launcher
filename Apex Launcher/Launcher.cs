@@ -30,6 +30,7 @@ namespace Apex_Launcher {
             TumblrBrowser.IsWebBrowserContextMenuEnabled = false;
             RedditBrowser.IsWebBrowserContextMenuEnabled = false;
             Program.initialize();
+            SetGameVersion(Program.GetCurrentVersion());
             EnableLaunch();
         }
 
