@@ -29,6 +29,7 @@
             this.DiscordLogo = new System.Windows.Forms.PictureBox();
             this.TabBox = new System.Windows.Forms.TabControl();
             this.UpdatesPage = new System.Windows.Forms.TabPage();
+            this.TumblrNoConnectionLabel = new System.Windows.Forms.Label();
             this.TumblrBrowser = new System.Windows.Forms.WebBrowser();
             this.CommunityPage = new System.Windows.Forms.TabPage();
             this.RedditBrowser = new System.Windows.Forms.WebBrowser();
@@ -90,6 +91,7 @@
             // 
             // UpdatesPage
             // 
+            this.UpdatesPage.Controls.Add(this.TumblrNoConnectionLabel);
             this.UpdatesPage.Controls.Add(this.TumblrBrowser);
             this.UpdatesPage.Location = new System.Drawing.Point(4, 22);
             this.UpdatesPage.Name = "UpdatesPage";
@@ -98,6 +100,15 @@
             this.UpdatesPage.TabIndex = 0;
             this.UpdatesPage.Text = "Game Updates";
             this.UpdatesPage.UseVisualStyleBackColor = true;
+            // 
+            // TumblrNoConnectionLabel
+            // 
+            this.TumblrNoConnectionLabel.AutoSize = true;
+            this.TumblrNoConnectionLabel.Location = new System.Drawing.Point(16, 19);
+            this.TumblrNoConnectionLabel.Name = "TumblrNoConnectionLabel";
+            this.TumblrNoConnectionLabel.Size = new System.Drawing.Size(284, 13);
+            this.TumblrNoConnectionLabel.TabIndex = 1;
+            this.TumblrNoConnectionLabel.Text = "Could not connect to the internet. Can\'t check for updates.";
             // 
             // TumblrBrowser
             // 
@@ -218,6 +229,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.DiscordLogo)).EndInit();
             this.TabBox.ResumeLayout(false);
             this.UpdatesPage.ResumeLayout(false);
+            this.UpdatesPage.PerformLayout();
             this.CommunityPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -240,6 +252,7 @@
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.Label LauncherVersionLabel;
         private System.Windows.Forms.Label GameVersionLabel;
+        private System.Windows.Forms.Label TumblrNoConnectionLabel;
     }
 }
 

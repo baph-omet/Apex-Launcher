@@ -13,12 +13,18 @@ namespace Apex_Launcher {
     static class Program {
 
         private static Launcher launcher;
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        public static bool NetworkConnected;
+        
         [STAThread]
         static void Main() {
+            try {
+                WebRequest wr = WebRequest.Create("https://raw.githubusercontent.com/griffenx/Apex-Launcher/master/Apex%20Launcher/VersionManifest.xml");
+                wr.GetResponse();
+                NetworkConnected = true;
+            } catch (WebException) {
+                NetworkConnected = false;
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -36,9 +42,13 @@ namespace Apex_Launcher {
             }
 
             //TODO: check for launcher update
-
-            InstallLatestVersion();
-
+            if (NetworkConnected) {
+                try {
+                    InstallLatestVersion();
+                } catch (WebException) {
+                    NetworkConnected = false;
+                }
+            }
             return;
         }
 

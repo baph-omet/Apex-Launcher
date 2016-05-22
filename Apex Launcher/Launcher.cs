@@ -17,6 +17,11 @@ namespace Apex_Launcher {
 
         public Launcher() {
             InitializeComponent();
+            if (!Program.NetworkConnected) {
+                TumblrBrowser.Hide();
+                RedditBrowser.Hide();
+                TabBox.Enabled = false;
+            }
         }
 
         private void Launcher_Shown(object sender, EventArgs e) {
