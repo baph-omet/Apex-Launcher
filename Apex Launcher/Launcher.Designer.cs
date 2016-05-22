@@ -29,7 +29,7 @@
             this.DiscordLogo = new System.Windows.Forms.PictureBox();
             this.TabBox = new System.Windows.Forms.TabControl();
             this.UpdatesPage = new System.Windows.Forms.TabPage();
-            this.TumblrNoConnectionLabel = new System.Windows.Forms.Label();
+            this.NoConnectionLabel = new System.Windows.Forms.Label();
             this.TumblrBrowser = new System.Windows.Forms.WebBrowser();
             this.CommunityPage = new System.Windows.Forms.TabPage();
             this.RedditBrowser = new System.Windows.Forms.WebBrowser();
@@ -91,7 +91,7 @@
             // 
             // UpdatesPage
             // 
-            this.UpdatesPage.Controls.Add(this.TumblrNoConnectionLabel);
+            this.UpdatesPage.Controls.Add(this.NoConnectionLabel);
             this.UpdatesPage.Controls.Add(this.TumblrBrowser);
             this.UpdatesPage.Location = new System.Drawing.Point(4, 22);
             this.UpdatesPage.Name = "UpdatesPage";
@@ -101,14 +101,14 @@
             this.UpdatesPage.Text = "Game Updates";
             this.UpdatesPage.UseVisualStyleBackColor = true;
             // 
-            // TumblrNoConnectionLabel
+            // NoConnectionLabel
             // 
-            this.TumblrNoConnectionLabel.AutoSize = true;
-            this.TumblrNoConnectionLabel.Location = new System.Drawing.Point(16, 19);
-            this.TumblrNoConnectionLabel.Name = "TumblrNoConnectionLabel";
-            this.TumblrNoConnectionLabel.Size = new System.Drawing.Size(284, 13);
-            this.TumblrNoConnectionLabel.TabIndex = 1;
-            this.TumblrNoConnectionLabel.Text = "Could not connect to the internet. Can\'t check for updates.";
+            this.NoConnectionLabel.AutoSize = true;
+            this.NoConnectionLabel.Location = new System.Drawing.Point(16, 19);
+            this.NoConnectionLabel.Name = "NoConnectionLabel";
+            this.NoConnectionLabel.Size = new System.Drawing.Size(284, 13);
+            this.NoConnectionLabel.TabIndex = 1;
+            this.NoConnectionLabel.Text = "Could not connect to the internet. Can\'t check for updates.";
             // 
             // TumblrBrowser
             // 
@@ -252,7 +252,7 @@
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.Label LauncherVersionLabel;
         private System.Windows.Forms.Label GameVersionLabel;
-        private System.Windows.Forms.Label TumblrNoConnectionLabel;
+        private System.Windows.Forms.Label NoConnectionLabel;
     }
 }
 

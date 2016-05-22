@@ -21,6 +21,8 @@ namespace Apex_Launcher {
                 TumblrBrowser.Hide();
                 RedditBrowser.Hide();
                 TabBox.Enabled = false;
+            } else {
+                NoConnectionLabel.Hide();
             }
         }
 
