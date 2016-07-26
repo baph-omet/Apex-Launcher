@@ -10,4 +10,9 @@
     <number>3.2</number>
     <location>https://dl.dropbox.com/s/xkquyseq2qp953k/Pok%C3%A9mon%20Apex%20Alpha%20Build%203.2.zip</location>
   </version>
+  <version>
+    <channel>a</channel>
+    <number>4</number>
+    <location>https://www.dropbox.com/s/c4n474oq69xhfm8/Pok%C3%A9mon%20Apex%20Alpha%20Build%204.zip</location>
+  </version>
 </versions>
