@@ -2,3 +2,4 @@
 currentlauncherversion=0.0.1
 installpath=
 keepLauncherOpen=false
+disableGameFonts=false

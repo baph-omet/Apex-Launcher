@@ -32,6 +32,9 @@
             this.OKButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
             this.PathTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.DisableFontBox = new System.Windows.Forms.CheckBox();
+            this.FontTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.ForceUpdateCheckbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // PathTextbox
@@ -77,7 +80,7 @@
             // 
             // OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(312, 38);
+            this.OKButton.Location = new System.Drawing.Point(312, 61);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(75, 23);
             this.OKButton.TabIndex = 4;
@@ -87,7 +90,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(393, 38);
+            this.CancelButton.Location = new System.Drawing.Point(393, 61);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 5;
@@ -100,11 +103,37 @@
             this.PathTooltip.ToolTipTitle = "The location where your game files will be downloaded and kept (Default: The same" +
     " location as this program)";
             // 
+            // DisableFontBox
+            // 
+            this.DisableFontBox.AutoSize = true;
+            this.DisableFontBox.Location = new System.Drawing.Point(147, 38);
+            this.DisableFontBox.Name = "DisableFontBox";
+            this.DisableFontBox.Size = new System.Drawing.Size(121, 17);
+            this.DisableFontBox.TabIndex = 6;
+            this.DisableFontBox.Text = "Disable Game Fonts";
+            this.DisableFontBox.UseVisualStyleBackColor = true;
+            // 
+            // FontTooltip
+            // 
+            this.FontTooltip.Tag = "Use system fonts instead of game fonts (not recommended)";
+            // 
+            // ForceUpdateCheckbox
+            // 
+            this.ForceUpdateCheckbox.AutoSize = true;
+            this.ForceUpdateCheckbox.Location = new System.Drawing.Point(275, 38);
+            this.ForceUpdateCheckbox.Name = "ForceUpdateCheckbox";
+            this.ForceUpdateCheckbox.Size = new System.Drawing.Size(91, 17);
+            this.ForceUpdateCheckbox.TabIndex = 7;
+            this.ForceUpdateCheckbox.Text = "Force Update";
+            this.ForceUpdateCheckbox.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 67);
+            this.ClientSize = new System.Drawing.Size(480, 96);
+            this.Controls.Add(this.ForceUpdateCheckbox);
+            this.Controls.Add(this.DisableFontBox);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.KeepOpenCheckbox);
@@ -131,5 +160,8 @@
         private System.Windows.Forms.Button OKButton;
         private new System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.ToolTip PathTooltip;
+        private System.Windows.Forms.CheckBox DisableFontBox;
+        private System.Windows.Forms.ToolTip FontTooltip;
+        private System.Windows.Forms.CheckBox ForceUpdateCheckbox;
     }
 }

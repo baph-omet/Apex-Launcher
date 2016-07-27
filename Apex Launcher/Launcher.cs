@@ -43,7 +43,7 @@ namespace Apex_Launcher {
         }
 
         private void BrowserNavigation(object sender, WebBrowserNavigatingEventArgs e) {
-            if (loaded && !(e.Url.Equals(((WebBrowser)sender).Url)) && (e.Url.ToString().Contains(((WebBrowser)sender).Url.ToString()))) {
+            if (loaded && !(e.Url.Equals(((WebBrowser)sender).Url)) && !(e.Url.ToString().Contains("redditmedia")) && (e.Url.ToString().Contains(((WebBrowser)sender).Url.ToString()))) {
                 Process.Start(e.Url.ToString());
                 e.Cancel = true;
             } else if (loaded) {
@@ -58,7 +58,10 @@ namespace Apex_Launcher {
         private void LaunchButton_Click(object sender, EventArgs e) {
             string launchpath = Program.GetInstallPath() + "\\Versions\\" + Program.GetParameter("currentversion") + "\\Game.exe";
 
-            if (!File.Exists(launchpath)) {
+            if (Program.forceUpdate) {
+                Program.DownloadVersion(Program.GetCurrentVersion());
+                Program.forceUpdate = false;
+            } else if (!File.Exists(launchpath)) {
                 DialogResult res = MessageBox.Show("Cannot find the game in your install path. It might be moved or deleted.\nCheck " + launchpath + " for your files, or redownload them.\nWould you like to redownload?", "Game not found", MessageBoxButtons.YesNo);
                 if (res == DialogResult.Yes) {
                     Program.DownloadVersion(Program.GetCurrentVersion());

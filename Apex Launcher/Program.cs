@@ -14,6 +14,7 @@ namespace Apex_Launcher {
 
         private static Launcher launcher;
         public static bool NetworkConnected;
+        public static bool forceUpdate = false;
         
         [STAThread]
         static void Main() {
@@ -49,6 +50,28 @@ namespace Apex_Launcher {
                     NetworkConnected = false;
                 }
             }
+
+            // Remove or add fonts
+            /*foreach (string filepath in Directory.GetFiles(GetInstallPath() + "\\Versions\\" + GetCurrentVersion().ToString() + "\\Fonts")) {
+                if (filepath.Contains(".ttf")) {
+
+                    string filename = filepath.Split('\\')[filepath.Split('\\').Length - 1];
+                    if (Convert.ToBoolean(GetParameter("disableGameFonts"))) {
+
+                        if (File.Exists("C:\\Windows\\Fonts\\" + filename)) {
+                            File.Delete("C:\\Windows\\Fonts\\" + filename);
+                            
+                        }
+                    } else {
+                        if (!File.Exists("C:\\Windows\\Fonts\\" + filename)) {
+                            File.Copy(filepath, "C:\\Windows\\Fonts\\" + filename);
+                        }
+                    }
+                }
+            }*/
+
+            
+            
             return;
         }
 
@@ -163,7 +186,11 @@ namespace Apex_Launcher {
             wc.DownloadFile(v.Location, filename + ".zip");
 
             launcher.UpdateStatus("Exctracting version " + v.ToString());
-            ZipFile.ExtractToDirectory(filename + ".zip",filename);
+            try {
+                ZipFile.ExtractToDirectory(filename + ".zip", filename);
+            } catch (InvalidDataException) {
+                MessageBox.Show("Could not unzip file\n" + filename + ".zip.\nThe file appears to be invalid. Please report this issue. In the meantime, try a manual download.","Apex Launcher Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            }
             File.Delete(filename + ".zip");
         }
 
