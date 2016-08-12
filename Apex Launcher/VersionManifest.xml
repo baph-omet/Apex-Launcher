@@ -3,16 +3,16 @@
   <version>
     <channel>a</channel>
     <number>3.1</number>
-    <location>https://drive.google.com/uc?export=download&confirm=cdo7&id=0Byf17QGwliVdaEtPLVB1V1FpYzg</location>
+    <location>https://drive.google.com/uc?export=download&amp;confirm=cdo7&amp;id=0Byf17QGwliVdaEtPLVB1V1FpYzg</location>
   </version>
   <version>
     <channel>a</channel>
     <number>3.2</number>
-    <location>https://drive.google.com/uc?export=download&confirm=0Byf17QGwliVdbEhrLUpvZ0lva0U</location>
+    <location>https://drive.google.com/uc?export=download&amp;confirm=0Byf17QGwliVdbEhrLUpvZ0lva0U</location>
   </version>
   <version>
     <channel>a</channel>
     <number>4</number>
-    <location>https://drive.google.com/uc?export=download&confirm=0Byf17QGwliVddjlZdnBQN1ZCYjA</location>
+    <location>https://drive.google.com/uc?export=download&amp;confirm=0Byf17QGwliVddjlZdnBQN1ZCYjA</location>
   </version>
 </versions>
