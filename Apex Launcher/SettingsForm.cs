@@ -25,7 +25,7 @@ namespace Apex_Launcher {
 
         private void OKButton_Click(object sender, EventArgs e) {
             bool validated = true;
-            if (!Program.hasWriteAccess(PathTextbox.Text)) {
+            if (!Program.HasWriteAccess(PathTextbox.Text)) {
                 MessageBox.Show("You don't have permission to write to that folder.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 validated = false;
             }
@@ -33,7 +33,7 @@ namespace Apex_Launcher {
             if (validated) {
                 Program.SetParameter("installpath", PathTextbox.Text);
                 Program.SetParameter("keepLauncherOpen", KeepOpenCheckbox.Checked.ToString());
-                Program.SetParameter("disableGameFonts", DisableFontBox.Checked.ToString());
+                //Program.SetParameter("disableGameFonts", DisableFontBox.Checked.ToString());
                 Program.forceUpdate = ForceUpdateCheckbox.Checked;
                 Close();
             }
@@ -45,7 +45,7 @@ namespace Apex_Launcher {
             fbd.ShowDialog();
 
             string selectedPath = fbd.SelectedPath;
-            if (Program.hasWriteAccess(selectedPath)) {
+            if (Program.HasWriteAccess(selectedPath)) {
                 PathTextbox.Text = selectedPath;
             } else {
                 MessageBox.Show("You don't have permission to write to that folder.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);

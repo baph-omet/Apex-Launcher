@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Launcher));
             this.LaunchButton = new System.Windows.Forms.Button();
             this.SettingsButton = new System.Windows.Forms.Button();
@@ -38,6 +39,7 @@
             this.StatusLabel = new System.Windows.Forms.Label();
             this.LauncherVersionLabel = new System.Windows.Forms.Label();
             this.GameVersionLabel = new System.Windows.Forms.Label();
+            this.LauncherTooltip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.DiscordLogo)).BeginInit();
             this.TabBox.SuspendLayout();
             this.UpdatesPage.SuspendLayout();
@@ -54,6 +56,7 @@
             this.LaunchButton.Size = new System.Drawing.Size(295, 122);
             this.LaunchButton.TabIndex = 0;
             this.LaunchButton.Text = "Launch Game";
+            this.LauncherTooltip.SetToolTip(this.LaunchButton, "Launch the game!");
             this.LaunchButton.UseVisualStyleBackColor = true;
             this.LaunchButton.Click += new System.EventHandler(this.LaunchButton_Click);
             // 
@@ -65,6 +68,7 @@
             this.SettingsButton.Size = new System.Drawing.Size(253, 122);
             this.SettingsButton.TabIndex = 2;
             this.SettingsButton.Text = "Settings";
+            this.LauncherTooltip.SetToolTip(this.SettingsButton, "Change launcher settings here.");
             this.SettingsButton.UseVisualStyleBackColor = true;
             this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
@@ -77,6 +81,7 @@
             this.DiscordLogo.Size = new System.Drawing.Size(250, 122);
             this.DiscordLogo.TabIndex = 3;
             this.DiscordLogo.TabStop = false;
+            this.LauncherTooltip.SetToolTip(this.DiscordLogo, "Join our Discord server to chat with the community!");
             this.DiscordLogo.Click += new System.EventHandler(this.DiscordLogo_Click);
             // 
             // TabBox
@@ -157,6 +162,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(250, 122);
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
+            this.LauncherTooltip.SetToolTip(this.pictureBox1, "https://reddit.com/r/PokemonApex");
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // SaveMgmtButton
@@ -168,6 +174,7 @@
             this.SaveMgmtButton.Size = new System.Drawing.Size(250, 122);
             this.SaveMgmtButton.TabIndex = 7;
             this.SaveMgmtButton.Text = "Manage Saves\r\n(Coming soon)";
+            this.LauncherTooltip.SetToolTip(this.SaveMgmtButton, "Patience, Iago.");
             this.SaveMgmtButton.UseVisualStyleBackColor = true;
             // 
             // StatusLabel
@@ -191,6 +198,7 @@
             this.LauncherVersionLabel.Size = new System.Drawing.Size(85, 13);
             this.LauncherVersionLabel.TabIndex = 9;
             this.LauncherVersionLabel.Text = "Launcher v1.1.0";
+            this.LauncherTooltip.SetToolTip(this.LauncherVersionLabel, "Your current launcher version.");
             // 
             // GameVersionLabel
             // 
@@ -203,6 +211,7 @@
             this.GameVersionLabel.TabIndex = 10;
             this.GameVersionLabel.Text = "Build: ALPHA 3.1";
             this.GameVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LauncherTooltip.SetToolTip(this.GameVersionLabel, "Your currently installed game version. Updated automatically.");
             // 
             // Launcher
             // 
@@ -254,6 +263,7 @@
         private System.Windows.Forms.Label LauncherVersionLabel;
         private System.Windows.Forms.Label NoConnectionLabel;
         public System.Windows.Forms.Label GameVersionLabel;
+        private System.Windows.Forms.ToolTip LauncherTooltip;
     }
 }
 

@@ -52,7 +52,7 @@ namespace Apex_Launcher {
             return new Version(GetChannelFromString(str.Split(' ')[0]), Convert.ToDouble(str.Split(' ')[1]), "");
         }
 
-        public override bool Equals(object obj) {
+        public new bool Equals(object obj) {
             if (this == null) return false;
             if (obj == null) return false;
             if (!GetType().Equals(obj.GetType())) return false;

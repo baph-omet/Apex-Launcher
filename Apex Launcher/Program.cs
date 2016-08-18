@@ -193,13 +193,18 @@ namespace Apex_Launcher {
             return installpath;
         }
 
-        public static bool hasWriteAccess(string folderPath) {
+        public static bool HasWriteAccess(string folderPath) {
             try {
                 System.Security.AccessControl.DirectorySecurity ds = Directory.GetAccessControl(folderPath);
                 return true;
             } catch (UnauthorizedAccessException) {
                 return false;
             }
+        }
+
+        public static string GetLauncherVersion() {
+            string v = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            return v.Substring(0,v.Length - 2);
         }
     }
 }

@@ -28,12 +28,10 @@
             this.PathLabel = new System.Windows.Forms.Label();
             this.BrowseButton = new System.Windows.Forms.Button();
             this.KeepOpenCheckbox = new System.Windows.Forms.CheckBox();
-            this.KeepOpenCheckboxTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.CheckboxTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.OKButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
             this.PathTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.DisableFontBox = new System.Windows.Forms.CheckBox();
-            this.FontTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.ForceUpdateCheckbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
@@ -44,6 +42,8 @@
             this.PathTextbox.ReadOnly = true;
             this.PathTextbox.Size = new System.Drawing.Size(308, 20);
             this.PathTextbox.TabIndex = 0;
+            this.PathTooltip.SetToolTip(this.PathTextbox, "The location where your game files will be downloaded and kept (Default: The same" +
+        " location as this program)");
             // 
             // PathLabel
             // 
@@ -72,11 +72,8 @@
             this.KeepOpenCheckbox.Size = new System.Drawing.Size(128, 17);
             this.KeepOpenCheckbox.TabIndex = 3;
             this.KeepOpenCheckbox.Text = "Keep Launcher Open";
+            this.CheckboxTooltip.SetToolTip(this.KeepOpenCheckbox, "Keep Launcher open after the game has been launched (Default: Off)");
             this.KeepOpenCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // KeepOpenCheckboxTooltip
-            // 
-            this.KeepOpenCheckboxTooltip.ToolTipTitle = "Keep Launcher open after the game has been launched (Default: Off)";
             // 
             // OKButton
             // 
@@ -103,28 +100,16 @@
             this.PathTooltip.ToolTipTitle = "The location where your game files will be downloaded and kept (Default: The same" +
     " location as this program)";
             // 
-            // DisableFontBox
-            // 
-            this.DisableFontBox.AutoSize = true;
-            this.DisableFontBox.Location = new System.Drawing.Point(147, 38);
-            this.DisableFontBox.Name = "DisableFontBox";
-            this.DisableFontBox.Size = new System.Drawing.Size(121, 17);
-            this.DisableFontBox.TabIndex = 6;
-            this.DisableFontBox.Text = "Disable Game Fonts";
-            this.DisableFontBox.UseVisualStyleBackColor = true;
-            // 
-            // FontTooltip
-            // 
-            this.FontTooltip.Tag = "Use system fonts instead of game fonts (not recommended)";
-            // 
             // ForceUpdateCheckbox
             // 
             this.ForceUpdateCheckbox.AutoSize = true;
-            this.ForceUpdateCheckbox.Location = new System.Drawing.Point(275, 38);
+            this.ForceUpdateCheckbox.Location = new System.Drawing.Point(146, 38);
             this.ForceUpdateCheckbox.Name = "ForceUpdateCheckbox";
             this.ForceUpdateCheckbox.Size = new System.Drawing.Size(91, 17);
             this.ForceUpdateCheckbox.TabIndex = 7;
             this.ForceUpdateCheckbox.Text = "Force Update";
+            this.CheckboxTooltip.SetToolTip(this.ForceUpdateCheckbox, "If checked, the program will  redownload the most recent version of the game when" +
+        " the launch button is clicked, regardless of the currently installed version.");
             this.ForceUpdateCheckbox.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
@@ -133,7 +118,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(480, 96);
             this.Controls.Add(this.ForceUpdateCheckbox);
-            this.Controls.Add(this.DisableFontBox);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.KeepOpenCheckbox);
@@ -156,12 +140,10 @@
         private System.Windows.Forms.Label PathLabel;
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.CheckBox KeepOpenCheckbox;
-        private System.Windows.Forms.ToolTip KeepOpenCheckboxTooltip;
+        private System.Windows.Forms.ToolTip CheckboxTooltip;
         private System.Windows.Forms.Button OKButton;
         private new System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.ToolTip PathTooltip;
-        private System.Windows.Forms.CheckBox DisableFontBox;
-        private System.Windows.Forms.ToolTip FontTooltip;
         private System.Windows.Forms.CheckBox ForceUpdateCheckbox;
     }
 }

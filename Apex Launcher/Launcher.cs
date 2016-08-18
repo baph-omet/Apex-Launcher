@@ -31,6 +31,7 @@ namespace Apex_Launcher {
             RedditBrowser.IsWebBrowserContextMenuEnabled = false;
             Program.initialize();
             SetGameVersion(Program.GetCurrentVersion());
+            LauncherVersionLabel.Text = "Launcher v" + Program.GetLauncherVersion();
             EnableLaunch();
         }
 
@@ -69,9 +70,9 @@ namespace Apex_Launcher {
                 Program.DownloadVersion(Program.GetMostRecentVersion());
                 Program.forceUpdate = false;
             } else if (!File.Exists(launchpath)) {
-                DialogResult res = MessageBox.Show("Cannot find the game in your install path. It might be moved or deleted.\nCheck " + launchpath + " for your files, or redownload them.\nWould you like to redownload?", "Game not found", MessageBoxButtons.YesNo);
+                DialogResult res = MessageBox.Show("Cannot find the game in your install path. It might be moved or deleted.\nCheck \n" + launchpath + "\nfor your files, or redownload them.\nWould you like to redownload?", "Game not found", MessageBoxButtons.YesNo);
                 if (res == DialogResult.Yes) {
-                    Program.DownloadVersion(Program.GetCurrentVersion());
+                    Program.DownloadVersion(Program.GetMostRecentVersion());
                 } else return;
             }
 
