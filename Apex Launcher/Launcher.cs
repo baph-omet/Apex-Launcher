@@ -56,10 +56,17 @@ namespace Apex_Launcher {
         }
 
         private void LaunchButton_Click(object sender, EventArgs e) {
+            if (Program.Downloading) {
+                MessageBox.Show("A download is currently in progress. Please cancel your download or wait until it finishes.","Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                return;
+            }
             string launchpath = Program.GetInstallPath() + "\\Versions\\" + Program.GetParameter("currentversion") + "\\Game.exe";
 
             if (Program.forceUpdate) {
-                Program.DownloadVersion(Program.GetCurrentVersion());
+                string path = Directory.GetCurrentDirectory() + "\\Versions\\" + Program.GetCurrentVersion().ToString();
+                if (File.Exists(path + ".zip")) File.Delete(path + ".zip");
+                if (Directory.Exists(path)) Directory.Delete(path,true);
+                Program.DownloadVersion(Program.GetMostRecentVersion());
                 Program.forceUpdate = false;
             } else if (!File.Exists(launchpath)) {
                 DialogResult res = MessageBox.Show("Cannot find the game in your install path. It might be moved or deleted.\nCheck " + launchpath + " for your files, or redownload them.\nWould you like to redownload?", "Game not found", MessageBoxButtons.YesNo);
@@ -67,8 +74,11 @@ namespace Apex_Launcher {
                     Program.DownloadVersion(Program.GetCurrentVersion());
                 } else return;
             }
-            Process.Start(launchpath);
-            if (!Convert.ToBoolean(Program.GetParameter("keepLauncherOpen"))) Close();
+
+            if (File.Exists(launchpath)) {
+                Process.Start(launchpath);
+                if (!Convert.ToBoolean(Program.GetParameter("keepLauncherOpen"))) Close();
+            }
         }
 
         public void EnableLaunch() {
@@ -76,12 +86,20 @@ namespace Apex_Launcher {
             UpdateStatus("Ready to launch");
         }
 
+        public delegate void US(string message);
         public void UpdateStatus(string message) {
-            StatusLabel.Text = message;
+            if (StatusLabel.InvokeRequired) {
+                US d = UpdateStatus;
+                this.Invoke(d, new object[] { message });
+            } else StatusLabel.Text = message;
         }
 
+        public delegate void SGV(Version v);
         public void SetGameVersion(Version v) {
-            GameVersionLabel.Text = "Build: " + v.ToString();
+            if (GameVersionLabel.InvokeRequired) {
+                SGV d = SetGameVersion;
+                Invoke(d, new object[] { v });
+            } else GameVersionLabel.Text = "Build: " + v.ToString();
         }
 
         public void SetLauncherVersion(string versionText) {
@@ -91,6 +109,15 @@ namespace Apex_Launcher {
         private void SettingsButton_Click(object sender, EventArgs e) {
             SettingsForm settings = new SettingsForm();
             settings.ShowDialog();
+        }
+
+        private void Launcher_FormClosing(object sender, FormClosingEventArgs e) {
+            if (Program.Downloading) {
+                DialogResult res = MessageBox.Show("A download is still in progress. Closing the launcher will cancel your download. Are you sure you want to quit?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (res == DialogResult.No) {
+                    e.Cancel = true;
+                }
+            }
         }
     }
 }

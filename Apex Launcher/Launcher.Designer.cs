@@ -167,7 +167,7 @@
             this.SaveMgmtButton.Name = "SaveMgmtButton";
             this.SaveMgmtButton.Size = new System.Drawing.Size(250, 122);
             this.SaveMgmtButton.TabIndex = 7;
-            this.SaveMgmtButton.Text = "Manage Saves";
+            this.SaveMgmtButton.Text = "Manage Saves\r\n(Coming soon)";
             this.SaveMgmtButton.UseVisualStyleBackColor = true;
             // 
             // StatusLabel
@@ -190,7 +190,7 @@
             this.LauncherVersionLabel.Name = "LauncherVersionLabel";
             this.LauncherVersionLabel.Size = new System.Drawing.Size(85, 13);
             this.LauncherVersionLabel.TabIndex = 9;
-            this.LauncherVersionLabel.Text = "Launcher v0.0.1";
+            this.LauncherVersionLabel.Text = "Launcher v1.1.0";
             // 
             // GameVersionLabel
             // 
@@ -224,7 +224,8 @@
             this.MaximizeBox = false;
             this.Name = "Launcher";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Pokémon Apex Launcher";
+            this.Text = "Apex Launcher";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Launcher_FormClosing);
             this.Shown += new System.EventHandler(this.Launcher_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.DiscordLogo)).EndInit();
             this.TabBox.ResumeLayout(false);
@@ -251,8 +252,8 @@
         private System.Windows.Forms.WebBrowser RedditBrowser;
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.Label LauncherVersionLabel;
-        private System.Windows.Forms.Label GameVersionLabel;
         private System.Windows.Forms.Label NoConnectionLabel;
+        public System.Windows.Forms.Label GameVersionLabel;
     }
 }
 

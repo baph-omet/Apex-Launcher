@@ -12,9 +12,10 @@ using System.IO.Compression;
 namespace Apex_Launcher {
     static class Program {
 
-        private static Launcher launcher;
+        public static Launcher launcher;
         public static bool NetworkConnected;
         public static bool forceUpdate = false;
+        public static bool Downloading = false;
         
         [STAThread]
         static void Main() {
@@ -113,9 +114,25 @@ namespace Apex_Launcher {
             return Version.FromString(GetParameter("currentversion"));
         }
 
-        public static Version InstallLatestVersion() {
+        public static bool InstallLatestVersion() {
             launcher.UpdateStatus("Checking for new versions...");
 
+            Version mostRecent = GetMostRecentVersion();
+
+            if (mostRecent != null && mostRecent.GreaterThan(GetCurrentVersion())) {
+                DialogResult result = MessageBox.Show("New version found: " + mostRecent.Channel.ToString() + " " + mostRecent.Number + "\nDownload and install this update?", "Update Found", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes) {
+                    DownloadVersion(mostRecent);
+                    return true;
+                } else return false;
+            }
+
+            launcher.UpdateStatus("No new version found.");
+            return false;
+        }
+
+        public static Version GetMostRecentVersion() {
             XmlDocument doc = new XmlDocument();
             doc.Load("https://raw.githubusercontent.com/griffenx/Apex-Launcher/master/Apex%20Launcher/VersionManifest.xml");
 
@@ -156,42 +173,18 @@ namespace Apex_Launcher {
                     }
                 }
                 Version v = new Version(channel, number, location);
-                if (mostRecent == null || v.GreaterThan(mostRecent)) mostRecent = v;
-
+                if (mostRecent == null || v.GreaterThan(mostRecent) || v.Equals(mostRecent)) mostRecent = v;
             }
 
-            if (mostRecent != null && mostRecent.GreaterThan(GetCurrentVersion())) {
-                DialogResult result = MessageBox.Show("New version found: " + mostRecent.Channel.ToString() + " " + mostRecent.Number + "\nDownload and install this update?", "Update Found", MessageBoxButtons.YesNo);
-
-                if (result == DialogResult.Yes) {
-                    DownloadVersion(mostRecent);
-                    SetParameter("currentversion", mostRecent.ToString());
-                    launcher.SetGameVersion(mostRecent);
-                    return mostRecent;
-                } else return null;
-            }
-
-            launcher.UpdateStatus("No new version found.");
-            return null;
+            return mostRecent;
         }
 
         public static void DownloadVersion(Version v) {
-            launcher.UpdateStatus("Downloading version " + v.ToString());
-            WebClient wc = new WebClient();
-            string installpath = GetInstallPath();
-            string filename = installpath + "\\Versions\\" + v.ToString();
+            DownloadForm dlf = new DownloadForm(v);
+            dlf.Show();
+            dlf.StartDownload();
 
-            Directory.CreateDirectory(installpath + "\\Versions");
-
-            wc.DownloadFile(v.Location, filename + ".zip");
-
-            launcher.UpdateStatus("Exctracting version " + v.ToString());
-            try {
-                ZipFile.ExtractToDirectory(filename + ".zip", filename);
-            } catch (InvalidDataException) {
-                MessageBox.Show("Could not unzip file\n" + filename + ".zip.\nThe file appears to be invalid. Please report this issue. In the meantime, try a manual download.","Apex Launcher Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-            }
-            File.Delete(filename + ".zip");
+            //wc.DownloadFile(v.Location, filename + ".zip");
         }
 
         public static string GetInstallPath() {

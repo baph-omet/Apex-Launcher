@@ -51,5 +51,15 @@ namespace Apex_Launcher {
         public static Version FromString(string str) {
             return new Version(GetChannelFromString(str.Split(' ')[0]), Convert.ToDouble(str.Split(' ')[1]), "");
         }
+
+        public override bool Equals(object obj) {
+            if (this == null) return false;
+            if (obj == null) return false;
+            if (!GetType().Equals(obj.GetType())) return false;
+            if (obj == this) return true;
+            if (!(obj is Version)) return false;
+            if (((Version)obj).ToString().Equals(ToString())) return true;
+            return false;
+        }
     }
 }
