@@ -20,6 +20,7 @@ namespace Apex_Launcher {
             if (!Program.NetworkConnected) {
                 TumblrBrowser.Hide();
                 RedditBrowser.Hide();
+                WikiBrowser.Hide();
                 TabBox.Enabled = false;
             } else {
                 NoConnectionLabel.Hide();
@@ -29,6 +30,7 @@ namespace Apex_Launcher {
         private void Launcher_Shown(object sender, EventArgs e) {
             TumblrBrowser.IsWebBrowserContextMenuEnabled = false;
             RedditBrowser.IsWebBrowserContextMenuEnabled = false;
+            WikiBrowser.IsWebBrowserContextMenuEnabled = false;
             Program.initialize();
             SetGameVersion(Program.GetCurrentVersion());
             LauncherVersionLabel.Text = "Launcher v" + Program.GetLauncherVersion();
