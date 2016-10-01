@@ -70,10 +70,10 @@ namespace Apex_Launcher {
             }
 
             if (succeeded) {
-                Program.launcher.UpdateStatus("Exctracting version " + v.ToString());
+                Program.launcher.UpdateStatus("Extracting version " + v.ToString());
                 try {
                     if (Directory.Exists(Destination)) Directory.Delete(Destination, true);
-                    UpdateProgressText("Doanload completed. Extracting...");
+                    UpdateProgressText("Download completed. Extracting...");
                     ZipFile.ExtractToDirectory(filepath, Destination);
                 } catch (InvalidDataException) {
                     MessageBox.Show("Could not unzip file\n" + Destination + ".zip.\nThe file appears to be invalid. Please report this issue. In the meantime, try a manual download.", "Apex Launcher Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
