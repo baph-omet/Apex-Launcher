@@ -34,17 +34,19 @@
             this.TumblrBrowser = new System.Windows.Forms.WebBrowser();
             this.CommunityPage = new System.Windows.Forms.TabPage();
             this.RedditBrowser = new System.Windows.Forms.WebBrowser();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.RedditLogo = new System.Windows.Forms.PictureBox();
             this.SaveMgmtButton = new System.Windows.Forms.Button();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.LauncherVersionLabel = new System.Windows.Forms.Label();
             this.GameVersionLabel = new System.Windows.Forms.Label();
             this.LauncherTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.WikiLogo = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.DiscordLogo)).BeginInit();
             this.TabBox.SuspendLayout();
             this.UpdatesPage.SuspendLayout();
             this.CommunityPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RedditLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WikiLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // LaunchButton
@@ -63,9 +65,9 @@
             // SettingsButton
             // 
             this.SettingsButton.Font = new System.Drawing.Font("Lucida Console", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SettingsButton.Location = new System.Drawing.Point(525, 514);
+            this.SettingsButton.Location = new System.Drawing.Point(780, 514);
             this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(253, 122);
+            this.SettingsButton.Size = new System.Drawing.Size(253, 58);
             this.SettingsButton.TabIndex = 2;
             this.SettingsButton.Text = "Settings";
             this.LauncherTooltip.SetToolTip(this.SettingsButton, "Change launcher settings here.");
@@ -153,29 +155,29 @@
             this.RedditBrowser.Url = new System.Uri("https://reddit.com/r/PokemonApex", System.UriKind.Absolute);
             this.RedditBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.BrowserNavigation);
             // 
-            // pictureBox1
+            // RedditLogo
             // 
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(269, 514);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(250, 122);
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
-            this.LauncherTooltip.SetToolTip(this.pictureBox1, "https://reddit.com/r/PokemonApex");
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.RedditLogo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.RedditLogo.Image = ((System.Drawing.Image)(resources.GetObject("RedditLogo.Image")));
+            this.RedditLogo.Location = new System.Drawing.Point(269, 514);
+            this.RedditLogo.Name = "RedditLogo";
+            this.RedditLogo.Size = new System.Drawing.Size(250, 122);
+            this.RedditLogo.TabIndex = 6;
+            this.RedditLogo.TabStop = false;
+            this.LauncherTooltip.SetToolTip(this.RedditLogo, "https://reddit.com/r/PokemonApex");
+            this.RedditLogo.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // SaveMgmtButton
             // 
-            this.SaveMgmtButton.Enabled = false;
-            this.SaveMgmtButton.Font = new System.Drawing.Font("Lucida Console", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SaveMgmtButton.Location = new System.Drawing.Point(783, 514);
+            this.SaveMgmtButton.Font = new System.Drawing.Font("Lucida Console", 14.25F, System.Drawing.FontStyle.Bold);
+            this.SaveMgmtButton.Location = new System.Drawing.Point(780, 578);
             this.SaveMgmtButton.Name = "SaveMgmtButton";
-            this.SaveMgmtButton.Size = new System.Drawing.Size(250, 122);
+            this.SaveMgmtButton.Size = new System.Drawing.Size(253, 58);
             this.SaveMgmtButton.TabIndex = 7;
-            this.SaveMgmtButton.Text = "Manage Saves\r\n(Coming soon)";
+            this.SaveMgmtButton.Text = "Manage Saves";
             this.LauncherTooltip.SetToolTip(this.SaveMgmtButton, "Patience, Iago.");
             this.SaveMgmtButton.UseVisualStyleBackColor = true;
+            this.SaveMgmtButton.Click += new System.EventHandler(this.SaveMgmtButton_Click);
             // 
             // StatusLabel
             // 
@@ -213,17 +215,30 @@
             this.GameVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.LauncherTooltip.SetToolTip(this.GameVersionLabel, "Your currently installed game version. Updated automatically.");
             // 
+            // WikiLogo
+            // 
+            this.WikiLogo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.WikiLogo.Image = ((System.Drawing.Image)(resources.GetObject("WikiLogo.Image")));
+            this.WikiLogo.Location = new System.Drawing.Point(524, 514);
+            this.WikiLogo.Name = "WikiLogo";
+            this.WikiLogo.Size = new System.Drawing.Size(250, 122);
+            this.WikiLogo.TabIndex = 11;
+            this.WikiLogo.TabStop = false;
+            this.LauncherTooltip.SetToolTip(this.WikiLogo, "https://reddit.com/r/PokemonApex");
+            this.WikiLogo.Click += new System.EventHandler(this.WikiLogo_Click);
+            // 
             // Launcher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1346, 669);
+            this.Controls.Add(this.WikiLogo);
             this.Controls.Add(this.GameVersionLabel);
             this.Controls.Add(this.LauncherVersionLabel);
             this.Controls.Add(this.StatusLabel);
             this.Controls.Add(this.SaveMgmtButton);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.RedditLogo);
             this.Controls.Add(this.TabBox);
             this.Controls.Add(this.DiscordLogo);
             this.Controls.Add(this.SettingsButton);
@@ -241,7 +256,8 @@
             this.UpdatesPage.ResumeLayout(false);
             this.UpdatesPage.PerformLayout();
             this.CommunityPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RedditLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WikiLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -255,7 +271,7 @@
         private System.Windows.Forms.TabControl TabBox;
         private System.Windows.Forms.TabPage UpdatesPage;
         private System.Windows.Forms.TabPage CommunityPage;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox RedditLogo;
         private System.Windows.Forms.Button SaveMgmtButton;
         private System.Windows.Forms.WebBrowser TumblrBrowser;
         private System.Windows.Forms.WebBrowser RedditBrowser;
@@ -264,6 +280,7 @@
         private System.Windows.Forms.Label NoConnectionLabel;
         public System.Windows.Forms.Label GameVersionLabel;
         private System.Windows.Forms.ToolTip LauncherTooltip;
+        private System.Windows.Forms.PictureBox WikiLogo;
     }
 }
 

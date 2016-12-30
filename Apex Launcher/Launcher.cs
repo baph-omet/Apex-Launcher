@@ -20,6 +20,7 @@ namespace Apex_Launcher {
             if (!Program.NetworkConnected) {
                 TumblrBrowser.Hide();
                 RedditBrowser.Hide();
+                //WikiBrowser.Hide();
                 TabBox.Enabled = false;
             } else {
                 NoConnectionLabel.Hide();
@@ -41,6 +42,10 @@ namespace Apex_Launcher {
 
         private void pictureBox1_Click(object sender, EventArgs e) {
             Process.Start("https://reddit.com/r/PokemonApex");
+        }
+
+        private void WikiLogo_Click(object sender, EventArgs e) {
+            Process.Start("http://pokemonapex.wikia.com/wiki/Pok%C3%A9mon_Apex_Wikia");
         }
 
         private void BrowserNavigation(object sender, WebBrowserNavigatingEventArgs e) {
@@ -119,6 +124,11 @@ namespace Apex_Launcher {
                     e.Cancel = true;
                 }
             }
+        }
+
+        private void SaveMgmtButton_Click(object sender, EventArgs e) {
+            SaveManagementForm saves = new SaveManagementForm();
+            saves.ShowDialog();
         }
     }
 }
