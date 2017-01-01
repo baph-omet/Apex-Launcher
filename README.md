@@ -15,13 +15,13 @@ Implemented:
 
 * Viewports to the blog and subreddit
 
-* Links to the subreddit and Discord server
+* Links to the subreddit, wiki, and Discord server
 
 * Configurable install path
 
-Planned:
-
 * Save data management
+
+Planned:
 
 * Automatic font installation
 
