@@ -206,5 +206,43 @@ namespace Apex_Launcher {
             string v = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             return v.Substring(0,v.Length - 2);
         }
+
+        public static string GetNextAvailableFilePath(string path) {
+            path = path.Replace('/', '\\');
+
+            int i = 1;
+            while (File.Exists(path) && i < 1000000) {
+                string extension = path.Split('.')[path.Split('.').Length - 1];
+                string preExtension = path.Substring(0, path.Length - extension.Length - 1);
+                
+                int numbering = -1;
+                List<int> digits = new List<int>();
+                int j = preExtension.Length - 1;
+                while (preExtension[j]!='\\' && numbering < 0) {
+                    if (j == preExtension.Length - 1 && preExtension[j] != ')') break;
+                    if (j < preExtension.Length - 1) {
+                        if (preExtension[j] == '(') {
+                            numbering = Convert.ToInt32(String.Join("", digits));
+                        } else {
+                            try {
+                                digits.Insert(0, Convert.ToInt16(preExtension[j].ToString()));
+                            } catch (FormatException) { break; }
+                        }
+                    }
+                    j--;
+                }
+
+                if (numbering >= 0) {
+                    i = numbering + 1;
+                    path = preExtension.Substring(0,preExtension.Length - 3 - numbering.ToString().Length) + " (" + i + ")." + extension;
+                } else path = preExtension + " (" + i + ")." + extension;
+                /*if (preExtension.Substring(preExtension.Length-3-i.ToString().Length).Equals(" (" + i + ")"))
+                    path = preExtension.Substring(0,preExtension.Length-3-i.ToString().Length) + " (" + i + ")." + extension;
+                else path = preExtension + " (" + i + ")." + extension;*/
+                i++;
+            }
+
+            return path;
+        }
     }
 }

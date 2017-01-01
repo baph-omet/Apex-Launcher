@@ -29,10 +29,10 @@
             this.BrowseButton = new System.Windows.Forms.Button();
             this.KeepOpenCheckbox = new System.Windows.Forms.CheckBox();
             this.CheckboxTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.ForceUpdateCheckbox = new System.Windows.Forms.CheckBox();
             this.OKButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
             this.PathTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.ForceUpdateCheckbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // PathTextbox
@@ -75,6 +75,18 @@
             this.CheckboxTooltip.SetToolTip(this.KeepOpenCheckbox, "Keep Launcher open after the game has been launched (Default: Off)");
             this.KeepOpenCheckbox.UseVisualStyleBackColor = true;
             // 
+            // ForceUpdateCheckbox
+            // 
+            this.ForceUpdateCheckbox.AutoSize = true;
+            this.ForceUpdateCheckbox.Location = new System.Drawing.Point(146, 38);
+            this.ForceUpdateCheckbox.Name = "ForceUpdateCheckbox";
+            this.ForceUpdateCheckbox.Size = new System.Drawing.Size(91, 17);
+            this.ForceUpdateCheckbox.TabIndex = 7;
+            this.ForceUpdateCheckbox.Text = "Force Update";
+            this.CheckboxTooltip.SetToolTip(this.ForceUpdateCheckbox, "If checked, the program will  redownload the most recent version of the game when" +
+        " the launch button is clicked, regardless of the currently installed version.");
+            this.ForceUpdateCheckbox.UseVisualStyleBackColor = true;
+            // 
             // OKButton
             // 
             this.OKButton.Location = new System.Drawing.Point(312, 61);
@@ -100,18 +112,6 @@
             this.PathTooltip.ToolTipTitle = "The location where your game files will be downloaded and kept (Default: The same" +
     " location as this program)";
             // 
-            // ForceUpdateCheckbox
-            // 
-            this.ForceUpdateCheckbox.AutoSize = true;
-            this.ForceUpdateCheckbox.Location = new System.Drawing.Point(146, 38);
-            this.ForceUpdateCheckbox.Name = "ForceUpdateCheckbox";
-            this.ForceUpdateCheckbox.Size = new System.Drawing.Size(91, 17);
-            this.ForceUpdateCheckbox.TabIndex = 7;
-            this.ForceUpdateCheckbox.Text = "Force Update";
-            this.CheckboxTooltip.SetToolTip(this.ForceUpdateCheckbox, "If checked, the program will  redownload the most recent version of the game when" +
-        " the launch button is clicked, regardless of the currently installed version.");
-            this.ForceUpdateCheckbox.UseVisualStyleBackColor = true;
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -128,7 +128,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
-            this.Text = "SettingsForm";
+            this.Text = "Settings";
             this.ResumeLayout(false);
             this.PerformLayout();
 
