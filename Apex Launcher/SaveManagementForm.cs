@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -76,13 +77,80 @@ namespace Apex_Launcher {
         }
 
         private void RenameButton_Click(object sender, EventArgs e) {
-
+            if (FileView.SelectedItems.Count > 0) {
+                if (FileView.SelectedItems[0].SubItems[0].Text.Equals(currentSaveName)) {
+                    DialogResult res = MessageBox.Show(
+                        "This is your current save file. If you rename it, the game will no longer recognize it until you have changed it back to the current save file. Are you sure you want to rename it?",
+                        "Warning",
+                        MessageBoxButtons.YesNo
+                        );
+                    if (res != DialogResult.Yes) return;
+                }
+                string oldfile = GetPath(FileView.SelectedItems[0].SubItems[0].Text);
+                TextEntryForm tef = new TextEntryForm();
+                tef.ShowDialog();
+                foreach (char c in tef.Result) {
+                    if ((new[] { '/','\\','|','>','<',':','?','*','"'}).Contains(c)) {
+                        MessageBox.Show("File name contains an invalid character (" + c + "). Please choose another file name.");
+                        return;
+                    }
+                }
+                File.Copy(oldfile, GetPath(tef.Result + ".rxdata"));
+                File.Delete(oldfile);
+                GetSaveFiles();
+                FileView.Select();
+            }
         }
 
         private void MakeDefaultButton_Click(object sender, EventArgs e) {
             if (FileView.SelectedItems.Count > 0) {
-
+                string filename = FileView.SelectedItems[0].SubItems[0].Text;
+                if (!filename.Equals(currentSaveName)) {
+                    DialogResult res = MessageBox.Show(
+                        "Are you sure you want to make this your active save file? This will overwrite the current active save.",
+                        "Warning",
+                        MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes) {
+                        try { File.Delete(GetPath(currentSaveName)); } catch { }
+                        File.Copy(GetPath(filename), GetPath(currentSaveName));
+                        File.Delete(GetPath(filename));
+                        GetSaveFiles();
+                        FileView.Select();
+                    }
+                }
             }
+        }
+
+        private void ExportButton_Click(object sender, EventArgs e) {
+            if (FileView.SelectedItems.Count > 0) {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.AddExtension = true;
+                sfd.DefaultExt = ".rxdata";
+                sfd.Filter = "RPGXP Data Files|*.rxdata";
+                sfd.ShowDialog();
+                if (sfd.FileName.Length > 0) File.Copy(GetPath(FileView.SelectedItems[0].SubItems[0].Text), sfd.FileName);
+            }
+        }
+
+        private void ImportButton_Click(object sender, EventArgs e) {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.AddExtension = true;
+            ofd.DefaultExt = ".rxdata";
+            ofd.Filter = "RPGXP Data Files|*.rxdata";
+            ofd.ShowDialog();
+
+            if (ofd.FileName.Length > 0) {
+                string newfilename = Program.GetNextAvailableFilePath(GetPath(ofd.FileName.Split('\\')[ofd.FileName.Split('\\').Length - 1]));
+
+                File.Copy(ofd.FileName, newfilename);
+
+                GetSaveFiles();
+            }
+            FileView.Select();
+        }
+
+        private void ExplorerOpenButton_Click(object sender, EventArgs e) {
+            Process.Start(savePath);
         }
     }
 }

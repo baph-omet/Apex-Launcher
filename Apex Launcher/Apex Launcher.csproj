@@ -92,6 +92,12 @@
     <Compile Include="SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TextEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextEntryForm.Designer.cs">
+      <DependentUpon>TextEntryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Version.cs" />
     <EmbeddedResource Include="DownloadForm.resx">
       <DependentUpon>DownloadForm.cs</DependentUpon>
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextEntryForm.resx">
+      <DependentUpon>TextEntryForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
