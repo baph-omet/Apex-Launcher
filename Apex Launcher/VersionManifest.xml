@@ -15,4 +15,9 @@
     <number>4</number>
     <location>http://www.mediafire.com/download/49cl5rsq4h3scc3/Pok%C3%A9mon_Apex_Alpha_Build_4.zip</location>
   </version>
+  <version>
+    <channel>a</channel>
+    <number>5</number>
+    <location>http://www.mediafire.com/download/f5vx2r65w7cjtmt/Pok%C3%A9mon_Apex_Alpha_Build_5.zip</location>
+  </version>
 </versions>
