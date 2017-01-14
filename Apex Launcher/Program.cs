@@ -20,9 +20,10 @@ namespace Apex_Launcher {
         [STAThread]
         static void Main() {
             try {
-                WebRequest wr = WebRequest.Create("https://raw.githubusercontent.com/griffenx/Apex-Launcher/master/Apex%20Launcher/VersionManifest.xml");
-                wr.GetResponse();
-                NetworkConnected = true;
+                NetworkConnected = DownloadVersionManifest();
+                //WebRequest wr = WebRequest.Create("https://raw.githubusercontent.com/griffenx/Apex-Launcher/master/Apex%20Launcher/VersionManifest.xml");
+                //wr.GetResponse();
+                //NetworkConnected = true;
             } catch (WebException) {
                 NetworkConnected = false;
             }
@@ -110,6 +111,32 @@ namespace Apex_Launcher {
             }
         }
 
+        public static bool DownloadVersionManifest() {
+            bool completed = false;
+            try {
+                HttpWebRequest filereq = (HttpWebRequest)HttpWebRequest.Create("http://www.mediafire.com/download/qkauu9oca3lcjw1/VersionManifest.xml");
+                HttpWebResponse fileresp = (HttpWebResponse)filereq.GetResponse();
+                if (filereq.ContentLength > 0) fileresp.ContentLength = filereq.ContentLength;
+                using (Stream dlstream = fileresp.GetResponseStream()) {
+                    using (FileStream outputStream = new FileStream(GetInstallPath() + "\\Versions\\VersionManifest.xml", FileMode.OpenOrCreate)) {
+                        int buffersize = 1000;
+                        long bytesRead = 0;
+                        int length = 1;
+                        while (length > 0) {
+                            byte[] buffer = new Byte[buffersize];
+                            length = dlstream.Read(buffer, 0, buffersize);
+                            bytesRead += length;
+                            outputStream.Write(buffer, 0, length);
+                        }
+                    }
+                }
+                completed = true;
+            } catch(Exception e) {
+                completed = false;
+            }
+            return completed;
+        }
+
         public static Version GetCurrentVersion() {
             return Version.FromString(GetParameter("currentversion"));
         }
@@ -117,7 +144,7 @@ namespace Apex_Launcher {
         public static bool InstallLatestVersion() {
             launcher.UpdateStatus("Checking for new versions...");
 
-            Version mostRecent = GetMostRecentVersion();
+            Version mostRecent = Version.GetMostRecentVersion();
 
             if (mostRecent != null && mostRecent.GreaterThan(GetCurrentVersion())) {
                 DialogResult result = MessageBox.Show("New version found: " + mostRecent.Channel.ToString() + " " + mostRecent.Number + "\nDownload and install this update?", "Update Found", MessageBoxButtons.YesNo);
@@ -132,52 +159,7 @@ namespace Apex_Launcher {
             return false;
         }
 
-        public static Version GetMostRecentVersion() {
-            XmlDocument doc = new XmlDocument();
-            doc.Load("https://raw.githubusercontent.com/griffenx/Apex-Launcher/master/Apex%20Launcher/VersionManifest.xml");
-
-            Version mostRecent = GetCurrentVersion();
-            foreach (XmlNode node in doc.GetElementsByTagName("version")) {
-                Channel channel = Channel.NONE;
-                double number = 0.0;
-                string location = "";
-
-                foreach (XmlNode prop in node.ChildNodes) {
-                    switch (prop.Name.ToLower()) {
-                        case "channel":
-                            switch (prop.InnerText[0]) {
-                                case 'a':
-                                    channel = Channel.ALPHA;
-                                    break;
-                                case 'b':
-                                    channel = Channel.BETA;
-                                    break;
-                                case 'r':
-                                    channel = Channel.RELEASE;
-                                    break;
-                                default:
-                                    channel = Channel.NONE;
-                                    break;
-                            }
-                            break;
-                        case "number":
-                            try {
-                                number = Convert.ToDouble(prop.InnerText);
-                            } catch (FormatException) {
-                                number = 0.0;
-                            }
-                            break;
-                        case "location":
-                            location = prop.InnerText;
-                            break;
-                    }
-                }
-                Version v = new Version(channel, number, location);
-                if (mostRecent == null || v.GreaterThan(mostRecent) || v.Equals(mostRecent)) mostRecent = v;
-            }
-
-            return mostRecent;
-        }
+        
 
         public static void DownloadVersion(Version v) {
             DownloadForm dlf = new DownloadForm(v);

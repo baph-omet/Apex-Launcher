@@ -66,18 +66,25 @@ namespace Apex_Launcher {
                 MessageBox.Show("A download is currently in progress. Please cancel your download or wait until it finishes.","Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 return;
             }
-            string launchpath = Program.GetInstallPath() + "\\Versions\\" + Program.GetParameter("currentversion") + "\\Game.exe";
+            Version CurrentVersion = Program.GetCurrentVersion();
+            string launchpath = Program.GetInstallPath() + "\\Versions\\" + CurrentVersion.ToString() + "\\Game.exe";
 
             if (Program.forceUpdate) {
-                string path = Directory.GetCurrentDirectory() + "\\Versions\\" + Program.GetCurrentVersion().ToString();
+                string path = Program.GetInstallPath() + "\\Versions\\" + CurrentVersion.ToString();
                 if (File.Exists(path + ".zip")) File.Delete(path + ".zip");
                 if (Directory.Exists(path)) Directory.Delete(path,true);
-                Program.DownloadVersion(Program.GetMostRecentVersion());
+                if (CurrentVersion.IsPatch) {
+                    string previousPath = Program.GetInstallPath() + "\\Versions\\" + CurrentVersion.Prerequisite.ToString();
+                    if (File.Exists(previousPath + ".zip")) File.Delete(previousPath + ".zip");
+                    if (Directory.Exists(previousPath)) Directory.Delete(previousPath);
+                }
+
+                Program.DownloadVersion(Version.GetMostRecentVersion());
                 Program.forceUpdate = false;
             } else if (!File.Exists(launchpath)) {
                 DialogResult res = MessageBox.Show("Cannot find the game in your install path. It might be moved or deleted.\nCheck \n" + launchpath + "\nfor your files, or redownload them.\nWould you like to redownload?", "Game not found", MessageBoxButtons.YesNo);
                 if (res == DialogResult.Yes) {
-                    Program.DownloadVersion(Program.GetMostRecentVersion());
+                    Program.DownloadVersion(Version.GetMostRecentVersion());
                 } else return;
             }
 

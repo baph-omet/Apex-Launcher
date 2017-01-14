@@ -16,19 +16,28 @@ using System.Windows.Forms;
 namespace Apex_Launcher {
     public partial class DownloadForm : Form {
 
-        private string Source;
-        private string Destination;
-        private string installpath;
+        //private string Source;
+        //private string Destination;
+        //private string installpath;
         private string filepath;
+        private List<Version> downloadQueue;
         private Version v;
+        private Version prerequisite;
         private Thread dlThread;
 
         public DownloadForm(Version v) {
             InitializeComponent();
-            Source = v.Location;
-            installpath = Program.GetInstallPath();
-            Destination = installpath + "\\Versions\\" + v.ToString();
-            filepath = Destination + ".zip";
+            downloadQueue = new List<Version>();
+            if (v.IsPatch) {
+                prerequisite = v.Prerequisite;
+                if (prerequisite.GreaterThan(Program.GetCurrentVersion())) downloadQueue.Add(prerequisite);
+            } else prerequisite = null;
+            downloadQueue.Add(v);
+
+            //Source = v.Location;
+            //installpath = Program.GetInstallPath();
+            //Destination = installpath + "\\Versions\\" + v.ToString();
+            //filepath = Destination + ".zip";
             dlThread = null;
             this.v = v;
         }
@@ -41,52 +50,83 @@ namespace Apex_Launcher {
         }
 
         public void Download() {
-            Program.launcher.UpdateStatus("Downloading version " + v.ToString());
-            Directory.CreateDirectory(Destination);
-            bool succeeded = true;
+            bool allFinished = true;
+            foreach (Version queuedVersion in downloadQueue) {
+                string Source = queuedVersion.Location;
+                string Destination = Program.GetInstallPath() + "\\Versions\\" + queuedVersion.ToString();
+                filepath = Destination + ".zip";
 
-            HttpWebRequest filereq = (HttpWebRequest)HttpWebRequest.Create(Source);
-            HttpWebResponse fileresp = (HttpWebResponse)filereq.GetResponse();
-            if (filereq.ContentLength > 0) fileresp.ContentLength = filereq.ContentLength;
-            using (Stream dlstream = fileresp.GetResponseStream()) {
-                using (FileStream outputStream = new FileStream(filepath, FileMode.OpenOrCreate)) {
-                    int buffersize = 10000;
-                    //try {
-                        long bytesRead = 0;
-                        int length = 1;
-                        while (length > 0) {
-                            byte[] buffer = new Byte[buffersize];
-                            length = dlstream.Read(buffer, 0, buffersize);
-                            bytesRead += length;
-                            outputStream.Write(buffer, 0, length);
-                            UpdateProgress((int)(100 * bytesRead / fileresp.ContentLength));
-                            UpdateProgressText("Downloading " + (bytesRead / 1048576) + "/" + (fileresp.ContentLength / 1048576) + " MB...");
+                Program.launcher.UpdateStatus("Downloading version " + queuedVersion.ToString());
+                Directory.CreateDirectory(Destination);
+                bool succeeded = true;
+
+                HttpWebRequest filereq = (HttpWebRequest)HttpWebRequest.Create(Source);
+                HttpWebResponse fileresp = (HttpWebResponse)filereq.GetResponse();
+                if (filereq.ContentLength > 0) fileresp.ContentLength = filereq.ContentLength;
+                using (Stream dlstream = fileresp.GetResponseStream()) {
+                    using (FileStream outputStream = new FileStream(filepath, FileMode.OpenOrCreate)) {
+                        int buffersize = 10000;
+                        try {
+                            long bytesRead = 0;
+                            int length = 1;
+                            while (length > 0) {
+                                byte[] buffer = new Byte[buffersize];
+                                length = dlstream.Read(buffer, 0, buffersize);
+                                bytesRead += length;
+                                outputStream.Write(buffer, 0, length);
+                                UpdateProgress((int)(100 * bytesRead / fileresp.ContentLength));
+                                UpdateProgressText(
+                                    "Downloading " + (bytesRead / 1048576) + "/" + (fileresp.ContentLength / 1048576) + " MB (" + (bytesRead / fileresp.ContentLength) + "%)..."
+                                );
+                            }
+                        } catch (Exception e) {
+                            succeeded = false;
+                            DialogResult res = MessageBox.Show(
+                                "An error has occurred during your download. Please check your network connection and try again.\nIf this error persists, please report this issue to the launcher's GitHub page. Click OK to copy the error details to your clipboard or CANCEL to ignore this message.",
+                                "Download Error",
+                                MessageBoxButtons.OKCancel,
+                                MessageBoxIcon.Error
+                            );
+                            if (res == DialogResult.OK) Clipboard.SetText(e.ToString());
                         }
-                    /*} catch (Exception e) {
-                        DialogResult res = MessageBox.Show("An error has occurred during your download. Please check your network connection and try again.\nIf this error persists, please report this issue to the launcher's GitHub page. Click OK to copy the error details to your clipboard or CANCEL to ignore this message.","Download Error",MessageBoxButtons.OKCancel,MessageBoxIcon.Error);
-                        if (res == DialogResult.OK) Clipboard.SetText(e.ToString());
-                    }*/
+                    }
+                }
+
+                if (succeeded) {
+                    Program.launcher.UpdateStatus("Extracting version " + v.ToString());
+                    try {
+                        if (Directory.Exists(Destination)) Directory.Delete(Destination, true);
+                        UpdateProgressText("Download completed. Extracting...");
+                        ZipFile.ExtractToDirectory(filepath, Destination);
+                        if (queuedVersion.IsPatch) {
+                            UpdateProgressText("Patching...");
+                            string versionpath = Program.GetInstallPath() + "\\Versions\\" + prerequisite.ToString();
+                            RecursiveCopy(versionpath, Destination,false);
+                        }
+                    } catch (InvalidDataException) {
+                        MessageBox.Show(
+                            "Could not unzip file\n" + Destination + ".zip.\nThe file appears to be invalid. Please report this issue. In the meantime, try a manual download.",
+                            "Apex Launcher Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    File.Delete(filepath);
+                } else {
+                    allFinished = false;
+                    MessageBox.Show(
+                        "The download couldn't be completed. Check your internet connection. If you think this is a program error, please report this to the Launcher's GitHub page."
+                    );
+                    break;
                 }
             }
-
-            if (succeeded) {
-                Program.launcher.UpdateStatus("Extracting version " + v.ToString());
-                try {
-                    if (Directory.Exists(Destination)) Directory.Delete(Destination, true);
-                    UpdateProgressText("Download completed. Extracting...");
-                    ZipFile.ExtractToDirectory(filepath, Destination);
-                } catch (InvalidDataException) {
-                    MessageBox.Show("Could not unzip file\n" + Destination + ".zip.\nThe file appears to be invalid. Please report this issue. In the meantime, try a manual download.", "Apex Launcher Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                File.Delete(filepath);
+            if (allFinished) {
                 Program.SetParameter("currentversion", v.ToString());
                 Program.launcher.SetGameVersion(v);
-                Program.Downloading = false;
                 Program.launcher.UpdateStatus("Ready to launch");
-                CloseForm();
-            } else {
-                MessageBox.Show("The download couldn't be completed. Check your internet connection. If you think this is a program error, please report this to the Launcher's GitHub page.");
             }
+            Program.Downloading = false;
+            CloseForm();
         }
 
         public delegate void UP(int progress);
@@ -123,6 +163,19 @@ namespace Apex_Launcher {
                 Program.launcher.UpdateStatus("Download cancelled.");
                 return true;
             } return false;
+        }
+
+        private static void RecursiveCopy(string SourceDirectory, string DestinationDirectory) {
+            RecursiveCopy(SourceDirectory, DestinationDirectory, true);
+        }
+        private static void RecursiveCopy(string SourceDirectory, string DestinationDirectory, bool overwriteFile) {
+            if (!Directory.Exists(DestinationDirectory)) Directory.CreateDirectory(DestinationDirectory);
+            foreach (string f in Directory.GetFiles(SourceDirectory)) {
+                if (overwriteFile || !File.Exists(DestinationDirectory + "\\" + f.Split('\\').Last())) {
+                    File.Copy(f,DestinationDirectory + "\\" + f.Split('\\').Last(),overwriteFile);
+               }
+            }
+            foreach (string d in Directory.GetDirectories(SourceDirectory))  RecursiveCopy(d, DestinationDirectory + "\\" + d.Split('\\').Last(), overwriteFile);
         }
 
         private void CancelDownloadButton_Click(object sender, EventArgs e) {
