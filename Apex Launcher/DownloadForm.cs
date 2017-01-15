@@ -76,10 +76,10 @@ namespace Apex_Launcher {
                                 outputStream.Write(buffer, 0, length);
                                 UpdateProgress((int)(100 * bytesRead / fileresp.ContentLength));
                                 UpdateProgressText(
-                                    "Downloading " + (bytesRead / 1048576) + "/" + (fileresp.ContentLength / 1048576) + " MB (" + (bytesRead / fileresp.ContentLength) + "%)..."
+                                    "Downloading " + (bytesRead / 1048576) + "/" + (fileresp.ContentLength / 1048576) + " MB (" + Convert.ToInt16(100 * (double)bytesRead / fileresp.ContentLength) + "%)..."
                                 );
                             }
-                        } catch (Exception e) {
+                        } catch (WebException e) {
                             succeeded = false;
                             DialogResult res = MessageBox.Show(
                                 "An error has occurred during your download. Please check your network connection and try again.\nIf this error persists, please report this issue to the launcher's GitHub page. Click OK to copy the error details to your clipboard or CANCEL to ignore this message.",
@@ -141,7 +141,9 @@ namespace Apex_Launcher {
         public void UpdateProgressText(string message) {
             if (ProgressLabel.InvokeRequired) {
                 UPT d = UpdateProgressText;
-                this.Invoke(d, new object[] { message });
+                try {
+                    this.Invoke(d, new object[] { message });
+                } catch (ObjectDisposedException) { }
             } else ProgressLabel.Text = message;
         }
 
