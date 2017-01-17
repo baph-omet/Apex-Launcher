@@ -26,4 +26,10 @@
     <location>http://www.mediafire.com/download/28h1a6bl8qyagm3/Pok%C3%A9mon_Apex_Alpha_Build_5.1_%28Patch%29.zip</location>
     <patch>true</patch>
   </version>
+  <version>
+    <channel>a</channel>
+    <number>5.2</number>
+    <location>http://www.mediafire.com/download/m0ktkdra503p11l/Pok%C3%A9mon_Apex_Alpha_Build_5.2.zip</location>
+    <patch>true</patch>
+  </version>
 </versions>
