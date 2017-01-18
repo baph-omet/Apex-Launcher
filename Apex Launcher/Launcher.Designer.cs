@@ -134,7 +134,7 @@
             this.TumblrBrowser.ScriptErrorsSuppressed = true;
             this.TumblrBrowser.Size = new System.Drawing.Size(1966, 705);
             this.TumblrBrowser.TabIndex = 0;
-            this.TumblrBrowser.Url = new System.Uri("https://pokemonapex.tumblr.com", System.UriKind.Absolute);
+            this.TumblrBrowser.Url = new System.Uri("https://pokemonapex.tumblr.com/#recentposts", System.UriKind.Absolute);
             this.TumblrBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.BrowserLoaded);
             this.TumblrBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.BrowserNavigation);
             // 
