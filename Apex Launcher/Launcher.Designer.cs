@@ -212,7 +212,7 @@
             this.LauncherVersionLabel.Name = "LauncherVersionLabel";
             this.LauncherVersionLabel.Size = new System.Drawing.Size(122, 20);
             this.LauncherVersionLabel.TabIndex = 9;
-            this.LauncherVersionLabel.Text = "Launcher v1.1.0";
+            this.LauncherVersionLabel.Text = "Launcher v1.4.0";
             this.LauncherTooltip.SetToolTip(this.LauncherVersionLabel, "Your current launcher version.");
             // 
             // GameVersionLabel

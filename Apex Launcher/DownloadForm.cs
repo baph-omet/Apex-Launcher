@@ -61,7 +61,15 @@ namespace Apex_Launcher {
                 bool succeeded = true;
 
                 HttpWebRequest filereq = (HttpWebRequest)HttpWebRequest.Create(Source);
-                HttpWebResponse fileresp = (HttpWebResponse)filereq.GetResponse();
+                HttpWebResponse fileresp = null;
+                try {
+                     fileresp = (HttpWebResponse)filereq.GetResponse();
+                } catch (WebException) {
+                    MessageBox.Show("Network exception encountered when trying to start your download. You might not have a connection to the internet, or access to the download link is restricted. If you think tihs is a program error, please report it to the Launcher's GitHub page.");
+                    Program.Downloading = false;
+                    CloseForm();
+                    return;
+                }
                 if (filereq.ContentLength > 0) fileresp.ContentLength = filereq.ContentLength;
                 using (Stream dlstream = fileresp.GetResponseStream()) {
                     using (FileStream outputStream = new FileStream(filepath, FileMode.OpenOrCreate)) {
