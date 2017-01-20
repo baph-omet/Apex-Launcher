@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
-using System.Xml;
-using System.IO.Compression;
 
 namespace Apex_Launcher {
     static class Program {
@@ -19,15 +16,7 @@ namespace Apex_Launcher {
         
         [STAThread]
         static void Main() {
-            try {
-                NetworkConnected = DownloadVersionManifest();
-                //WebRequest wr = WebRequest.Create("https://raw.githubusercontent.com/griffenx/Apex-Launcher/master/Apex%20Launcher/VersionManifest.xml");
-                //wr.GetResponse();
-                //NetworkConnected = true;
-            } catch (WebException) {
-                NetworkConnected = false;
-            }
-
+            initialize();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -44,13 +33,19 @@ namespace Apex_Launcher {
                 }
             }
 
-            //TODO: check for launcher update
-            if (NetworkConnected) {
-                try {
-                    InstallLatestVersion();
-                } catch (WebException) {
-                    NetworkConnected = false;
-                }
+            if (GithubBridge.CheckForLauncherUpdate()) {
+                Application.Exit();
+                return;
+            }
+
+            if (!Directory.Exists(GetInstallPath() + "\\Versions")) Directory.CreateDirectory(GetInstallPath() + "\\Versions");
+            try {
+                NetworkConnected = DownloadVersionManifest();
+                //WebRequest wr = WebRequest.Create("https://raw.githubusercontent.com/griffenx/Apex-Launcher/master/Apex%20Launcher/VersionManifest.xml");
+                //wr.GetResponse();
+                //NetworkConnected = true;
+            } catch (WebException) {
+                NetworkConnected = false;
             }
 
             // Remove or add fonts
@@ -71,13 +66,8 @@ namespace Apex_Launcher {
                     }
                 }
             }*/
-
-            
-            
             return;
         }
-
-        //public static void CheckForLauncherUpdate()
 
         public static string GetParameter(string parameter) {
             foreach (string line in File.ReadAllLines(Directory.GetCurrentDirectory() + "\\config.txt")) {
@@ -159,14 +149,10 @@ namespace Apex_Launcher {
             return false;
         }
 
-        
-
         public static void DownloadVersion(Version v) {
             DownloadForm dlf = new DownloadForm(v);
             dlf.Show();
             dlf.StartDownload();
-
-            //wc.DownloadFile(v.Location, filename + ".zip");
         }
 
         public static string GetInstallPath() {
@@ -218,9 +204,6 @@ namespace Apex_Launcher {
                     i = numbering + 1;
                     path = preExtension.Substring(0,preExtension.Length - 3 - numbering.ToString().Length) + " (" + i + ")." + extension;
                 } else path = preExtension + " (" + i + ")." + extension;
-                /*if (preExtension.Substring(preExtension.Length-3-i.ToString().Length).Equals(" (" + i + ")"))
-                    path = preExtension.Substring(0,preExtension.Length-3-i.ToString().Length) + " (" + i + ")." + extension;
-                else path = preExtension + " (" + i + ")." + extension;*/
                 i++;
             }
 

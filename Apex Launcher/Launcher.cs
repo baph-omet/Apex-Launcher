@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 using System.Windows.Forms;
 
 namespace Apex_Launcher {
@@ -20,7 +14,6 @@ namespace Apex_Launcher {
             if (!Program.NetworkConnected) {
                 TumblrBrowser.Hide();
                 RedditBrowser.Hide();
-                //WikiBrowser.Hide();
                 TabBox.Enabled = false;
             } else {
                 NoConnectionLabel.Hide();
@@ -30,9 +23,15 @@ namespace Apex_Launcher {
         private void Launcher_Shown(object sender, EventArgs e) {
             TumblrBrowser.IsWebBrowserContextMenuEnabled = false;
             RedditBrowser.IsWebBrowserContextMenuEnabled = false;
-            Program.initialize();
             SetGameVersion(Program.GetCurrentVersion());
             LauncherVersionLabel.Text = "Launcher v" + Program.GetLauncherVersion();
+            if (Program.NetworkConnected) {
+                try {
+                    Program.InstallLatestVersion();
+                } catch (WebException) {
+                    Program.NetworkConnected = false;
+                }
+            }
             EnableLaunch();
         }
 
