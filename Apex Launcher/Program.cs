@@ -9,9 +9,9 @@ using System.Net;
 namespace Apex_Launcher {
     static class Program {
 
-        public static Launcher launcher;
+        public static Launcher Launcher;
         public static bool NetworkConnected;
-        public static bool forceUpdate = false;
+        public static bool ForceUpdate = false;
         public static bool Downloading = false;
         
         [STAThread]
@@ -20,8 +20,8 @@ namespace Apex_Launcher {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            launcher = new Launcher();
-            Application.Run(launcher);
+            Launcher = new Launcher();
+            Application.Run(Launcher);
         }
 
         public static void initialize() {
@@ -121,7 +121,7 @@ namespace Apex_Launcher {
                     }
                 }
                 completed = true;
-            } catch(Exception e) {
+            } catch(Exception) {
                 completed = false;
             }
             return completed;
@@ -132,7 +132,7 @@ namespace Apex_Launcher {
         }
 
         public static bool InstallLatestVersion() {
-            launcher.UpdateStatus("Checking for new versions...");
+            Launcher.UpdateStatus("Checking for new versions...");
 
             Version mostRecent = Version.GetMostRecentVersion();
 
@@ -145,7 +145,7 @@ namespace Apex_Launcher {
                 } else return false;
             }
 
-            launcher.UpdateStatus("No new version found.");
+            Launcher.UpdateStatus("No new version found.");
             return false;
         }
 

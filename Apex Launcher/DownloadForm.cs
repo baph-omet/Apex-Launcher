@@ -50,7 +50,7 @@ namespace Apex_Launcher {
                 string Destination = Program.GetInstallPath() + "\\Versions\\" + queuedVersion.ToString();
                 filepath = Destination + ".zip";
 
-                Program.launcher.UpdateStatus("Downloading version " + queuedVersion.ToString());
+                Program.Launcher.UpdateStatus("Downloading version " + queuedVersion.ToString());
                 Directory.CreateDirectory(Destination);
                 bool succeeded = true;
 
@@ -95,7 +95,7 @@ namespace Apex_Launcher {
                 }
 
                 if (succeeded) {
-                    Program.launcher.UpdateStatus("Extracting version " + v.ToString());
+                    Program.Launcher.UpdateStatus("Extracting version " + v.ToString());
                     try {
                         if (Directory.Exists(Destination)) Directory.Delete(Destination, true);
                         UpdateProgressText("Download completed. Extracting...");
@@ -124,8 +124,8 @@ namespace Apex_Launcher {
             }
             if (allFinished) {
                 Program.SetParameter("currentversion", v.ToString());
-                Program.launcher.SetGameVersion(v);
-                Program.launcher.UpdateStatus("Ready to launch");
+                Program.Launcher.SetGameVersion(v);
+                Program.Launcher.UpdateStatus("Ready to launch");
             }
             Program.Downloading = false;
             CloseForm();
@@ -164,7 +164,7 @@ namespace Apex_Launcher {
                 dlThread.Abort();
                 try { File.Delete(filepath); } catch (Exception) { };
                 Program.Downloading = false;
-                Program.launcher.UpdateStatus("Download cancelled.");
+                Program.Launcher.UpdateStatus("Download cancelled.");
                 return true;
             } return false;
         }

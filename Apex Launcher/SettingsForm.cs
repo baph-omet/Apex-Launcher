@@ -8,7 +8,7 @@ namespace Apex_Launcher {
 
             PathTextbox.Text = Program.GetInstallPath();
             KeepOpenCheckbox.Checked = Convert.ToBoolean(Program.GetParameter("keepLauncherOpen"));
-            ForceUpdateCheckbox.Checked = Program.forceUpdate;
+            ForceUpdateCheckbox.Checked = Program.ForceUpdate;
         }
 
         private void CancelButton_Click(object sender, EventArgs e) {
@@ -26,7 +26,7 @@ namespace Apex_Launcher {
                 Program.SetParameter("installpath", PathTextbox.Text);
                 Program.SetParameter("keepLauncherOpen", KeepOpenCheckbox.Checked.ToString());
                 //Program.SetParameter("disableGameFonts", DisableFontBox.Checked.ToString());
-                Program.forceUpdate = ForceUpdateCheckbox.Checked;
+                Program.ForceUpdate = ForceUpdateCheckbox.Checked;
                 Close();
             }
         }

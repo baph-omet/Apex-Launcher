@@ -14,6 +14,7 @@ namespace Apex_Launcher {
             if (!Program.NetworkConnected) {
                 TumblrBrowser.Hide();
                 RedditBrowser.Hide();
+                GitHubBrowser.Hide();
                 TabBox.Enabled = false;
             } else {
                 NoConnectionLabel.Hide();
@@ -23,6 +24,7 @@ namespace Apex_Launcher {
         private void Launcher_Shown(object sender, EventArgs e) {
             TumblrBrowser.IsWebBrowserContextMenuEnabled = false;
             RedditBrowser.IsWebBrowserContextMenuEnabled = false;
+            GitHubBrowser.IsWebBrowserContextMenuEnabled = false;
             SetGameVersion(Program.GetCurrentVersion());
             LauncherVersionLabel.Text = "Launcher v" + Program.GetLauncherVersion();
             if (Program.NetworkConnected) {
@@ -68,7 +70,7 @@ namespace Apex_Launcher {
             Version CurrentVersion = Program.GetCurrentVersion();
             string launchpath = Program.GetInstallPath() + "\\Versions\\" + CurrentVersion.ToString() + "\\Game.exe";
 
-            if (Program.forceUpdate) {
+            if (Program.ForceUpdate) {
                 string path = Program.GetInstallPath() + "\\Versions\\" + CurrentVersion.ToString();
                 if (File.Exists(path + ".zip")) File.Delete(path + ".zip");
                 if (Directory.Exists(path)) Directory.Delete(path,true);
@@ -79,7 +81,7 @@ namespace Apex_Launcher {
                 }
 
                 Program.DownloadVersion(Version.GetMostRecentVersion());
-                Program.forceUpdate = false;
+                Program.ForceUpdate = false;
             } else if (!File.Exists(launchpath)) {
                 DialogResult res = MessageBox.Show("Cannot find the game in your install path. It might be moved or deleted.\nCheck \n" + launchpath + "\nfor your files, or redownload them.\nWould you like to redownload?", "Game not found", MessageBoxButtons.YesNo);
                 if (res == DialogResult.Yes) {
