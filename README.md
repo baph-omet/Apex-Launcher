@@ -11,9 +11,11 @@ Implemented:
 
 * Automatic game updating and installing
 
+* Automatically checks for new launcher versions
+
 * No need to manage game folders
 
-* Viewports to the blog and subreddit
+* Viewports to the blog, subreddit, and here
 
 * Links to the subreddit, wiki, and Discord server
 
