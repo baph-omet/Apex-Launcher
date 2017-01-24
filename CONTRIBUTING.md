@@ -44,5 +44,6 @@ If you're interested in contributing code to the project, you are more than welc
             public string propertyname;
 3. Long lines should be split into multi-line statements. Avoid off-screen code and text wrap whenever possible.
 4. Strings should be declared as type `string` instead of `String`.
+5. The `var` keyword is right out.
 
 Other common sense things should also apply.
