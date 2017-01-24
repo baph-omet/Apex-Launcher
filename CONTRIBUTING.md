@@ -8,6 +8,8 @@ Did you find an issue with the Launcher? Please open an issue report on the [iss
 3. Please make your title concise and representitive of your exact issue.
 
 4. Please give as much information as possible when reporting issues. 
+    * What version of the launcher are you using?
+    * What are some details of your environment? (Launcher install location, launcher settings, operating system, etc.)
     * What were you doing, exactly, when the issue occurred? 
     * What exactly happened that was wrong? Did you get an error message, and if so, what did it say? (When reporting error messages, you don't have to include most of the error. Usually just the stack trace (the bit marked "Exception Text") is necessary, but if in doubt, include the whole thing). 
     * What conditions about your situation might be considered atypical? (First time running the program, messed with internal files, etc.)
