@@ -17,9 +17,19 @@ namespace Apex_Launcher {
 
         private void OKButton_Click(object sender, EventArgs e) {
             bool validated = true;
+            if (PathTextbox.Text != Program.GetParameter("installpath")) {
+                if (
+                    MessageBox.Show(
+                        "If you change your install path, you will need to move your game data to the new path or redownload it before you will be able to play. Is this OK?",
+                        "Warning",
+                        MessageBoxButtons.YesNo
+                    ) == DialogResult.No
+                ) return;
+            }
+
             if (!Program.HasWriteAccess(PathTextbox.Text)) {
                 MessageBox.Show("You don't have permission to write to that folder.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                validated = false;
+                return;
             }
 
             if (validated) {
