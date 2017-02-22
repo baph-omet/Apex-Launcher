@@ -19,10 +19,10 @@ namespace Apex_Launcher {
                     Dictionary<string, object> json = jss.Deserialize<Dictionary<string,object>>(text);
                     string tag = json["tag_name"].ToString().Replace("v", "");
                     int[] latestVersion = new[] {
-                    Convert.ToInt32(tag.Split('.')[0]),
-                    Convert.ToInt32(tag.Split('.')[1]),
-                    Convert.ToInt32(tag.Split('.')[2])
-                };
+                        Convert.ToInt32(tag.Split('.')[0]),
+                        Convert.ToInt32(tag.Split('.')[1]),
+                        Convert.ToInt32(tag.Split('.')[2])
+                    };
                     System.Version launcherVersion = Assembly.GetExecutingAssembly().GetName().Version;
                     if (latestVersion[0] > launcherVersion.Major ||
                         (latestVersion[0] == launcherVersion.Major && latestVersion[1] > launcherVersion.Minor) ||
