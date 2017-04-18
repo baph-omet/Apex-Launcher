@@ -2,7 +2,7 @@
 Welcome to the repository for the official launcher for fan game [Pokémon Apex](https://pokemonapex.tumblr.com). This launcher is written in C# for Windows.
 
 ## Issues
-If you have found an issue or have a suggestion about the **launcher only**, please report them here. If you think you can do better than me, feel free to submit a pull request and I'll check it out.
+If you have found an issue or have a suggestion about the **launcher only**, please report them here. If you would like to contribute code, feel free to submit a pull request for review.
 
 If you have an in-game issue with Apex, please report it on the [official subreddit](https://www.reddit.com/r/PokemonApex).
 
