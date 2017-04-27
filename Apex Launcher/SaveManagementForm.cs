@@ -16,6 +16,7 @@ namespace Apex_Launcher {
 
         private void GetSaveFiles() {
             FileView.Items.Clear();
+            if (!Directory.Exists(savePath)) Directory.CreateDirectory(savePath);
             foreach (string path in Directory.GetFiles(savePath,"*.rxdata")) {
                 string filename = path.Split('\\')[path.Split('\\').Length - 1];
                 if (filename.Equals("Game.rxdata")) filename = currentSaveName;
