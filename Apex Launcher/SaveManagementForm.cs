@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -12,14 +12,22 @@ namespace Apex_Launcher {
         public SaveManagementForm() {
             InitializeComponent();
             GetSaveFiles();
-        }
 
+        }
         private void GetSaveFiles() {
             FileView.Items.Clear();
-            foreach (string path in Directory.GetFiles(savePath,"*.rxdata")) {
-                string filename = path.Split('\\')[path.Split('\\').Length - 1];
-                if (filename.Equals("Game.rxdata")) filename = currentSaveName;
-                FileView.Items.Add(new ListViewItem(new[] {filename,File.GetLastWriteTime(path).ToString() }));
+            try
+            {
+                foreach (string path in Directory.GetFiles(savePath,"*.rxdata")) {
+                    string filename = path.Split('\\')[path.Split('\\').Length - 1];
+                    if (filename.Equals("Game.rxdata")) filename = currentSaveName;
+                    FileView.Items.Add(new ListViewItem(new[] {filename,File.GetLastWriteTime(path).ToString() }));
+                }
+            }catch{
+                MessageBox.Show("Save file does not exist.\nPlease run the game first.", "Apex Launcher Manage Saves",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                System.IO.Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Saved Games\\Pokémon Apex\\");
+                
             }
         }
 
