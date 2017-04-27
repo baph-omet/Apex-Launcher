@@ -4,6 +4,8 @@ Welcome to the repository for the official launcher for fan game [Pokémon Apex]
 ## Issues
 If you have found an issue or have a suggestion about the **launcher only**, please report them here. If you would like to contribute code, feel free to submit a pull request for review.
 
+Please read the [CONTRIBUTING.md](https://github.com/griffenx/Apex-Launcher/blob/master/CONTRIBUTING.md) file before submitting for report and pull request guidelines.
+
 If you have an in-game issue with Apex, please report it on the [official subreddit](https://www.reddit.com/r/PokemonApex).
 
 ## Features
