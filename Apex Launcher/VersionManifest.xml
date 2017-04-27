@@ -32,4 +32,9 @@
     <location>http://www.mediafire.com/download/m0ktkdra503p11l/Pok%C3%A9mon_Apex_Alpha_Build_5.2.zip</location>
     <patch>true</patch>
   </version>
+  <version>
+    <channel>a</channel>
+    <number>6</number>
+    <location>http://www.mediafire.com/download/91d50jx1nl42aj0/Pok%C3%A9mon_Apex_Alpha_Build_6.zip</location>
+  </version>
 </versions>
