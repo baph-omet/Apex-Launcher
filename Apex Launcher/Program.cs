@@ -38,7 +38,10 @@ namespace Apex_Launcher {
                 return;
             }
 
-            if (!Directory.Exists(GetInstallPath() + "\\Versions")) Directory.CreateDirectory(GetInstallPath() + "\\Versions");
+            if (!Directory.Exists(GetInstallPath() + "\\Versions")) {
+                Directory.CreateDirectory(GetInstallPath() + "\\Versions");
+                if (!GetParameter("currentversion").Equals("ALPHA 0.0")) SetParameter("currentversion", "ALPHA 0.0");
+            }
             try {
                 NetworkConnected = DownloadVersionManifest();
                 //WebRequest wr = WebRequest.Create("https://raw.githubusercontent.com/griffenx/Apex-Launcher/master/Apex%20Launcher/VersionManifest.xml");
