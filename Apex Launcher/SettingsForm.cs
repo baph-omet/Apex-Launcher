@@ -7,7 +7,7 @@ namespace Apex_Launcher {
             InitializeComponent();
 
             PathTextbox.Text = Program.GetInstallPath();
-            KeepOpenCheckbox.Checked = Convert.ToBoolean(Program.GetParameter("keepLauncherOpen"));
+            KeepOpenCheckbox.Checked = Convert.ToBoolean(Program.GetParameter("keepLauncherOpen"), Program.Culture);
             ForceUpdateCheckbox.Checked = Program.ForceUpdate;
         }
 

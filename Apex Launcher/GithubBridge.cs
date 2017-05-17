@@ -19,16 +19,17 @@ namespace Apex_Launcher {
                     Dictionary<string, object> json = jss.Deserialize<Dictionary<string,object>>(text);
                     string tag = json["tag_name"].ToString().Replace("v", "");
                     int[] latestVersion = new[] {
-                        Convert.ToInt32(tag.Split('.')[0]),
-                        Convert.ToInt32(tag.Split('.')[1]),
-                        Convert.ToInt32(tag.Split('.')[2])
+                        Convert.ToInt32(tag.Split('.')[0],Program.Culture),
+                        Convert.ToInt32(tag.Split('.')[1],Program.Culture),
+                        Convert.ToInt32(tag.Split('.')[2],Program.Culture)
                     };
                     System.Version launcherVersion = Assembly.GetExecutingAssembly().GetName().Version;
                     if (latestVersion[0] > launcherVersion.Major ||
                         (latestVersion[0] == launcherVersion.Major && latestVersion[1] > launcherVersion.Minor) ||
                         (latestVersion[0] == launcherVersion.Major && latestVersion[1] == launcherVersion.Minor && latestVersion[2] > launcherVersion.Revision)
                         ) {
-                        if (MessageBox.Show("New Launcher Version is available: v" + tag + ". Would you like to download it now?", "New Launcher Version", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                        if (MessageBox.Show("New Launcher Version is available: v" + tag + ". Would you like to download it now?",
+                            "New Launcher Version", MessageBoxButtons.YesNo) == DialogResult.Yes) {
                             Process.Start(json["html_url"].ToString());
                             return true;
                         }

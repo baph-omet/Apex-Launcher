@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Net;
+using System.Globalization;
 
 namespace Apex_Launcher {
     static class Program {
@@ -13,15 +14,23 @@ namespace Apex_Launcher {
         public static bool NetworkConnected;
         public static bool ForceUpdate = false;
         public static bool Downloading = false;
+
+        public static CultureInfo Culture = new CultureInfo("en-US");
         
         [STAThread]
         static void Main() {
-            initialize();
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            try {
+                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+                initialize();
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
 
-            Launcher = new Launcher();
-            Application.Run(Launcher);
+                Launcher = new Launcher();
+                Application.Run(Launcher);
+            } catch(Exception e) {
+                ErrorCatcher ec = new ErrorCatcher(e);
+                ec.ShowDialog();
+            }
         }
 
         public static void initialize() {
@@ -56,7 +65,7 @@ namespace Apex_Launcher {
                 if (filepath.Contains(".ttf")) {
 
                     string filename = filepath.Split('\\')[filepath.Split('\\').Length - 1];
-                    if (Convert.ToBoolean(GetParameter("disableGameFonts"))) {
+                    if (Convert.ToBoolean(GetParameter("disableGameFonts"),Program.Culture)) {
 
                         if (File.Exists("C:\\Windows\\Fonts\\" + filename)) {
                             File.Delete("C:\\Windows\\Fonts\\" + filename);
@@ -140,7 +149,8 @@ namespace Apex_Launcher {
             Version mostRecent = Version.GetMostRecentVersion();
 
             if (mostRecent != null && mostRecent.GreaterThan(GetCurrentVersion())) {
-                DialogResult result = MessageBox.Show("New version found: " + mostRecent.Channel.ToString() + " " + mostRecent.Number + "\nDownload and install this update?", "Update Found", MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("New version found: " + mostRecent.Channel.ToString() + " " + mostRecent.Number +
+                    "\nDownload and install this update?", "Update Found", MessageBoxButtons.YesNo);
 
                 if (result == DialogResult.Yes) {
                     DownloadVersion(mostRecent);
@@ -193,10 +203,10 @@ namespace Apex_Launcher {
                     if (j == preExtension.Length - 1 && preExtension[j] != ')') break;
                     if (j < preExtension.Length - 1) {
                         if (preExtension[j] == '(') {
-                            numbering = Convert.ToInt32(String.Join("", digits));
+                            numbering = Convert.ToInt32(String.Join("", digits), Program.Culture);
                         } else {
                             try {
-                                digits.Insert(0, Convert.ToInt16(preExtension[j].ToString()));
+                                digits.Insert(0, Convert.ToInt16(preExtension[j].ToString(), Program.Culture));
                             } catch (FormatException) { break; }
                         }
                     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,7 +78,7 @@ namespace Apex_Launcher {
         public static Version FromString(string str) {
             return new Version(
                 GetChannelFromString(str.Split(' ')[0]),
-                str.Last() != 'p' ? Convert.ToDouble(str.Split(' ')[1]) : Convert.ToDouble(str.Split(' ')[1].Replace('p','\0')),
+                str.Last() != 'p' ? Convert.ToDouble(str.Split(' ')[1],Program.Culture) : Convert.ToDouble(str.Split(' ')[1].Replace('p','\0'), Program.Culture),
                 "",
                 str[str.Length - 1] == 'p');
         }
@@ -114,7 +115,7 @@ namespace Apex_Launcher {
                             break;
                         case "number":
                             try {
-                                number = Convert.ToDouble(prop.InnerText);
+                                number = Convert.ToDouble(prop.InnerText, Program.Culture);
                             } catch (FormatException) {
                                 number = 0.0;
                             }
@@ -123,7 +124,7 @@ namespace Apex_Launcher {
                             location = prop.InnerText;
                             break;
                         case "patch":
-                            patch = Convert.ToBoolean(prop.InnerText);
+                            patch = Convert.ToBoolean(prop.InnerText, Program.Culture);
                             break;
                     }
                 }

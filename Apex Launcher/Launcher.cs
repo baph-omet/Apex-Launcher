@@ -83,7 +83,10 @@ namespace Apex_Launcher {
                 Program.DownloadVersion(Version.GetMostRecentVersion());
                 Program.ForceUpdate = false;
             } else if (!File.Exists(launchpath)) {
-                DialogResult res = MessageBox.Show("Cannot find the game in your install path. It might be moved or deleted.\nCheck \n" + launchpath + "\nfor your files, or redownload them.\nWould you like to redownload?", "Game not found", MessageBoxButtons.YesNo);
+                DialogResult res = MessageBox.Show(
+                    "Cannot find the game in your install path. It might be moved or deleted.\nCheck \n" + launchpath + 
+                    "\nfor your files, or redownload them.\nWould you like to redownload?", "Game not found", MessageBoxButtons.YesNo
+                );
                 if (res == DialogResult.Yes) {
                     Program.DownloadVersion(Version.GetMostRecentVersion());
                 } else return;
@@ -91,7 +94,7 @@ namespace Apex_Launcher {
 
             if (File.Exists(launchpath)) {
                 Process.Start(launchpath);
-                if (!Convert.ToBoolean(Program.GetParameter("keepLauncherOpen"))) Close();
+                if (!Convert.ToBoolean(Program.GetParameter("keepLauncherOpen"), Program.Culture)) Close();
             }
         }
 
@@ -127,7 +130,11 @@ namespace Apex_Launcher {
 
         private void Launcher_FormClosing(object sender, FormClosingEventArgs e) {
             if (Program.Downloading) {
-                DialogResult res = MessageBox.Show("A download is still in progress. Closing the launcher will cancel your download. Are you sure you want to quit?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult res = MessageBox.Show(
+                    "A download is still in progress. Closing the launcher will cancel your download. Are you sure you want to quit?", "Warning",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
                 if (res == DialogResult.No) {
                     e.Cancel = true;
                 }
