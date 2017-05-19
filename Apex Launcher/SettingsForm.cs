@@ -17,7 +17,7 @@ namespace Apex_Launcher {
 
         private void OKButton_Click(object sender, EventArgs e) {
             bool validated = true;
-            if (PathTextbox.Text != Program.GetParameter("installpath")) {
+            if (Program.GetParameter("installpath").Length > 0 && PathTextbox.Text != Program.GetParameter("installpath")) {
                 if (
                     MessageBox.Show(
                         "If you change your install path, you will need to move your game data to the new path or redownload it before you will be able to play. Is this OK?",

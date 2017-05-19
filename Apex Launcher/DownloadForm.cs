@@ -9,10 +9,7 @@ using System.Windows.Forms;
 
 namespace Apex_Launcher {
     public partial class DownloadForm : Form {
-
-        //private string Source;
-        //private string Destination;
-        //private string installpath;
+        
         private string filepath;
         private List<Version> downloadQueue;
         private Version v;
@@ -48,7 +45,7 @@ namespace Apex_Launcher {
                     filepath = Destination + ".zip";
 
                     Program.Launcher.UpdateStatus("Downloading version " + queuedVersion.ToString());
-                    Directory.CreateDirectory(Destination);
+                    //Directory.CreateDirectory(Destination);
                     bool succeeded = true;
 
                     HttpWebRequest filereq = (HttpWebRequest)HttpWebRequest.Create(Source);
@@ -77,7 +74,9 @@ namespace Apex_Launcher {
                                     outputStream.Write(buffer, 0, length);
                                     UpdateProgress((int)(100 * bytesRead / fileresp.ContentLength));
                                     UpdateProgressText(
-                                        "Downloading " + (bytesRead / 1048576) + "/" + (fileresp.ContentLength / 1048576) +
+                                        "Downloading " + queuedVersion.ToString() +
+                                        " (Package " + (downloadQueue.IndexOf(queuedVersion) + 1) + "/" + downloadQueue.Count + ") " +
+                                        (bytesRead / 1048576) + "/" + (fileresp.ContentLength / 1048576) +
                                         " MB (" + Convert.ToInt16(100 * (double)bytesRead / fileresp.ContentLength, Program.Culture) + "%)..."
                                     );
                                 }
@@ -100,7 +99,8 @@ namespace Apex_Launcher {
                         Program.Launcher.UpdateStatus("Extracting version " + v.ToString());
                         try {
                             if (Directory.Exists(Destination)) Directory.Delete(Destination, true);
-                            UpdateProgressText("Download completed. Extracting...");
+                            UpdateProgressText("Download " + (downloadQueue.IndexOf(queuedVersion) + 1) + "/" + downloadQueue.Count +
+                                " completed. Extracting...");
                             ZipFile.ExtractToDirectory(filepath, Destination);
                             if (queuedVersion.IsPatch) {
                                 UpdateProgressText("Patching...");
@@ -131,7 +131,8 @@ namespace Apex_Launcher {
                 }
                 Program.Downloading = false;
                 CloseForm();
-            } catch (Exception e) {
+            } catch (ThreadAbortException) { }
+            catch (Exception e) {
                 (new ErrorCatcher(e)).ShowDialog();
                 CloseForm();
             }

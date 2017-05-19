@@ -77,7 +77,8 @@ namespace Apex_Launcher {
                 if (CurrentVersion.IsPatch) {
                     string previousPath = Program.GetInstallPath() + "\\Versions\\" + CurrentVersion.Prerequisite.ToString();
                     if (File.Exists(previousPath + ".zip")) File.Delete(previousPath + ".zip");
-                    if (Directory.Exists(previousPath)) Directory.Delete(previousPath);
+                    if (Directory.Exists(previousPath)) Directory.Delete(previousPath,true);
+                    Program.SetParameter("currentversion", "ALPHA 0.0");
                 }
 
                 Program.DownloadVersion(Version.GetMostRecentVersion());

@@ -53,9 +53,6 @@ namespace Apex_Launcher {
             }
             try {
                 NetworkConnected = DownloadVersionManifest();
-                //WebRequest wr = WebRequest.Create("https://raw.githubusercontent.com/griffenx/Apex-Launcher/master/Apex%20Launcher/VersionManifest.xml");
-                //wr.GetResponse();
-                //NetworkConnected = true;
             } catch (WebException) {
                 NetworkConnected = false;
             }
