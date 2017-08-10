@@ -47,6 +47,7 @@ namespace Apex_Launcher {
             fbd.ShowDialog();
 
             string selectedPath = fbd.SelectedPath;
+            if (selectedPath == null || selectedPath.Length == 0) return;
             if (Program.HasWriteAccess(selectedPath)) {
                 PathTextbox.Text = selectedPath;
             } else {

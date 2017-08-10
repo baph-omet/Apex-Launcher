@@ -155,7 +155,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SaveManagementForm";
-            this.Text = "SaveManagementForm";
+            this.Text = "Save Manager";
             this.ResumeLayout(false);
 
         }
