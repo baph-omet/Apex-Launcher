@@ -26,7 +26,7 @@ namespace Apex_Launcher {
                     System.Version launcherVersion = Assembly.GetExecutingAssembly().GetName().Version;
                     if (latestVersion[0] > launcherVersion.Major ||
                         (latestVersion[0] == launcherVersion.Major && latestVersion[1] > launcherVersion.Minor) ||
-                        (latestVersion[0] == launcherVersion.Major && latestVersion[1] == launcherVersion.Minor && latestVersion[2] > launcherVersion.Revision)
+                        (latestVersion[0] == launcherVersion.Major && latestVersion[1] == launcherVersion.Minor && latestVersion[2] > launcherVersion.Build)
                         ) {
                         if (MessageBox.Show("New Launcher Version is available: v" + tag + ". Would you like to download it now?",
                             "New Launcher Version", MessageBoxButtons.YesNo) == DialogResult.Yes) {
