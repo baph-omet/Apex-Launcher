@@ -38,7 +38,7 @@ namespace Apex_Launcher {
         }
 
         private void DiscordLogo_Click(object sender, EventArgs e) {
-            Process.Start("https://discord.gg/0uEmVbfB955hPDDR");
+            Process.Start("http://apex.iamvishnu.net/discord");
         }
 
         private void pictureBox1_Click(object sender, EventArgs e) {
