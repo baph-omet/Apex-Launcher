@@ -60,4 +60,10 @@
     <location>https://www.mediafire.com/download/m2d9e7cba5y8fro/Pok%E9mon%20Apex%20Alpha%20Build%207.1.zip</location>
     <patch>true</patch>
   </version>
+  <version>
+    <channel>a</channel>
+    <number>7.2</number>
+    <location>https://www.mediafire.com/download/h9bemeco197z7iw/Pok%E9mon%20Apex%20Alpha%20Build%207.2.zip</location>
+    <patch>true</patch>
+  </version>
 </versions>
