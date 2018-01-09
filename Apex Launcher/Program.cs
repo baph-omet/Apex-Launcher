@@ -21,6 +21,7 @@ namespace Apex_Launcher {
         static void Main() {
             try {
                 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+                Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
                 initialize();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
