@@ -72,4 +72,9 @@
     <location>https://www.mediafire.com/download/hewlvf3vqqdt2ya/Pok%E9mon%20Apex%20Alpha%20Build%207.3.zip</location>
     <patch>true</patch>
   </version>
+  <version>
+    <channel>a</channel>
+    <number>8</number>
+    <location>https://www.mediafire.com/download/8durrekd79tpcml/Pok%E9mon_Apex_Alpha_Build_8.zip/file</location>
+  </version>
 </versions>
