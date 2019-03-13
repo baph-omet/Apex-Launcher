@@ -120,7 +120,7 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="YorickHead.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
+        iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAYAAADFeBvrAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
         DwAAjA8AAP1SAACBQAAAfXkAAOmLAAA85QAAGcxzPIV3AAAKOWlDQ1BQaG90b3Nob3AgSUNDIHByb2Zp
         bGUAAEjHnZZ3VFTXFofPvXd6oc0wAlKG3rvAANJ7k15FYZgZYCgDDjM0sSGiAhFFRJoiSFDEgNFQJFZE
         sRAUVLAHJAgoMRhFVCxvRtaLrqy89/Ly++Osb+2z97n77L3PWhcAkqcvl5cGSwGQyhPwgzyc6RGRUXTs
@@ -165,16 +165,20 @@
         XTesb3QPLh88M+QwdP6m681Lt7xuXbu94vbgcOjwnZHokdE77DtTd1PuvriXeW/h/sYH6AdFD6UeVjxS
         fNTws+7PbaOWo6fHXMf6Hwc/vj/OGn/2S8Yv7ycKnpCfVEyqTDZPmU2dmnafvvF05dOJZ+nPFmYKf5X+
         tfa5zvMffnP8rX82YnbiBf/Fp99LXsq/PPRq2aueuYC5R69TXy/MF72Rf3P4LeNt37vwd5MLWe+x7ys/
-        6H7o/ujz8cGn1E+f/gUDmPP8usTo0wAAAAlwSFlzAAAOwQAADsEBuJFr7QAAAVxJREFUWEfVlMFxg0AQ
-        BJUGGfDw2y8HwZdY/OZHRCYCouFBAGcGM65lGe6QQKfSVrWQ5nZnR1cq3UIIL0WKOZFiTqSYEynGqKoq
-        xPD9KaQYQy21+P4UUrSUZRksbdtG8f3ezyNFizdUSy2+3/t5pAhowKtVy2JwLhVEiuBlAabCy78BUUti
-        +Hn6bvZthJ0AdV3fhZ8/FQCGrGEYlnfb4lnf95sQDweAEQxZRwP4EO8ZgMsfDWBDXBLgu/xIBkDP0wKg
-        sGCveHZJAPx5+AA8+/n8mj/bgsZzHwBePJtqvW8jLI0qAArXvBitCtreb+BUAHwzgjoSwM5cGgALuMQX
-        z4CdOR1gHMeZpmlWS2Kgl3NvGYA1D8AAwBR0XXfoyTn6+D1Ei381DyI9bwPm+FapJ3o5Rx+/g0jRUhRF
-        ALwFVOqJXs5NJX2JFC004i0cAb2XBXg2UsyJFHMixXyE2y8Xd/qYfSnjSwAAAABJRU5ErkJggg==
+        6H7o/ujz8cGn1E+f/gUDmPP8usTo0wAAAAlwSFlzAAAOwQAADsEBuJFr7QAAAjBJREFUaEPtmTtuwzAQ
+        BX0cFalT5RC+T2p3uo27XMpHUEQDoncnT16RogMD4gIDCPy8Nyxc+TRNUxPO5/O0B+bVIhdrUJIlMK8W
+        uViDkiyBebXIxRqUZAnMq0UuKoZhmJ4xjuMuVKaFPmvIRYUqsSjJElSmhT5ryEWFKrEoyRJUpoU+a8hF
+        hSqxKMkSVKaFPmvIxQQD+SNWUi1hH33ouyAXEwxggZJoCfvoQ98FuZhgAAuUREvYRx/6LsjFBANYoCRa
+        wj760Hfh8TF/Whj4btC3P+jdoG9/EOGPtDWq00Lf/iCiJFqiOi307Q9i4ffw4bhcLrtgHvvoQ9/+IBZQ
+        QEmWwDz20Ye+x3sQAynA8xSKhueZxz768Pw8/UEOnqdgNDzPPPbRh+fn6Q9ycHg/Gp6/3W4O9tGH91Pk
+        PTZ/4AADWMDh/Wh4vj8I91PkPTZ/4AADWMDh/Wh4/t8f9PP55aAAiUbdsbCPPvSdpz/IoSQs0ag7FvbR
+        h77zHPxB/JFer1dH631CH/r2B7EgEtq7T+hD30M8iOMuMJBDQU7pPvuET/pDIfsvPD7+DgMcHApxSvfZ
+        J3yePygvPIYBDg6FOKX77BM+B3vQhmGggz9iCkb7zGNf5Jn3o4NmcniCApFwtM889kWeeT86aCaHJygQ
+        CUf7zGNf5Jn3o4NmcniCApFwtM889kWeeX/5iBCTy14B+7ciFxVinEBr2L8VuagQ4wRaw/6tyEWFGCfQ
+        GvZvYzr9Aj+ZAD7SCVKfAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="DescriptionBox.Text" xml:space="preserve">
-    <value>An unhandled exception was encountered in the Apex Launcher. The details of the issue are below. Please help the developer make this Launcher better by reporting this issue on the Launcher's GitHub page! Just paste the details below into a new issue.</value>
+    <value>An unhandled exception was encountered in the Apex Launcher. The details of the issue are below. Please help the developer make this Launcher better by reporting this issue on the Launcher's GitHub page! Just paste the details below into a new issue if it has not already been reported. If so, please provide any additional information in the existing report. Thanks!</value>
   </data>
 </root>

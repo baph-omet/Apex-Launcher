@@ -56,15 +56,8 @@ namespace Apex_Launcher {
         }
         
         private void CopyButton_Click(object sender, EventArgs e) {
-            /*Thread t = new Thread(CopyToClipboard);
-            t.SetApartmentState(ApartmentState.STA);
-            t.Start();*/
             Clipboard.SetText(DetailsBox.Text);
         }
-
-        /*public static void CopyToClipboard() {
-            Clipboard.SetText(Details)
-        }*/
 
         private void LinkButton_Click(object sender, EventArgs e) {
             Process.Start("https://github.com/griffenx/Apex-Launcher/issues/new");
