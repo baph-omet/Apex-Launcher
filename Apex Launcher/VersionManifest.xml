@@ -77,4 +77,10 @@
     <number>8</number>
     <location>https://www.mediafire.com/download/8durrekd79tpcml/Pok%E9mon_Apex_Alpha_Build_8.zip/file</location>
   </version>
+  <version>
+    <channel>a</channel>
+    <number>8.1</number>
+    <location>https://www.mediafire.com/download/uplct5cj77wu462/Pok%E9mon_Apex_Alpha_Build_8.1.zip/file</location>
+    <patch>true</patch>
+  </version>
 </versions>
