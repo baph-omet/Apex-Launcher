@@ -99,7 +99,7 @@
             this.TabBox.Location = new System.Drawing.Point(12, 12);
             this.TabBox.Name = "TabBox";
             this.TabBox.SelectedIndex = 0;
-            this.TabBox.Size = new System.Drawing.Size(1321, 498);
+            this.TabBox.Size = new System.Drawing.Size(1321, 478);
             this.TabBox.TabIndex = 4;
             // 
             // UpdatesPage
@@ -108,8 +108,8 @@
             this.UpdatesPage.Controls.Add(this.TumblrBrowser);
             this.UpdatesPage.Location = new System.Drawing.Point(4, 22);
             this.UpdatesPage.Name = "UpdatesPage";
-            this.UpdatesPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.UpdatesPage.Size = new System.Drawing.Size(1313, 472);
+            this.UpdatesPage.Padding = new System.Windows.Forms.Padding(3);
+            this.UpdatesPage.Size = new System.Drawing.Size(1313, 452);
             this.UpdatesPage.TabIndex = 0;
             this.UpdatesPage.Text = "Game Updates";
             this.UpdatesPage.UseVisualStyleBackColor = true;
@@ -131,7 +131,7 @@
             this.TumblrBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.TumblrBrowser.Name = "TumblrBrowser";
             this.TumblrBrowser.ScriptErrorsSuppressed = true;
-            this.TumblrBrowser.Size = new System.Drawing.Size(1307, 466);
+            this.TumblrBrowser.Size = new System.Drawing.Size(1307, 446);
             this.TumblrBrowser.TabIndex = 0;
             this.TumblrBrowser.Url = new System.Uri("https://pokemonapex.tumblr.com/#recentposts", System.UriKind.Absolute);
             this.TumblrBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.BrowserLoaded);
@@ -142,8 +142,8 @@
             this.CommunityPage.Controls.Add(this.RedditBrowser);
             this.CommunityPage.Location = new System.Drawing.Point(4, 22);
             this.CommunityPage.Name = "CommunityPage";
-            this.CommunityPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.CommunityPage.Size = new System.Drawing.Size(1314, 479);
+            this.CommunityPage.Padding = new System.Windows.Forms.Padding(3);
+            this.CommunityPage.Size = new System.Drawing.Size(1270, 452);
             this.CommunityPage.TabIndex = 1;
             this.CommunityPage.Text = "Community Posts";
             this.CommunityPage.UseVisualStyleBackColor = true;
@@ -156,7 +156,7 @@
             this.RedditBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.RedditBrowser.Name = "RedditBrowser";
             this.RedditBrowser.ScriptErrorsSuppressed = true;
-            this.RedditBrowser.Size = new System.Drawing.Size(1308, 473);
+            this.RedditBrowser.Size = new System.Drawing.Size(1264, 446);
             this.RedditBrowser.TabIndex = 0;
             this.RedditBrowser.Url = new System.Uri("https://reddit.com/r/PokemonApex", System.UriKind.Absolute);
             this.RedditBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.BrowserNavigation);
@@ -183,7 +183,7 @@
             this.SaveMgmtButton.Size = new System.Drawing.Size(253, 58);
             this.SaveMgmtButton.TabIndex = 7;
             this.SaveMgmtButton.Text = "Manage Saves";
-            this.LauncherTooltip.SetToolTip(this.SaveMgmtButton, "Patience, Iago.");
+            this.LauncherTooltip.SetToolTip(this.SaveMgmtButton, "Manage game save files.");
             this.SaveMgmtButton.UseVisualStyleBackColor = true;
             this.SaveMgmtButton.Click += new System.EventHandler(this.SaveMgmtButton_Click);
             // 
@@ -205,7 +205,7 @@
             this.LauncherVersionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.LauncherVersionLabel.AutoSize = true;
             this.LauncherVersionLabel.ForeColor = System.Drawing.Color.White;
-            this.LauncherVersionLabel.Location = new System.Drawing.Point(1446, 509);
+            this.LauncherVersionLabel.Location = new System.Drawing.Point(1248, 500);
             this.LauncherVersionLabel.Name = "LauncherVersionLabel";
             this.LauncherVersionLabel.Size = new System.Drawing.Size(85, 13);
             this.LauncherVersionLabel.TabIndex = 9;
@@ -218,7 +218,7 @@
             this.GameVersionLabel.AutoSize = true;
             this.GameVersionLabel.Font = new System.Drawing.Font("Lucida Console", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GameVersionLabel.ForeColor = System.Drawing.Color.White;
-            this.GameVersionLabel.Location = new System.Drawing.Point(1034, 643);
+            this.GameVersionLabel.Location = new System.Drawing.Point(1093, 646);
             this.GameVersionLabel.Name = "GameVersionLabel";
             this.GameVersionLabel.Size = new System.Drawing.Size(240, 19);
             this.GameVersionLabel.TabIndex = 10;
