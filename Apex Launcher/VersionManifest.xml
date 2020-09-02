@@ -89,4 +89,10 @@
     <location>https://www.mediafire.com/download/ze8l977vy62zlka/Pok%E9mon_Apex_Alpha_Build_8.2.zip/file</location>
     <patch>true</patch>
   </version>
+  <version>
+    <channel>a</channel>
+    <number>9</number>
+    <audioversion>1</audioversion>
+    <location>http://www.mediafire.com/download/uibf9asdocyt2k6/Pokémon+Apex+Alpha+Build+9.zip/file</location>
+  </version>
 </versions>

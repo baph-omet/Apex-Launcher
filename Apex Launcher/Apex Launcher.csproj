@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Apex_Launcher</RootNamespace>
     <AssemblyName>Apex Launcher</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -40,6 +40,7 @@
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,6 +50,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>giratina.ico</ApplicationIcon>
@@ -76,53 +78,55 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DownloadForm.cs">
+    <Compile Include="Forms\DownloadForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DownloadForm.Designer.cs">
+    <Compile Include="Forms\DownloadForm.Designer.cs">
       <DependentUpon>DownloadForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ErrorCatcher.cs">
+    <Compile Include="Forms\ErrorCatcher.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ErrorCatcher.Designer.cs">
+    <Compile Include="Forms\ErrorCatcher.Designer.cs">
       <DependentUpon>ErrorCatcher.cs</DependentUpon>
     </Compile>
     <Compile Include="GithubBridge.cs" />
-    <Compile Include="Launcher.cs">
+    <Compile Include="Forms\Launcher.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Launcher.Designer.cs">
+    <Compile Include="Forms\Launcher.Designer.cs">
       <DependentUpon>Launcher.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaveManagementForm.cs">
+    <Compile Include="Forms\SaveManagementForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SaveManagementForm.Designer.cs">
+    <Compile Include="Forms\SaveManagementForm.Designer.cs">
       <DependentUpon>SaveManagementForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SettingsForm.cs">
+    <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsForm.Designer.cs">
+    <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TextEntryForm.cs">
+    <Compile Include="Forms\TextEntryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TextEntryForm.Designer.cs">
+    <Compile Include="Forms\TextEntryForm.Designer.cs">
       <DependentUpon>TextEntryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Version.cs" />
-    <EmbeddedResource Include="DownloadForm.resx">
+    <Compile Include="Version\IDownloadable.cs" />
+    <Compile Include="Version\VersionGameFiles.cs" />
+    <Compile Include="Version\VersionAudio.cs" />
+    <EmbeddedResource Include="Forms\DownloadForm.resx">
       <DependentUpon>DownloadForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ErrorCatcher.resx">
+    <EmbeddedResource Include="Forms\ErrorCatcher.resx">
       <DependentUpon>ErrorCatcher.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Launcher.resx">
+    <EmbeddedResource Include="Forms\Launcher.resx">
       <DependentUpon>Launcher.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -135,13 +139,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SaveManagementForm.resx">
+    <EmbeddedResource Include="Forms\SaveManagementForm.resx">
       <DependentUpon>SaveManagementForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForm.resx">
+    <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TextEntryForm.resx">
+    <EmbeddedResource Include="Forms\TextEntryForm.resx">
       <DependentUpon>TextEntryForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -161,6 +165,7 @@
     <EmbeddedResource Include="config.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="VersionManifestAudio.xml" />
     <Content Include="giratina.ico" />
     <Content Include="VersionManifest.xml">
       <SubType>Designer</SubType>

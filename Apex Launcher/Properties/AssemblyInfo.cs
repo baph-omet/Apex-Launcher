@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("IAMVISHNU Media")]
 [assembly: AssemblyProduct("Apex Launcher")]
-[assembly: AssemblyCopyright("Copyright © iamvishnu 2019")]
+[assembly: AssemblyCopyright("Copyright © IAMVISHNU Media 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

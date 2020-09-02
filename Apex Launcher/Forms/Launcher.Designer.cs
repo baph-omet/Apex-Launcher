@@ -172,7 +172,7 @@
             this.RedditLogo.TabIndex = 6;
             this.RedditLogo.TabStop = false;
             this.LauncherTooltip.SetToolTip(this.RedditLogo, "https://reddit.com/r/PokemonApex");
-            this.RedditLogo.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.RedditLogo.Click += new System.EventHandler(this.PictureBox1_Click);
             // 
             // SaveMgmtButton
             // 

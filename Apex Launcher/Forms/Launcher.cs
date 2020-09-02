@@ -41,7 +41,7 @@ namespace Apex_Launcher {
             Process.Start("http://apex.iamvishnu.net/discord");
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e) {
+        private void PictureBox1_Click(object sender, EventArgs e) {
             Process.Start("https://reddit.com/r/PokemonApex");
         }
 
@@ -64,32 +64,32 @@ namespace Apex_Launcher {
 
         private void LaunchButton_Click(object sender, EventArgs e) {
             if (Program.Downloading) {
-                MessageBox.Show("A download is currently in progress. Please cancel your download or wait until it finishes.","Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show("A download is currently in progress. Please cancel your download or wait until it finishes.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            Version CurrentVersion = Program.GetCurrentVersion();
+            VersionGameFiles CurrentVersion = Program.GetCurrentVersion();
             string launchpath = Program.GetInstallPath() + "\\Versions\\" + CurrentVersion.ToString() + "\\Game.exe";
 
             if (Program.ForceUpdate) {
                 string path = Program.GetInstallPath() + "\\Versions\\" + CurrentVersion.ToString();
                 if (File.Exists(path + ".zip")) File.Delete(path + ".zip");
-                if (Directory.Exists(path)) Directory.Delete(path,true);
+                if (Directory.Exists(path)) Directory.Delete(path, true);
                 if (CurrentVersion.IsPatch) {
                     string previousPath = Program.GetInstallPath() + "\\Versions\\" + CurrentVersion.Prerequisite.ToString();
                     if (File.Exists(previousPath + ".zip")) File.Delete(previousPath + ".zip");
-                    if (Directory.Exists(previousPath)) Directory.Delete(previousPath,true);
+                    if (Directory.Exists(previousPath)) Directory.Delete(previousPath, true);
                     Program.SetParameter("currentversion", "ALPHA 0.0");
                 }
 
-                Program.DownloadVersion(Version.GetMostRecentVersion());
+                Program.DownloadVersion(VersionGameFiles.GetMostRecentVersion());
                 Program.ForceUpdate = false;
             } else if (!File.Exists(launchpath)) {
                 DialogResult res = MessageBox.Show(
-                    "Cannot find the game in your install path. It might be moved or deleted.\nCheck \n" + launchpath + 
+                    "Cannot find the game in your install path. It might be moved or deleted.\nCheck \n" + launchpath +
                     "\nfor your files, or redownload them.\nWould you like to redownload?", "Game not found", MessageBoxButtons.YesNo
                 );
                 if (res == DialogResult.Yes) {
-                    Program.DownloadVersion(Version.GetMostRecentVersion());
+                    Program.DownloadVersion(VersionGameFiles.GetMostRecentVersion());
                 } else return;
             }
 
@@ -112,8 +112,8 @@ namespace Apex_Launcher {
             } else StatusLabel.Text = message;
         }
 
-        public delegate void SGV(Version v);
-        public void SetGameVersion(Version v) {
+        public delegate void SGV(VersionGameFiles v);
+        public void SetGameVersion(VersionGameFiles v) {
             if (GameVersionLabel.InvokeRequired) {
                 SGV d = SetGameVersion;
                 Invoke(d, new object[] { v });

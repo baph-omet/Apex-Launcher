@@ -4,7 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Apex_Launcher {
@@ -54,13 +53,17 @@ namespace Apex_Launcher {
             } catch (Exception) { }
             DetailsBox.Text = sb.ToString();
         }
-        
+
         private void CopyButton_Click(object sender, EventArgs e) {
             Clipboard.SetText(DetailsBox.Text);
         }
 
         private void LinkButton_Click(object sender, EventArgs e) {
-            Process.Start("https://github.com/griffenx/Apex-Launcher/issues/new");
+            Process.Start("https://github.com/griffenx/Apex-Launcher/issues/new?title=" + exception.GetType().Name + " in " + exception.TargetSite.Name + "&body=" + exception.StackTrace);
+        }
+
+        private void ButtonViewIssues_Click(object sender, EventArgs e) {
+            Process.Start("https://github.com/griffenx/Apex-Launcher/issues");
         }
     }
 }

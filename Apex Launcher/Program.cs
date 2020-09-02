@@ -1,46 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
-using System.Net;
-using System.Globalization;
 
 namespace Apex_Launcher {
     static class Program {
+        private static DownloadForm DownloadForm = null;
 
         public static Launcher Launcher;
         public static bool NetworkConnected;
         public static bool ForceUpdate = false;
-        public static bool Downloading = false;
+        public static bool Downloading {
+            get {
+                if (DownloadForm == null) return false;
+                return DownloadForm.Downloading;
+            }
+        }
 
         public static CultureInfo Culture = new CultureInfo("en-US");
-        
+
         [STAThread]
         static void Main() {
             try {
                 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
                 Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-                initialize();
+                Initialize();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 Launcher = new Launcher();
                 Application.Run(Launcher);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 ErrorCatcher ec = new ErrorCatcher(e);
                 ec.ShowDialog();
             }
         }
 
-        public static void initialize() {
+        public static void Initialize() {
             if (!File.Exists(Directory.GetCurrentDirectory() + "\\config.txt")) {
-                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Apex_Launcher.config.txt")) {
-                    using (FileStream fileStream = new FileStream(Directory.GetCurrentDirectory() + "\\config.txt", FileMode.CreateNew)) {
-                        for (int i = 0; i < stream.Length; i++) fileStream.WriteByte((byte)stream.ReadByte());
-                    }
-                }
+                using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Apex_Launcher.config.txt");
+                using FileStream fileStream = new FileStream(Directory.GetCurrentDirectory() + "\\config.txt", FileMode.CreateNew);
+                for (int i = 0; i < stream.Length; i++) fileStream.WriteByte((byte)stream.ReadByte());
             }
 
             if (GithubBridge.CheckForLauncherUpdate()) {
@@ -112,39 +116,38 @@ namespace Apex_Launcher {
         }
 
         public static bool DownloadVersionManifest() {
-            bool completed = false;
+            bool completed;
             try {
-                HttpWebRequest filereq = (HttpWebRequest)HttpWebRequest.Create("http://www.mediafire.com/download/qkauu9oca3lcjw1/VersionManifest.xml");
+                HttpWebRequest filereq = (HttpWebRequest)WebRequest.Create("http://www.mediafire.com/download/qkauu9oca3lcjw1/VersionManifest.xml");
                 HttpWebResponse fileresp = (HttpWebResponse)filereq.GetResponse();
                 if (filereq.ContentLength > 0) fileresp.ContentLength = filereq.ContentLength;
                 using (Stream dlstream = fileresp.GetResponseStream()) {
-                    using (FileStream outputStream = new FileStream(GetInstallPath() + "\\Versions\\VersionManifest.xml", FileMode.OpenOrCreate)) {
-                        int buffersize = 1000;
-                        long bytesRead = 0;
-                        int length = 1;
-                        while (length > 0) {
-                            byte[] buffer = new Byte[buffersize];
-                            length = dlstream.Read(buffer, 0, buffersize);
-                            bytesRead += length;
-                            outputStream.Write(buffer, 0, length);
-                        }
+                    using FileStream outputStream = new FileStream(GetInstallPath() + "\\Versions\\VersionManifest.xml", FileMode.OpenOrCreate);
+                    int buffersize = 1000;
+                    long bytesRead = 0;
+                    int length = 1;
+                    while (length > 0) {
+                        byte[] buffer = new Byte[buffersize];
+                        length = dlstream.Read(buffer, 0, buffersize);
+                        bytesRead += length;
+                        outputStream.Write(buffer, 0, length);
                     }
                 }
                 completed = true;
-            } catch(Exception) {
+            } catch (Exception) {
                 completed = false;
             }
             return completed;
         }
 
-        public static Version GetCurrentVersion() {
-            return Version.FromString(GetParameter("currentversion"));
+        public static VersionGameFiles GetCurrentVersion() {
+            return VersionGameFiles.FromString(GetParameter("currentversion"));
         }
 
         public static bool InstallLatestVersion() {
             Launcher.UpdateStatus("Checking for new versions...");
 
-            Version mostRecent = Version.GetMostRecentVersion();
+            VersionGameFiles mostRecent = VersionGameFiles.GetMostRecentVersion();
 
             if (mostRecent != null && mostRecent.GreaterThan(GetCurrentVersion())) {
                 DialogResult result = MessageBox.Show("New version found: " + mostRecent.Channel.ToString() + " " + mostRecent.Number +
@@ -160,10 +163,11 @@ namespace Apex_Launcher {
             return false;
         }
 
-        public static void DownloadVersion(Version v) {
-            DownloadForm dlf = new DownloadForm(v);
-            dlf.Show();
-            dlf.StartDownload();
+        public static void DownloadVersion(VersionGameFiles v) {
+            DownloadForm = new DownloadForm(v);
+            DownloadForm.Show();
+            DownloadForm.StartDownload();
+
         }
 
         public static string GetInstallPath() {
@@ -183,7 +187,7 @@ namespace Apex_Launcher {
 
         public static string GetLauncherVersion() {
             string v = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            return v.Substring(0,v.Length - 2);
+            return v.Substring(0, v.Length - 2);
         }
 
         public static string GetNextAvailableFilePath(string path) {
@@ -193,11 +197,11 @@ namespace Apex_Launcher {
             while (File.Exists(path) && i < 1000000) {
                 string extension = path.Split('.')[path.Split('.').Length - 1];
                 string preExtension = path.Substring(0, path.Length - extension.Length - 1);
-                
+
                 int numbering = -1;
                 List<int> digits = new List<int>();
                 int j = preExtension.Length - 1;
-                while (preExtension[j]!='\\' && numbering < 0) {
+                while (preExtension[j] != '\\' && numbering < 0) {
                     if (j == preExtension.Length - 1 && preExtension[j] != ')') break;
                     if (j < preExtension.Length - 1) {
                         if (preExtension[j] == '(') {
@@ -213,7 +217,7 @@ namespace Apex_Launcher {
 
                 if (numbering >= 0) {
                     i = numbering + 1;
-                    path = preExtension.Substring(0,preExtension.Length - 3 - numbering.ToString().Length) + " (" + i + ")." + extension;
+                    path = preExtension.Substring(0, preExtension.Length - 3 - numbering.ToString().Length) + " (" + i + ")." + extension;
                 } else path = preExtension + " (" + i + ")." + extension;
                 i++;
             }

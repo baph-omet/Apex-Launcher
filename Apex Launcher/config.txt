@@ -1,5 +1,7 @@
 ﻿currentversion=ALPHA 0.0
 currentlauncherversion=0.0.1
+currentAudioVersion=0
 installpath=
 keepLauncherOpen=false
 disableGameFonts=false
+disableMusicDownload=false
