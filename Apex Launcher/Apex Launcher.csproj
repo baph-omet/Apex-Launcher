@@ -56,10 +56,11 @@
     <ApplicationIcon>giratina.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Properties\LauncherKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -148,7 +149,6 @@
     <EmbeddedResource Include="Forms\TextEntryForm.resx">
       <DependentUpon>TextEntryForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Properties\LauncherKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

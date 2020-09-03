@@ -6,6 +6,7 @@ using System.Reflection;
 
 namespace Apex_Launcher {
     public static class Config {
+        private static bool _loaded = false;
         private static string Filepath => Path.Combine(Directory.GetCurrentDirectory(), "config.txt");
 
         private static VersionGameFiles _currentVersion;
@@ -15,7 +16,7 @@ namespace Apex_Launcher {
             }
             set {
                 _currentVersion = value;
-                SaveConfig();
+                if (_loaded) SaveConfig();
             }
         }
 
@@ -26,7 +27,7 @@ namespace Apex_Launcher {
             }
             set {
                 _currentVersionAudio = value;
-                SaveConfig();
+                if (_loaded) SaveConfig();
             }
         }
 
@@ -38,7 +39,7 @@ namespace Apex_Launcher {
             }
             set {
                 _installPath = value;
-                SaveConfig();
+                if (_loaded) SaveConfig();
             }
         }
 
@@ -49,7 +50,7 @@ namespace Apex_Launcher {
             }
             set {
                 _keepLauncherOpen = value;
-                SaveConfig();
+                if (_loaded) SaveConfig();
             }
         }
 
@@ -60,7 +61,7 @@ namespace Apex_Launcher {
             }
             set {
                 _disableAudioDownload = value;
-                SaveConfig();
+                if (_loaded) SaveConfig();
             }
         }
 
@@ -73,13 +74,15 @@ namespace Apex_Launcher {
                 string value = split[1].Trim();
 
                 foreach (PropertyInfo pi in typeof(Config).GetProperties()) {
-                    if (pi.Name.ToLower() == param) {
+                    if (pi.Name.ToLower() == param.ToLower()) {
                         try {
                             object v = null;
-                            if (pi.PropertyType.IsAssignableFrom(typeof(IDownloadable))) {
+                            if (pi.PropertyType.GetInterfaces().Contains(typeof(IDownloadable))) {
                                 if (pi.PropertyType == typeof(VersionGameFiles)) v = VersionGameFiles.FromString(value);
                                 if (pi.PropertyType == typeof(VersionAudio)) v = VersionAudio.FromString(value);
-                            } else pi.SetValue(null, Convert.ChangeType(value, pi.PropertyType));
+                            } else v = Convert.ChangeType(value, pi.PropertyType);
+
+                            pi.SetValue(null, v);
                         } catch (Exception) {
                             pi.SetValue(null, default);
                         }
@@ -87,6 +90,8 @@ namespace Apex_Launcher {
                     }
                 }
             }
+
+            _loaded = true;
         }
 
         public static void SaveConfig() {
