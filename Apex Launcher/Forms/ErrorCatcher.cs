@@ -8,12 +8,12 @@ using System.Windows.Forms;
 
 namespace Apex_Launcher {
     public partial class ErrorCatcher : Form {
-        private Exception exception;
+        private readonly Exception exception;
 
         public ErrorCatcher(Exception e) {
             exception = e;
             InitializeComponent();
-
+            Enabled = true;
             Initialize();
         }
 
@@ -24,16 +24,16 @@ namespace Apex_Launcher {
             sb.AppendLine();
             sb.AppendLine("# Configuration");
             try {
-                sb.AppendLine("* Current Launcher Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
-                sb.AppendLine("* Current Game Version: " + Program.GetParameter("currentversion"));
-                sb.AppendLine("* Install Path: " + Program.GetParameter("installpath"));
+                sb.AppendLine($"* Current Launcher Version: {Assembly.GetExecutingAssembly().GetName().Version}");
+                sb.AppendLine($"* Current Game Version: {Config.CurrentVersion}");
+                sb.AppendLine($"* Install Path: {Config.InstallPath}");
             } catch (Exception) { }
             try {
                 sb.AppendLine();
                 sb.AppendLine("# Files");
                 if (File.Exists(Directory.GetCurrentDirectory() + "\\config.txt")) sb.AppendLine("* `config.txt`");
 
-                string installpath = Program.GetParameter("installpath");
+                string installpath = Config.InstallPath;
                 if (Directory.Exists(installpath)) {
                     sb.AppendLine("* " + installpath + ":");
                     if (Directory.Exists(installpath + "\\Versions")) {
@@ -59,7 +59,7 @@ namespace Apex_Launcher {
         }
 
         private void LinkButton_Click(object sender, EventArgs e) {
-            Process.Start("https://github.com/griffenx/Apex-Launcher/issues/new?title=" + exception.GetType().Name + " in " + exception.TargetSite.Name + "&body=" + exception.StackTrace);
+            Process.Start("https://github.com/griffenx/Apex-Launcher/issues/new" + $"?title={exception.GetType().Name} in {exception.TargetSite.Name}&body={Uri.EscapeDataString(DetailsBox.Text)}");
         }
 
         private void ButtonViewIssues_Click(object sender, EventArgs e) {

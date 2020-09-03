@@ -25,7 +25,8 @@ namespace Apex_Launcher {
             TumblrBrowser.IsWebBrowserContextMenuEnabled = false;
             RedditBrowser.IsWebBrowserContextMenuEnabled = false;
             //GitHubBrowser.IsWebBrowserContextMenuEnabled = false;
-            SetGameVersion(Program.GetCurrentVersion());
+            VersionGameFiles vgf = Config.CurrentVersion;
+            if (vgf != null) SetGameVersion(vgf);
             LauncherVersionLabel.Text = "Launcher v" + Program.GetLauncherVersion();
             if (Program.NetworkConnected) {
                 try {
@@ -67,18 +68,18 @@ namespace Apex_Launcher {
                 MessageBox.Show("A download is currently in progress. Please cancel your download or wait until it finishes.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            VersionGameFiles CurrentVersion = Program.GetCurrentVersion();
-            string launchpath = Program.GetInstallPath() + "\\Versions\\" + CurrentVersion.ToString() + "\\Game.exe";
+            VersionGameFiles CurrentVersion = Config.CurrentVersion;
+            string launchpath = Path.Combine(Config.InstallPath, "Versions", CurrentVersion.ToString(), "Game.exe");
 
             if (Program.ForceUpdate) {
-                string path = Program.GetInstallPath() + "\\Versions\\" + CurrentVersion.ToString();
+                string path = Config.InstallPath + "\\Versions\\" + CurrentVersion.ToString();
                 if (File.Exists(path + ".zip")) File.Delete(path + ".zip");
                 if (Directory.Exists(path)) Directory.Delete(path, true);
                 if (CurrentVersion.IsPatch) {
-                    string previousPath = Program.GetInstallPath() + "\\Versions\\" + CurrentVersion.Prerequisite.ToString();
+                    string previousPath = Config.InstallPath + "\\Versions\\" + CurrentVersion.Prerequisite.ToString();
                     if (File.Exists(previousPath + ".zip")) File.Delete(previousPath + ".zip");
                     if (Directory.Exists(previousPath)) Directory.Delete(previousPath, true);
-                    Program.SetParameter("currentversion", "ALPHA 0.0");
+                    Config.CurrentVersion = VersionGameFiles.FromString("ALPHA 0.0");
                 }
 
                 Program.DownloadVersion(VersionGameFiles.GetMostRecentVersion());
@@ -95,7 +96,7 @@ namespace Apex_Launcher {
 
             if (File.Exists(launchpath)) {
                 Process.Start(launchpath);
-                if (!Convert.ToBoolean(Program.GetParameter("keepLauncherOpen"), Program.Culture)) Close();
+                if (!Config.KeepLauncherOpen) Close();
             }
         }
 
@@ -108,7 +109,7 @@ namespace Apex_Launcher {
         public void UpdateStatus(string message) {
             if (StatusLabel.InvokeRequired) {
                 US d = UpdateStatus;
-                this.Invoke(d, new object[] { message });
+                Invoke(d, new object[] { message });
             } else StatusLabel.Text = message;
         }
 

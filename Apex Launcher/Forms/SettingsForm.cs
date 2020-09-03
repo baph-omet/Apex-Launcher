@@ -6,8 +6,8 @@ namespace Apex_Launcher {
         public SettingsForm() {
             InitializeComponent();
 
-            PathTextbox.Text = Program.GetInstallPath();
-            KeepOpenCheckbox.Checked = Convert.ToBoolean(Program.GetParameter("keepLauncherOpen"), Program.Culture);
+            PathTextbox.Text = Config.InstallPath;
+            KeepOpenCheckbox.Checked = Convert.ToBoolean(Config.KeepLauncherOpen, Program.Culture);
             ForceUpdateCheckbox.Checked = Program.ForceUpdate;
         }
 
@@ -17,7 +17,7 @@ namespace Apex_Launcher {
 
         private void OKButton_Click(object sender, EventArgs e) {
             bool validated = true;
-            if (Program.GetParameter("installpath").Length > 0 && PathTextbox.Text != Program.GetParameter("installpath")) {
+            if (Config.InstallPath.Length > 0 && PathTextbox.Text != Config.InstallPath) {
                 if (
                     MessageBox.Show(
                         "If you change your install path, you will need to move your game data to the new path or redownload it before you will be able to play. Is this OK?",
@@ -33,17 +33,17 @@ namespace Apex_Launcher {
             }
 
             if (validated) {
-                Program.SetParameter("installpath", PathTextbox.Text);
-                Program.SetParameter("keepLauncherOpen", KeepOpenCheckbox.Checked.ToString());
-                //Program.SetParameter("disableGameFonts", DisableFontBox.Checked.ToString());
+                Config.InstallPath = PathTextbox.Text;
+                Config.KeepLauncherOpen = KeepOpenCheckbox.Checked;
                 Program.ForceUpdate = ForceUpdateCheckbox.Checked;
                 Close();
             }
         }
 
         private void BrowseButton_Click(object sender, EventArgs e) {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Choose a Folder";
+            FolderBrowserDialog fbd = new FolderBrowserDialog {
+                Description = "Choose a Folder"
+            };
             fbd.ShowDialog();
 
             string selectedPath = fbd.SelectedPath;

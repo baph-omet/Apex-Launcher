@@ -4,4 +4,4 @@ currentAudioVersion=0
 installpath=
 keepLauncherOpen=false
 disableGameFonts=false
-disableMusicDownload=false
+disableAudioDownload=false

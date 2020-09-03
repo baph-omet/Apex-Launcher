@@ -17,6 +17,7 @@ namespace Apex_Launcher {
         }
 
         public bool GreaterThan(IDownloadable other) {
+            if (other == null) return true;
             return Number > other.Number;
         }
 
@@ -28,10 +29,14 @@ namespace Apex_Launcher {
             return "Audio v" + Number.ToString();
         }
 
+        public static VersionAudio FromString(string str) {
+            return FromNumber(Convert.ToInt32(str.Replace("Audio v", "")));
+        }
+
         public static List<VersionAudio> GetAllVersions() {
             List<VersionAudio> versions = new List<VersionAudio>();
             XmlDocument doc = new XmlDocument();
-            doc.Load(Path.Combine(Program.GetInstallPath(), "Versions\\VersionManifestAudio.xml"));
+            doc.Load(Path.Combine(Config.InstallPath, "Versions\\VersionManifestAudio.xml"));
             foreach (XmlNode node in doc.GetElementsByTagName("version")) {
                 string location = string.Empty;
                 double number = 0;
@@ -58,6 +63,14 @@ namespace Apex_Launcher {
                 if (va.Number == (double)number) return va;
             }
             return null;
+        }
+
+        public static VersionAudio GetMostRecentVersion() {
+            VersionAudio mostRecent = null;
+            foreach (VersionAudio va in GetAllVersions()) {
+                if (mostRecent == null || va.GreaterThan(mostRecent)) mostRecent = va;
+            }
+            return mostRecent;
         }
     }
 }

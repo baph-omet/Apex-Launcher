@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
@@ -35,29 +34,28 @@ namespace Apex_Launcher {
                 Launcher = new Launcher();
                 Application.Run(Launcher);
             } catch (Exception e) {
-                ErrorCatcher ec = new ErrorCatcher(e);
+                ErrorCatcher ec = new ErrorCatcher(e) {
+                    Enabled = true
+                };
                 ec.ShowDialog();
             }
         }
 
         public static void Initialize() {
-            if (!File.Exists(Directory.GetCurrentDirectory() + "\\config.txt")) {
-                using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Apex_Launcher.config.txt");
-                using FileStream fileStream = new FileStream(Directory.GetCurrentDirectory() + "\\config.txt", FileMode.CreateNew);
-                for (int i = 0; i < stream.Length; i++) fileStream.WriteByte((byte)stream.ReadByte());
-            }
+            Config.LoadConfig();
 
             if (GithubBridge.CheckForLauncherUpdate()) {
                 Application.Exit();
                 return;
             }
 
-            if (!Directory.Exists(GetInstallPath() + "\\Versions")) {
-                Directory.CreateDirectory(GetInstallPath() + "\\Versions");
-                if (!GetParameter("currentversion").Equals("ALPHA 0.0")) SetParameter("currentversion", "ALPHA 0.0");
+            if (!Directory.Exists(Path.Combine(Config.InstallPath, "Versions"))) {
+                Directory.CreateDirectory(Path.Combine(Config.InstallPath, "Versions"));
+                if (Config.CurrentVersion.ToString().Equals("ALPHA 0.0")) Config.CurrentVersion = VersionGameFiles.FromString("ALPHA 0.0");
             }
+
             try {
-                NetworkConnected = DownloadVersionManifest();
+                NetworkConnected = DownloadVersionManifests();
             } catch (WebException) {
                 NetworkConnected = false;
             }
@@ -83,51 +81,24 @@ namespace Apex_Launcher {
             return;
         }
 
-        public static string GetParameter(string parameter) {
-            foreach (string line in File.ReadAllLines(Directory.GetCurrentDirectory() + "\\config.txt")) {
-                if (line.Length > 0 && !(new[] { '\n', ' ', '#' }.Contains(line[0])) && line.Contains('=')) {
-                    if (line.Split('=')[0].ToLower().Equals(parameter.ToLower())) {
-                        return line.Split('=')[1];
-                    }
-                }
-            }
-            return null;
-        }
-
-        public static void SetParameter(string parameter, string value) {
-            if (GetParameter(parameter) == null) {
-                File.AppendAllText(Directory.GetCurrentDirectory() + "\\config.txt", parameter + "=" + value + "\n");
-            } else {
-                string[] lines = File.ReadAllLines(Directory.GetCurrentDirectory() + "\\config.txt");
-                int foundline = -1;
-                foreach (string line in lines) {
-                    if (line.Length > 0 && !(new[] { '\n', ' ', '#' }.Contains(line[0])) && line.Contains('=')) {
-                        if (line.Split('=')[0].ToLower().Equals(parameter.ToLower())) {
-                            foundline = Array.IndexOf(lines, line);
-                            break;
-                        }
-                    }
-                }
-                if (foundline > -1) {
-                    lines[foundline] = parameter + "=" + value;
-                    File.WriteAllLines(Directory.GetCurrentDirectory() + "\\config.txt", lines);
-                }
-            }
-        }
-
-        public static bool DownloadVersionManifest() {
+        public static bool DownloadVersionManifests() {
             bool completed;
+            string[] files = new[] {
+                "http://www.mediafire.com/download/qkauu9oca3lcjw1/VersionManifest.xml",
+                "http://www.mediafire.com/download/zvooruhs1b3e4c9/VersionManifestAudio.xml"
+            };
             try {
-                HttpWebRequest filereq = (HttpWebRequest)WebRequest.Create("http://www.mediafire.com/download/qkauu9oca3lcjw1/VersionManifest.xml");
-                HttpWebResponse fileresp = (HttpWebResponse)filereq.GetResponse();
-                if (filereq.ContentLength > 0) fileresp.ContentLength = filereq.ContentLength;
-                using (Stream dlstream = fileresp.GetResponseStream()) {
-                    using FileStream outputStream = new FileStream(GetInstallPath() + "\\Versions\\VersionManifest.xml", FileMode.OpenOrCreate);
+                foreach (string file in files) {
+                    HttpWebRequest filereq = (HttpWebRequest)WebRequest.Create(file);
+                    HttpWebResponse fileresp = (HttpWebResponse)filereq.GetResponse();
+                    if (filereq.ContentLength > 0) fileresp.ContentLength = filereq.ContentLength;
+                    using Stream dlstream = fileresp.GetResponseStream();
+                    using FileStream outputStream = new FileStream(Path.Combine(Config.InstallPath, "Versions", Path.GetFileName(file)), FileMode.OpenOrCreate);
                     int buffersize = 1000;
                     long bytesRead = 0;
                     int length = 1;
                     while (length > 0) {
-                        byte[] buffer = new Byte[buffersize];
+                        byte[] buffer = new byte[buffersize];
                         length = dlstream.Read(buffer, 0, buffersize);
                         bytesRead += length;
                         outputStream.Write(buffer, 0, length);
@@ -140,40 +111,41 @@ namespace Apex_Launcher {
             return completed;
         }
 
-        public static VersionGameFiles GetCurrentVersion() {
-            return VersionGameFiles.FromString(GetParameter("currentversion"));
-        }
-
         public static bool InstallLatestVersion() {
             Launcher.UpdateStatus("Checking for new versions...");
 
             VersionGameFiles mostRecent = VersionGameFiles.GetMostRecentVersion();
 
-            if (mostRecent != null && mostRecent.GreaterThan(GetCurrentVersion())) {
-                DialogResult result = MessageBox.Show("New version found: " + mostRecent.Channel.ToString() + " " + mostRecent.Number +
-                    "\nDownload and install this update?", "Update Found", MessageBoxButtons.YesNo);
+            if (mostRecent != null && mostRecent.GreaterThan(Config.CurrentVersion)) {
+                DialogResult result = MessageBox.Show($"New version found: {mostRecent.Channel} {mostRecent.Number}\nDownload and install this update?", "Update Found", MessageBoxButtons.YesNo);
 
                 if (result == DialogResult.Yes) {
                     DownloadVersion(mostRecent);
                     return true;
-                } else return false;
+                }
+            }
+
+            VersionAudio mostRecentAudio = VersionAudio.GetMostRecentVersion();
+            if (!Config.DisableAudioDownload && mostRecentAudio.GreaterThan(Config.CurrentAudioVersion)) {
+                DialogResult result = MessageBox.Show($"New audio version found: {mostRecentAudio}.\nDownload and install this update?\n(Note, audio updates are often large downloads)", "Audio Update Found", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes) DownloadVersion(mostRecentAudio);
             }
 
             Launcher.UpdateStatus("No new version found.");
             return false;
         }
 
-        public static void DownloadVersion(VersionGameFiles v) {
-            DownloadForm = new DownloadForm(v);
+        public static void DownloadVersion(IDownloadable v) {
+            List<IDownloadable> queue = new List<IDownloadable>(new[] { v });
+            VersionGameFiles vgf = v as VersionGameFiles;
+            if (!Config.DisableAudioDownload && vgf.MinimumAudioVersion != null && vgf.MinimumAudioVersion.GreaterThan(Config.CurrentVersion)) {
+                DialogResult result = MessageBox.Show($"New audio version found: {vgf.MinimumAudioVersion}.\nDownload and install this update?\n(Note, audio updates are often large downloads)", "Audio Update Found", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes) queue.Add(vgf.MinimumAudioVersion);
+            }
+
+            DownloadForm = new DownloadForm(queue);
             DownloadForm.Show();
             DownloadForm.StartDownload();
-
-        }
-
-        public static string GetInstallPath() {
-            string installpath = GetParameter("installpath");
-            if (installpath.Length == 0) installpath = Directory.GetCurrentDirectory();
-            return installpath;
         }
 
         public static bool HasWriteAccess(string folderPath) {
@@ -205,7 +177,7 @@ namespace Apex_Launcher {
                     if (j == preExtension.Length - 1 && preExtension[j] != ')') break;
                     if (j < preExtension.Length - 1) {
                         if (preExtension[j] == '(') {
-                            numbering = Convert.ToInt32(String.Join("", digits), Program.Culture);
+                            numbering = Convert.ToInt32(string.Join("", digits), Program.Culture);
                         } else {
                             try {
                                 digits.Insert(0, Convert.ToInt16(preExtension[j].ToString(), Program.Culture));

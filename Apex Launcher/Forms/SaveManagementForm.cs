@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Apex_Launcher {
     public partial class SaveManagementForm : Form {
-        private string savePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Saved Games\\Pokémon Apex\\";
+        private readonly string savePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Saved Games\\Pokémon Apex\\";
         private const string currentSaveName = "[Current Save]";
 
         public SaveManagementForm() {

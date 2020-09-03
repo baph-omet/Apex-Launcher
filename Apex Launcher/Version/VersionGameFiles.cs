@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml;
 
 namespace Apex_Launcher {
@@ -28,15 +27,16 @@ namespace Apex_Launcher {
             }
         }
 
-        public VersionGameFiles(Channel channel, double number, string location) : this(channel, number, location, false) { }
-        public VersionGameFiles(Channel channel, double number, string location, bool ispatch) {
+        public VersionGameFiles(Channel channel, double number, string location, VersionAudio audioVersion, bool ispatch = false) {
             Channel = channel;
             Number = number;
             Location = location;
             IsPatch = ispatch;
+            MinimumAudioVersion = audioVersion;
         }
 
         public bool GreaterThan(IDownloadable other) {
+            if (other == null) return true;
             VersionGameFiles v = other as VersionGameFiles;
             if (Channel == v.Channel) return Number > v.Number;
             else return Channel > v.Channel;
@@ -60,7 +60,7 @@ namespace Apex_Launcher {
         }
 
         public bool NewerThanDownloaded() {
-            return GreaterThan(Program.GetCurrentVersion());
+            return GreaterThan(Config.CurrentVersion);
         }
 
         public static Channel GetChannelFromString(string name) {
@@ -80,18 +80,17 @@ namespace Apex_Launcher {
         }
 
         public static VersionGameFiles FromString(string str) {
-            return new VersionGameFiles(
-                GetChannelFromString(str.Split(' ')[0]),
-                str.Last() != 'p' ? Convert.ToDouble(str.Split(' ')[1], Program.Culture) : Convert.ToDouble(str.Split(' ')[1].Replace('p', '\0'), Program.Culture),
-                "",
-                str[str.Length - 1] == 'p');
+            foreach (VersionGameFiles vgf in GetAllVersions()) {
+                if (vgf.ToString() == str) return vgf;
+            }
+            return null;
         }
 
         public static List<VersionGameFiles> GetAllVersions() {
             List<VersionGameFiles> versions = new List<VersionGameFiles>();
 
             XmlDocument doc = new XmlDocument();
-            doc.Load(Program.GetInstallPath() + "\\Versions\\VersionManifest.xml");
+            doc.Load(Config.InstallPath + "\\Versions\\VersionManifest.xml");
 
             foreach (XmlNode node in doc.GetElementsByTagName("version")) {
                 Channel channel = Channel.NONE;
@@ -129,13 +128,13 @@ namespace Apex_Launcher {
                             break;
                     }
                 }
-                versions.Add(new VersionGameFiles(channel, number, location, patch));
+                versions.Add(new VersionGameFiles(channel, number, location, audioversion, patch));
             }
             return versions;
         }
 
         public static VersionGameFiles GetMostRecentVersion() {
-            VersionGameFiles mostRecent = Program.GetCurrentVersion();
+            VersionGameFiles mostRecent = Config.CurrentVersion;
             foreach (VersionGameFiles v in GetAllVersions()) if (mostRecent == null || v.GreaterThan(mostRecent) || v.Equals(mostRecent)) mostRecent = v;
             return mostRecent;
         }

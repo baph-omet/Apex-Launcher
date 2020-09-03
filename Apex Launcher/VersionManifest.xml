@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <versions>
   <version>
     <channel>a</channel>
@@ -75,24 +75,24 @@
   <version>
     <channel>a</channel>
     <number>8</number>
-    <location>https://www.mediafire.com/download/8durrekd79tpcml/Pok%E9mon_Apex_Alpha_Build_8.zip/file</location>
+    <location>https://www.mediafire.com/download/8durrekd79tpcml/Pok%E9mon_Apex_Alpha_Build_8.zip</location>
   </version>
   <version>
     <channel>a</channel>
     <number>8.1</number>
-    <location>https://www.mediafire.com/download/w3dsiitx7yk48fp/Pok%E9mon_Apex_Alpha_Build_8.1.zip/file</location>
+    <location>https://www.mediafire.com/download/w3dsiitx7yk48fp/Pok%E9mon_Apex_Alpha_Build_8.1.zip</location>
     <patch>true</patch>
   </version>
   <version>
     <channel>a</channel>
     <number>8.2</number>
-    <location>https://www.mediafire.com/download/ze8l977vy62zlka/Pok%E9mon_Apex_Alpha_Build_8.2.zip/file</location>
+    <location>https://www.mediafire.com/download/ze8l977vy62zlka/Pok%E9mon_Apex_Alpha_Build_8.2.zip</location>
     <patch>true</patch>
   </version>
   <version>
     <channel>a</channel>
     <number>9</number>
+    <location>http://www.mediafire.com/download/uibf9asdocyt2k6/Pokémon+Apex+Alpha+Build+9.zip</location>
     <audioversion>1</audioversion>
-    <location>http://www.mediafire.com/download/uibf9asdocyt2k6/Pokémon+Apex+Alpha+Build+9.zip/file</location>
   </version>
 </versions>

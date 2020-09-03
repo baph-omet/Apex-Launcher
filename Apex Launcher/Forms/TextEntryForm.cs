@@ -3,8 +3,8 @@ using System.Windows.Forms;
 
 namespace Apex_Launcher {
     public partial class TextEntryForm : Form {
-        private string Prompt;
-        private string Title;
+        private readonly string Prompt;
+        private readonly string Title;
 
         public string Result;
 

@@ -36,9 +36,10 @@
             // YorickHead
             // 
             this.YorickHead.Image = ((System.Drawing.Image)(resources.GetObject("YorickHead.Image")));
-            this.YorickHead.Location = new System.Drawing.Point(13, 22);
+            this.YorickHead.Location = new System.Drawing.Point(-1, 12);
             this.YorickHead.Name = "YorickHead";
-            this.YorickHead.Size = new System.Drawing.Size(34, 36);
+            this.YorickHead.Size = new System.Drawing.Size(52, 52);
+            this.YorickHead.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.YorickHead.TabIndex = 0;
             this.YorickHead.TabStop = false;
             // 
@@ -117,6 +118,7 @@
             this.Text = "Error Catcher";
             ((System.ComponentModel.ISupportInitialize)(this.YorickHead)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
