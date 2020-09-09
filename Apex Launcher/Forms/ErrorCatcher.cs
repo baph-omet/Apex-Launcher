@@ -48,9 +48,12 @@ namespace Apex_Launcher {
             try {
                 sb.AppendLine();
                 sb.AppendLine("# Environment");
-                sb.AppendLine("* Locale: " + CultureInfo.CurrentCulture.Name);
-                sb.AppendLine("* Operating System: " + Environment.OSVersion.VersionString);
-            } catch (Exception) { }
+                sb.AppendLine($"* Locale: {CultureInfo.CurrentCulture.Name}");
+                sb.AppendLine($"* Operating System: {Environment.OSVersion.VersionString}");
+                sb.AppendLine($"* .NET Runtime Version: {Environment.Version}");
+            } catch (Exception e) {
+                sb.AppendLine($"Couldn't get Environment info: \n{e}");
+            }
             DetailsBox.Text = sb.ToString();
         }
 

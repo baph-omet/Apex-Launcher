@@ -51,7 +51,7 @@ namespace Apex_Launcher {
 
             if (!Directory.Exists(Path.Combine(Config.InstallPath, "Versions"))) {
                 Directory.CreateDirectory(Path.Combine(Config.InstallPath, "Versions"));
-                if (Config.CurrentVersion.ToString().Equals("ALPHA 0.0")) Config.CurrentVersion = VersionGameFiles.FromString("ALPHA 0.0");
+                if (Config.CurrentVersion?.ToString().Equals("ALPHA 0.0") != false) Config.CurrentVersion = VersionGameFiles.FromString("ALPHA 0.0");
             }
 
             try {
