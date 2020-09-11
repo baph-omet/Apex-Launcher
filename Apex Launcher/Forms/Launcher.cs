@@ -39,11 +39,11 @@ namespace Apex_Launcher {
         }
 
         private void DiscordLogo_Click(object sender, EventArgs e) {
-            Process.Start("http://apex.iamvishnu.net/discord");
+            Process.Start("https://apex.iamvishnu.net/discord");
         }
 
         private void PictureBox1_Click(object sender, EventArgs e) {
-            Process.Start("https://reddit.com/r/PokemonApex");
+            Process.Start("https://forum.iamvishnu.net");
         }
 
         private void WikiLogo_Click(object sender, EventArgs e) {

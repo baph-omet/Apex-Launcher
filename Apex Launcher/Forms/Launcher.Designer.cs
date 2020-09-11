@@ -34,19 +34,23 @@
             this.TumblrBrowser = new System.Windows.Forms.WebBrowser();
             this.CommunityPage = new System.Windows.Forms.TabPage();
             this.RedditBrowser = new System.Windows.Forms.WebBrowser();
-            this.RedditLogo = new System.Windows.Forms.PictureBox();
+            this.ForumLogo = new System.Windows.Forms.PictureBox();
             this.SaveMgmtButton = new System.Windows.Forms.Button();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.LauncherVersionLabel = new System.Windows.Forms.Label();
             this.GameVersionLabel = new System.Windows.Forms.Label();
             this.LauncherTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.WikiLogo = new System.Windows.Forms.PictureBox();
+            this.ForumPage = new System.Windows.Forms.TabPage();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.WebBrowserForums = new System.Windows.Forms.WebBrowser();
             ((System.ComponentModel.ISupportInitialize)(this.DiscordLogo)).BeginInit();
             this.TabBox.SuspendLayout();
             this.UpdatesPage.SuspendLayout();
             this.CommunityPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RedditLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ForumLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WikiLogo)).BeginInit();
+            this.ForumPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // LaunchButton
@@ -96,6 +100,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabBox.Controls.Add(this.UpdatesPage);
             this.TabBox.Controls.Add(this.CommunityPage);
+            this.TabBox.Controls.Add(this.ForumPage);
             this.TabBox.Location = new System.Drawing.Point(12, 12);
             this.TabBox.Name = "TabBox";
             this.TabBox.SelectedIndex = 0;
@@ -139,11 +144,12 @@
             // 
             // CommunityPage
             // 
+            this.CommunityPage.Controls.Add(this.webBrowser1);
             this.CommunityPage.Controls.Add(this.RedditBrowser);
             this.CommunityPage.Location = new System.Drawing.Point(4, 22);
             this.CommunityPage.Name = "CommunityPage";
             this.CommunityPage.Padding = new System.Windows.Forms.Padding(3);
-            this.CommunityPage.Size = new System.Drawing.Size(1270, 452);
+            this.CommunityPage.Size = new System.Drawing.Size(1313, 452);
             this.CommunityPage.TabIndex = 1;
             this.CommunityPage.Text = "Community Posts";
             this.CommunityPage.UseVisualStyleBackColor = true;
@@ -156,23 +162,23 @@
             this.RedditBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.RedditBrowser.Name = "RedditBrowser";
             this.RedditBrowser.ScriptErrorsSuppressed = true;
-            this.RedditBrowser.Size = new System.Drawing.Size(1264, 446);
+            this.RedditBrowser.Size = new System.Drawing.Size(1307, 446);
             this.RedditBrowser.TabIndex = 0;
             this.RedditBrowser.Url = new System.Uri("https://reddit.com/r/PokemonApex", System.UriKind.Absolute);
             this.RedditBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.BrowserNavigation);
             // 
-            // RedditLogo
+            // ForumLogo
             // 
-            this.RedditLogo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RedditLogo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.RedditLogo.Image = ((System.Drawing.Image)(resources.GetObject("RedditLogo.Image")));
-            this.RedditLogo.Location = new System.Drawing.Point(268, 516);
-            this.RedditLogo.Name = "RedditLogo";
-            this.RedditLogo.Size = new System.Drawing.Size(250, 122);
-            this.RedditLogo.TabIndex = 6;
-            this.RedditLogo.TabStop = false;
-            this.LauncherTooltip.SetToolTip(this.RedditLogo, "https://reddit.com/r/PokemonApex");
-            this.RedditLogo.Click += new System.EventHandler(this.PictureBox1_Click);
+            this.ForumLogo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ForumLogo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ForumLogo.Image = ((System.Drawing.Image)(resources.GetObject("ForumLogo.Image")));
+            this.ForumLogo.Location = new System.Drawing.Point(268, 516);
+            this.ForumLogo.Name = "ForumLogo";
+            this.ForumLogo.Size = new System.Drawing.Size(250, 122);
+            this.ForumLogo.TabIndex = 6;
+            this.ForumLogo.TabStop = false;
+            this.LauncherTooltip.SetToolTip(this.ForumLogo, "https://forum.iamvishnu.net");
+            this.ForumLogo.Click += new System.EventHandler(this.PictureBox1_Click);
             // 
             // SaveMgmtButton
             // 
@@ -239,6 +245,40 @@
             this.LauncherTooltip.SetToolTip(this.WikiLogo, "http://pokemonapex.wikia.com");
             this.WikiLogo.Click += new System.EventHandler(this.WikiLogo_Click);
             // 
+            // ForumPage
+            // 
+            this.ForumPage.Controls.Add(this.WebBrowserForums);
+            this.ForumPage.Location = new System.Drawing.Point(4, 22);
+            this.ForumPage.Name = "ForumPage";
+            this.ForumPage.Size = new System.Drawing.Size(1313, 452);
+            this.ForumPage.TabIndex = 2;
+            this.ForumPage.Text = "Forum";
+            this.ForumPage.UseVisualStyleBackColor = true;
+            // 
+            // webBrowser1
+            // 
+            this.webBrowser1.AllowWebBrowserDrop = false;
+            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser1.Location = new System.Drawing.Point(3, 3);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.ScriptErrorsSuppressed = true;
+            this.webBrowser1.Size = new System.Drawing.Size(1307, 446);
+            this.webBrowser1.TabIndex = 1;
+            this.webBrowser1.Url = new System.Uri("https://reddit.com/r/PokemonApex", System.UriKind.Absolute);
+            // 
+            // WebBrowserForums
+            // 
+            this.WebBrowserForums.AllowWebBrowserDrop = false;
+            this.WebBrowserForums.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.WebBrowserForums.Location = new System.Drawing.Point(0, 0);
+            this.WebBrowserForums.MinimumSize = new System.Drawing.Size(20, 20);
+            this.WebBrowserForums.Name = "WebBrowserForums";
+            this.WebBrowserForums.ScriptErrorsSuppressed = true;
+            this.WebBrowserForums.Size = new System.Drawing.Size(1313, 452);
+            this.WebBrowserForums.TabIndex = 2;
+            this.WebBrowserForums.Url = new System.Uri("https://forum.iamvishnu.net", System.UriKind.Absolute);
+            // 
             // Launcher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -250,7 +290,7 @@
             this.Controls.Add(this.LauncherVersionLabel);
             this.Controls.Add(this.StatusLabel);
             this.Controls.Add(this.SaveMgmtButton);
-            this.Controls.Add(this.RedditLogo);
+            this.Controls.Add(this.ForumLogo);
             this.Controls.Add(this.TabBox);
             this.Controls.Add(this.DiscordLogo);
             this.Controls.Add(this.SettingsButton);
@@ -267,8 +307,9 @@
             this.UpdatesPage.ResumeLayout(false);
             this.UpdatesPage.PerformLayout();
             this.CommunityPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.RedditLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ForumLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WikiLogo)).EndInit();
+            this.ForumPage.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -282,7 +323,7 @@
         private System.Windows.Forms.TabControl TabBox;
         private System.Windows.Forms.TabPage UpdatesPage;
         private System.Windows.Forms.TabPage CommunityPage;
-        private System.Windows.Forms.PictureBox RedditLogo;
+        private System.Windows.Forms.PictureBox ForumLogo;
         private System.Windows.Forms.Button SaveMgmtButton;
         private System.Windows.Forms.WebBrowser TumblrBrowser;
         private System.Windows.Forms.WebBrowser RedditBrowser;
@@ -292,6 +333,9 @@
         public System.Windows.Forms.Label GameVersionLabel;
         private System.Windows.Forms.ToolTip LauncherTooltip;
         private System.Windows.Forms.PictureBox WikiLogo;
+        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.TabPage ForumPage;
+        private System.Windows.Forms.WebBrowser WebBrowserForums;
     }
 }
 
