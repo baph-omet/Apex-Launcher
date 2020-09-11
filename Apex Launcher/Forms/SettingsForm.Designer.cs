@@ -33,6 +33,7 @@
             this.OKButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
             this.PathTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.ButtonSysConf = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // PathTextbox
@@ -112,11 +113,22 @@
             this.PathTooltip.ToolTipTitle = "The location where your game files will be downloaded and kept (Default: The same" +
     " location as this program)";
             // 
+            // ButtonSysConf
+            // 
+            this.ButtonSysConf.Location = new System.Drawing.Point(12, 61);
+            this.ButtonSysConf.Name = "ButtonSysConf";
+            this.ButtonSysConf.Size = new System.Drawing.Size(165, 23);
+            this.ButtonSysConf.TabIndex = 8;
+            this.ButtonSysConf.Text = "Generate System Configuration";
+            this.ButtonSysConf.UseVisualStyleBackColor = true;
+            this.ButtonSysConf.Click += new System.EventHandler(this.ButtonSysConf_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(480, 96);
+            this.Controls.Add(this.ButtonSysConf);
             this.Controls.Add(this.ForceUpdateCheckbox);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.OKButton);
@@ -145,5 +157,6 @@
         private new System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.ToolTip PathTooltip;
         private System.Windows.Forms.CheckBox ForceUpdateCheckbox;
+        private System.Windows.Forms.Button ButtonSysConf;
     }
 }

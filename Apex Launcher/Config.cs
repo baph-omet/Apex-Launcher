@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace Apex_Launcher {
     public static class Config {
@@ -104,6 +106,43 @@ namespace Apex_Launcher {
             using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Apex_Launcher.config.txt");
             using FileStream fileStream = new FileStream(Filepath, FileMode.CreateNew);
             for (int i = 0; i < stream.Length; i++) fileStream.WriteByte((byte)stream.ReadByte());
+        }
+
+        public static string GetSystemConfigurationPaste() {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("# Configuration");
+            try {
+                sb.AppendLine($"* Current Launcher Version: {Assembly.GetExecutingAssembly().GetName().Version}");
+                sb.AppendLine($"* Current Game Version: {CurrentVersion}");
+                sb.AppendLine($"* Install Path: {InstallPath}");
+            } catch (Exception) { }
+            try {
+                sb.AppendLine();
+                sb.AppendLine("# Files");
+                if (File.Exists(Directory.GetCurrentDirectory() + "\\config.txt")) sb.AppendLine("* `config.txt`");
+
+                string installpath = InstallPath;
+                if (Directory.Exists(installpath)) {
+                    sb.AppendLine("* " + installpath + ":");
+                    if (Directory.Exists(installpath + "\\Versions")) {
+                        foreach (string folder in Directory.GetDirectories(installpath + "\\Versions")) {
+                            sb.AppendLine("    * " + Path.GetFileName(folder) + ":");
+                            foreach (string subfolder in Directory.GetDirectories(folder)) sb.AppendLine("        * " + Path.GetFileName(subfolder));
+                            foreach (string contents in Directory.GetFiles(folder)) sb.AppendLine("        * `" + Path.GetFileName(contents) + "`");
+                        }
+                    }
+                }
+            } catch (Exception) { }
+            try {
+                sb.AppendLine();
+                sb.AppendLine("# Environment");
+                sb.AppendLine($"* Locale: {CultureInfo.CurrentCulture.Name}");
+                sb.AppendLine($"* Operating System: {Environment.OSVersion.VersionString}");
+                sb.AppendLine($"* .NET Runtime Version: {Environment.Version}");
+            } catch (Exception e) {
+                sb.AppendLine($"Couldn't get Environment info: \n{e}");
+            }
+            return sb.ToString();
         }
     }
 }

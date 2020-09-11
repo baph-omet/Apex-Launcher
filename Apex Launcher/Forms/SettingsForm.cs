@@ -54,5 +54,10 @@ namespace Apex_Launcher {
                 MessageBox.Show("You don't have permission to write to that folder.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void ButtonSysConf_Click(object sender, EventArgs e) {
+            Clipboard.SetText(Config.GetSystemConfigurationPaste());
+            MessageBox.Show("System configuration copied to clipboard.");
+        }
     }
 }
