@@ -1,5 +1,5 @@
 # Apex-Launcher
-Welcome to the repository for the official launcher for fan game [Pokémon Apex](https://pokemonapex.tumblr.com). This launcher is written in C# for Windows.
+Welcome to the repository for the official launcher for fan game [Pokémon Apex](https://apex.iamvishnu.net). This launcher is written in C# for Windows.
 
 ## Issues
 If you have found an issue or have a suggestion about the **launcher only**, please report them here. If you would like to contribute code, feel free to submit a pull request for review.
@@ -17,7 +17,7 @@ Implemented:
 
 * No need to manage game folders
 
-* Viewports to the blog, subreddit, and here
+* Viewports to the blog and subreddit
 
 * Links to the subreddit, wiki, and Discord server
 
