@@ -95,4 +95,11 @@
     <location>http://www.mediafire.com/download/92ch69veg8tr7pf/Pokémon+Apex+Alpha+Build+9.zip</location>
     <audioversion>1</audioversion>
   </version>
+  <version>
+	<channel>a</channel>
+	<number>9.1</number>
+	<location>http://www.mediafire.com/download/1006bifo75vfx6u/Pokémon+Apex+Alpha+Build+9.1.zip</location>
+	<patch>true</patch>
+	<audioversion>1</audioversion>
+  </version>
 </versions>
