@@ -171,8 +171,8 @@ namespace ApexLauncher {
                     sb.AppendLine($"* {installpath}:");
                     if (Directory.Exists(Path.Combine(installpath, "Versions"))) {
                         foreach (string folder in Directory.GetDirectories(Path.Combine(installpath, "Versions"))) {
-                            sb.AppendLine($"    * {Path.GetFileName(folder)}:");
-                            foreach (string subfolder in Directory.GetDirectories(folder)) sb.AppendLine($"        * {Path.GetFileName(subfolder)}");
+                            sb.AppendLine($"    * {Path.GetDirectoryName(folder)}:");
+                            foreach (string subfolder in Directory.GetDirectories(folder)) sb.AppendLine($"        * {Path.GetDirectoryName(subfolder)}");
                             foreach (string contents in Directory.GetFiles(folder)) sb.AppendLine($"        * `{Path.GetFileName(contents)}`");
                         }
                     }

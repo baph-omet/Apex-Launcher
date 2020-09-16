@@ -80,6 +80,8 @@
             // 
             // DescriptionBox
             // 
+            this.DescriptionBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.DescriptionBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DescriptionBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DescriptionBox.Location = new System.Drawing.Point(57, 8);
@@ -112,8 +114,8 @@
             this.Controls.Add(this.DetailsBox);
             this.Controls.Add(this.YorickHead);
             this.Enabled = false;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(688, 370);
             this.Name = "ErrorCatcher";
             this.Text = "Error Catcher";
             ((System.ComponentModel.ISupportInitialize)(this.YorickHead)).EndInit();
