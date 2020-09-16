@@ -1,4 +1,4 @@
-﻿namespace Apex_Launcher {
+﻿namespace ApexLauncher {
     partial class SaveManagementForm {
         /// <summary>
         /// Required designer variable.

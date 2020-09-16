@@ -1,4 +1,4 @@
-﻿namespace Apex_Launcher {
+﻿namespace ApexLauncher {
     partial class DownloadForm {
         /// <summary>
         /// Required designer variable.

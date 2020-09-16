@@ -1,4 +1,4 @@
-﻿namespace Apex_Launcher {
+﻿namespace ApexLauncher {
     partial class Launcher {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,10 @@
             this.NoConnectionLabel = new System.Windows.Forms.Label();
             this.TumblrBrowser = new System.Windows.Forms.WebBrowser();
             this.CommunityPage = new System.Windows.Forms.TabPage();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.RedditBrowser = new System.Windows.Forms.WebBrowser();
+            this.ForumPage = new System.Windows.Forms.TabPage();
+            this.ForumBrowser = new System.Windows.Forms.WebBrowser();
             this.ForumLogo = new System.Windows.Forms.PictureBox();
             this.SaveMgmtButton = new System.Windows.Forms.Button();
             this.StatusLabel = new System.Windows.Forms.Label();
@@ -41,16 +44,13 @@
             this.GameVersionLabel = new System.Windows.Forms.Label();
             this.LauncherTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.WikiLogo = new System.Windows.Forms.PictureBox();
-            this.ForumPage = new System.Windows.Forms.TabPage();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.WebBrowserForums = new System.Windows.Forms.WebBrowser();
             ((System.ComponentModel.ISupportInitialize)(this.DiscordLogo)).BeginInit();
             this.TabBox.SuspendLayout();
             this.UpdatesPage.SuspendLayout();
             this.CommunityPage.SuspendLayout();
+            this.ForumPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ForumLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WikiLogo)).BeginInit();
-            this.ForumPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // LaunchButton
@@ -154,6 +154,18 @@
             this.CommunityPage.Text = "Community Posts";
             this.CommunityPage.UseVisualStyleBackColor = true;
             // 
+            // webBrowser1
+            // 
+            this.webBrowser1.AllowWebBrowserDrop = false;
+            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser1.Location = new System.Drawing.Point(3, 3);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.ScriptErrorsSuppressed = true;
+            this.webBrowser1.Size = new System.Drawing.Size(1307, 446);
+            this.webBrowser1.TabIndex = 1;
+            this.webBrowser1.Url = new System.Uri("https://reddit.com/r/PokemonApex", System.UriKind.Absolute);
+            // 
             // RedditBrowser
             // 
             this.RedditBrowser.AllowWebBrowserDrop = false;
@@ -166,6 +178,28 @@
             this.RedditBrowser.TabIndex = 0;
             this.RedditBrowser.Url = new System.Uri("https://reddit.com/r/PokemonApex", System.UriKind.Absolute);
             this.RedditBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.BrowserNavigation);
+            // 
+            // ForumPage
+            // 
+            this.ForumPage.Controls.Add(this.ForumBrowser);
+            this.ForumPage.Location = new System.Drawing.Point(4, 22);
+            this.ForumPage.Name = "ForumPage";
+            this.ForumPage.Size = new System.Drawing.Size(1313, 452);
+            this.ForumPage.TabIndex = 2;
+            this.ForumPage.Text = "Forum";
+            this.ForumPage.UseVisualStyleBackColor = true;
+            // 
+            // ForumBrowser
+            // 
+            this.ForumBrowser.AllowWebBrowserDrop = false;
+            this.ForumBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ForumBrowser.Location = new System.Drawing.Point(0, 0);
+            this.ForumBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.ForumBrowser.Name = "ForumBrowser";
+            this.ForumBrowser.ScriptErrorsSuppressed = true;
+            this.ForumBrowser.Size = new System.Drawing.Size(1313, 452);
+            this.ForumBrowser.TabIndex = 2;
+            this.ForumBrowser.Url = new System.Uri("https://forum.iamvishnu.net", System.UriKind.Absolute);
             // 
             // ForumLogo
             // 
@@ -245,40 +279,6 @@
             this.LauncherTooltip.SetToolTip(this.WikiLogo, "http://pokemonapex.wikia.com");
             this.WikiLogo.Click += new System.EventHandler(this.WikiLogo_Click);
             // 
-            // ForumPage
-            // 
-            this.ForumPage.Controls.Add(this.WebBrowserForums);
-            this.ForumPage.Location = new System.Drawing.Point(4, 22);
-            this.ForumPage.Name = "ForumPage";
-            this.ForumPage.Size = new System.Drawing.Size(1313, 452);
-            this.ForumPage.TabIndex = 2;
-            this.ForumPage.Text = "Forum";
-            this.ForumPage.UseVisualStyleBackColor = true;
-            // 
-            // webBrowser1
-            // 
-            this.webBrowser1.AllowWebBrowserDrop = false;
-            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser1.Location = new System.Drawing.Point(3, 3);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.ScriptErrorsSuppressed = true;
-            this.webBrowser1.Size = new System.Drawing.Size(1307, 446);
-            this.webBrowser1.TabIndex = 1;
-            this.webBrowser1.Url = new System.Uri("https://reddit.com/r/PokemonApex", System.UriKind.Absolute);
-            // 
-            // WebBrowserForums
-            // 
-            this.WebBrowserForums.AllowWebBrowserDrop = false;
-            this.WebBrowserForums.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.WebBrowserForums.Location = new System.Drawing.Point(0, 0);
-            this.WebBrowserForums.MinimumSize = new System.Drawing.Size(20, 20);
-            this.WebBrowserForums.Name = "WebBrowserForums";
-            this.WebBrowserForums.ScriptErrorsSuppressed = true;
-            this.WebBrowserForums.Size = new System.Drawing.Size(1313, 452);
-            this.WebBrowserForums.TabIndex = 2;
-            this.WebBrowserForums.Url = new System.Uri("https://forum.iamvishnu.net", System.UriKind.Absolute);
-            // 
             // Launcher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -307,9 +307,9 @@
             this.UpdatesPage.ResumeLayout(false);
             this.UpdatesPage.PerformLayout();
             this.CommunityPage.ResumeLayout(false);
+            this.ForumPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ForumLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WikiLogo)).EndInit();
-            this.ForumPage.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -335,7 +335,7 @@
         private System.Windows.Forms.PictureBox WikiLogo;
         private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.TabPage ForumPage;
-        private System.Windows.Forms.WebBrowser WebBrowserForums;
+        private System.Windows.Forms.WebBrowser ForumBrowser;
     }
 }
 

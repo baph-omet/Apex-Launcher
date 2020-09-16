@@ -1,9 +1,13 @@
-﻿using System;
+﻿// <copyright file="ErrorCatcher.cs" company="IAMVISHNU Media">
+// © Copyright by IAMVISHNU Media 2020 CC BY-NC-ND
+// </copyright>
+
+using System;
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Apex_Launcher {
+namespace ApexLauncher {
     public partial class ErrorCatcher : Form {
         private readonly Exception exception;
 

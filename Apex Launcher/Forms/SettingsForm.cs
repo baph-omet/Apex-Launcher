@@ -1,7 +1,11 @@
-﻿using System;
+﻿// <copyright file="SettingsForm.cs" company="IAMVISHNU Media">
+// © Copyright by IAMVISHNU Media 2020 CC BY-NC-ND
+// </copyright>
+
+using System;
 using System.Windows.Forms;
 
-namespace Apex_Launcher {
+namespace ApexLauncher {
     public partial class SettingsForm : Form {
         public SettingsForm() {
             InitializeComponent();
@@ -22,9 +26,7 @@ namespace Apex_Launcher {
                     MessageBox.Show(
                         "If you change your install path, you will need to move your game data to the new path or redownload it before you will be able to play. Is this OK?",
                         "Warning",
-                        MessageBoxButtons.YesNo
-                    ) == DialogResult.No
-                ) return;
+                        MessageBoxButtons.YesNo) == DialogResult.No) return;
             }
 
             if (!Program.HasWriteAccess(PathTextbox.Text)) {
@@ -41,7 +43,7 @@ namespace Apex_Launcher {
         }
 
         private void BrowseButton_Click(object sender, EventArgs e) {
-            FolderBrowserDialog fbd = new FolderBrowserDialog {
+            using FolderBrowserDialog fbd = new FolderBrowserDialog {
                 Description = "Choose a Folder"
             };
             fbd.ShowDialog();

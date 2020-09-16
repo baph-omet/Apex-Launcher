@@ -1,72 +1,107 @@
-﻿using System;
+﻿// <copyright file="Config.cs" company="IAMVISHNU Media">
+// © Copyright by IAMVISHNU Media 2020 CC BY-NC-ND
+// </copyright>
+
+using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Apex_Launcher {
+namespace ApexLauncher {
+    /// <summary>
+    /// Static class to contain the program's configuration settings.
+    /// </summary>
     public static class Config {
-        private static bool _loaded = false;
-        private static string Filepath => Path.Combine(Directory.GetCurrentDirectory(), "config.txt");
+        private static bool loaded;
 
-        private static VersionGameFiles _currentVersion;
+        private static VersionGameFiles currentVersion;
+
+        private static VersionAudio currentVersionAudio;
+
+        private static string installPath;
+
+        private static bool keepLauncherOpen;
+
+        private static bool disableAudioDownload;
+
+        /// <summary>
+        /// Gets or sets the currently installed version of the game's files.
+        /// </summary>
         public static VersionGameFiles CurrentVersion {
             get {
-                return _currentVersion;
+                return currentVersion;
             }
+
             set {
-                _currentVersion = value;
-                if (_loaded) SaveConfig();
+                currentVersion = value;
+                if (loaded) SaveConfig();
             }
         }
 
-        private static VersionAudio _currentVersionAudio;
+        /// <summary>
+        /// Gets or sets the currently installed version of the game's audio files.
+        /// </summary>
         public static VersionAudio CurrentAudioVersion {
             get {
-                return _currentVersionAudio;
+                return currentVersionAudio;
             }
+
             set {
-                _currentVersionAudio = value;
-                if (_loaded) SaveConfig();
+                currentVersionAudio = value;
+                if (loaded) SaveConfig();
             }
         }
 
-        private static string _installPath;
+        /// <summary>
+        /// Gets or sets the program's installation file path.
+        /// </summary>
         public static string InstallPath {
             get {
-                if (string.IsNullOrEmpty(_installPath)) return Directory.GetCurrentDirectory();
-                return _installPath;
+                if (string.IsNullOrEmpty(installPath)) return Directory.GetCurrentDirectory();
+                return installPath;
             }
+
             set {
-                _installPath = value;
-                if (_loaded) SaveConfig();
+                installPath = value;
+                if (loaded) SaveConfig();
             }
         }
 
-        private static bool _keepLauncherOpen;
+        /// <summary>
+        /// Gets or sets a value indicating whether launcher should be left open after launching the game proper.
+        /// </summary>
         public static bool KeepLauncherOpen {
             get {
-                return _keepLauncherOpen;
+                return keepLauncherOpen;
             }
+
             set {
-                _keepLauncherOpen = value;
-                if (_loaded) SaveConfig();
+                keepLauncherOpen = value;
+                if (loaded) SaveConfig();
             }
         }
 
-        private static bool _disableAudioDownload;
+        /// <summary>
+        /// Gets or sets a value indicating whether audio downloads should be disabled.
+        /// </summary>
         public static bool DisableAudioDownload {
             get {
-                return _disableAudioDownload;
+                return disableAudioDownload;
             }
+
             set {
-                _disableAudioDownload = value;
-                if (_loaded) SaveConfig();
+                disableAudioDownload = value;
+                if (loaded) SaveConfig();
             }
         }
 
+        private static string Filepath => Path.Combine(Directory.GetCurrentDirectory(), "config.txt");
+
+        /// <summary>
+        /// Load underlying configuration file to memory.
+        /// </summary>
         public static void LoadConfig() {
             if (!File.Exists(Filepath)) CreateConfig();
             foreach (string line in File.ReadAllLines(Filepath)) {
@@ -76,7 +111,7 @@ namespace Apex_Launcher {
                 string value = split[1].Trim();
 
                 foreach (PropertyInfo pi in typeof(Config).GetProperties()) {
-                    if (pi.Name.ToLower() == param.ToLower()) {
+                    if (pi.Name.ToLower(Program.Culture) == param.ToLower(Program.Culture)) {
                         try {
                             object v = null;
                             if (pi.PropertyType.GetInterfaces().Contains(typeof(IDownloadable))) {
@@ -85,63 +120,70 @@ namespace Apex_Launcher {
                             } else v = Convert.ChangeType(value, pi.PropertyType);
 
                             pi.SetValue(null, v);
-                        } catch (Exception) {
+                        } catch (FormatException) {
                             pi.SetValue(null, default);
                         }
+
                         break;
                     }
                 }
             }
 
-            _loaded = true;
+            loaded = true;
         }
 
+        /// <summary>
+        /// Save configuration variables to underlying file.
+        /// </summary>
         public static void SaveConfig() {
             List<string> lines = new List<string>();
             foreach (PropertyInfo pi in typeof(Config).GetProperties()) lines.Add($"{pi.Name}={pi.GetValue(null)}");
             File.WriteAllLines(Filepath, lines);
         }
 
+        /// <summary>
+        /// Create a default config file.
+        /// </summary>
         public static void CreateConfig() {
-            using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Apex_Launcher.config.txt");
+            using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("ApexLauncher.config.txt");
             using FileStream fileStream = new FileStream(Filepath, FileMode.CreateNew);
             for (int i = 0; i < stream.Length; i++) fileStream.WriteByte((byte)stream.ReadByte());
         }
 
+        /// <summary>
+        /// Gets a block of text that contains system data for debugging.
+        /// </summary>
+        /// <returns>String block that contains a bunch of system information.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Typically used only in debugging.")]
         public static string GetSystemConfigurationPaste() {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("# Configuration");
-            try {
-                sb.AppendLine($"* Current Launcher Version: {Assembly.GetExecutingAssembly().GetName().Version}");
-                sb.AppendLine($"* Current Game Version: {CurrentVersion}");
-                sb.AppendLine($"* Install Path: {InstallPath}");
-            } catch (Exception) { }
+            sb.AppendLine($"* Current Launcher Version: {Assembly.GetExecutingAssembly().GetName().Version}");
+            sb.AppendLine($"* Current Game Version: {CurrentVersion}");
+            sb.AppendLine($"* Install Path: {InstallPath}");
             try {
                 sb.AppendLine();
                 sb.AppendLine("# Files");
-                if (File.Exists(Directory.GetCurrentDirectory() + "\\config.txt")) sb.AppendLine("* `config.txt`");
+                if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "config.txt"))) sb.AppendLine("* `config.txt`");
 
                 string installpath = InstallPath;
                 if (Directory.Exists(installpath)) {
-                    sb.AppendLine("* " + installpath + ":");
-                    if (Directory.Exists(installpath + "\\Versions")) {
-                        foreach (string folder in Directory.GetDirectories(installpath + "\\Versions")) {
-                            sb.AppendLine("    * " + Path.GetFileName(folder) + ":");
-                            foreach (string subfolder in Directory.GetDirectories(folder)) sb.AppendLine("        * " + Path.GetFileName(subfolder));
-                            foreach (string contents in Directory.GetFiles(folder)) sb.AppendLine("        * `" + Path.GetFileName(contents) + "`");
+                    sb.AppendLine($"* {installpath}:");
+                    if (Directory.Exists(Path.Combine(installpath, "Versions"))) {
+                        foreach (string folder in Directory.GetDirectories(Path.Combine(installpath, "Versions"))) {
+                            sb.AppendLine($"    * {Path.GetFileName(folder)}:");
+                            foreach (string subfolder in Directory.GetDirectories(folder)) sb.AppendLine($"        * {Path.GetFileName(subfolder)}");
+                            foreach (string contents in Directory.GetFiles(folder)) sb.AppendLine($"        * `{Path.GetFileName(contents)}`");
                         }
                     }
                 }
             } catch (Exception) { }
-            try {
-                sb.AppendLine();
-                sb.AppendLine("# Environment");
-                sb.AppendLine($"* Locale: {CultureInfo.CurrentCulture.Name}");
-                sb.AppendLine($"* Operating System: {Environment.OSVersion.VersionString}");
-                sb.AppendLine($"* .NET Runtime Version: {Environment.Version}");
-            } catch (Exception e) {
-                sb.AppendLine($"Couldn't get Environment info: \n{e}");
-            }
+            sb.AppendLine();
+            sb.AppendLine("# Environment");
+            sb.AppendLine($"* Locale: {Program.Culture.Name}");
+            sb.AppendLine($"* Operating System: {Environment.OSVersion.VersionString}");
+            sb.AppendLine($"* .NET Runtime Version: {Environment.Version}");
+
             return sb.ToString();
         }
     }
