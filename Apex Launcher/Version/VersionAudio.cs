@@ -39,7 +39,11 @@ namespace ApexLauncher {
         /// <exception cref="ArgumentNullException">Thrown if argument is null.</exception>
         public static VersionAudio FromString(string str) {
             if (str is null) throw new ArgumentNullException(nameof(str));
-            return FromNumber(Convert.ToInt32(str.Replace("Audio v", string.Empty)));
+
+            int number = Convert.ToInt32(str.Replace("Audio v", string.Empty));
+
+            if (!File.Exists(Path.Combine(Config.InstallPath, "Versions", "VersionManifestAudio.xml"))) return new VersionAudio(number, string.Empty);
+            else return FromNumber(Convert.ToInt32(str.Replace("Audio v", string.Empty)));
         }
 
         /// <summary>

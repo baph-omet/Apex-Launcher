@@ -31,17 +31,23 @@ namespace ApexLauncher {
             InitializeComponent();
             downloadQueue = new List<IDownloadable>();
             foreach (IDownloadable d in downloads) {
-                if (d is VersionGameFiles) {
-                    if (mostRecent == null || d.GreaterThan(mostRecent)) mostRecent = d as VersionGameFiles;
-                }
-
-                if (d.Prerequisite != null && d.Prerequisite.NewerThanDownloaded()) downloadQueue.Add(d.Prerequisite);
-                else if (d is VersionGameFiles) {
+                if (d.Prerequisite != null && d.Prerequisite.NewerThanDownloaded()) {
+                    downloadQueue.Add(d.Prerequisite);
+                    if (d.Prerequisite is VersionGameFiles) baseVersion = d.Prerequisite as VersionGameFiles;
+                } else if (d is VersionGameFiles) {
                     VersionGameFiles vgf = d as VersionGameFiles;
                     if (!vgf.IsPatch) baseVersion = vgf;
                 }
 
                 downloadQueue.Add(d);
+
+                if (d is VersionGameFiles) {
+                    VersionGameFiles vgf = d as VersionGameFiles;
+                    if (mostRecent == null || d.GreaterThan(mostRecent)) mostRecent = vgf;
+                    if (vgf.MinimumAudioVersion != null && !downloadQueue.Contains(vgf.MinimumAudioVersion) && (Config.CurrentAudioVersion is null || vgf.MinimumAudioVersion.GreaterThan(Config.CurrentAudioVersion))) {
+                        downloadQueue.Add(vgf.MinimumAudioVersion);
+                    }
+                }
             }
 
             Aborted += DownloadForm_Aborted;
@@ -184,8 +190,24 @@ namespace ApexLauncher {
                         }
                     } else if (download is VersionAudio) {
                         VersionAudio va = download as VersionAudio;
-                        string versionpath = Path.Combine(Config.InstallPath, "Versions", baseVersion.ToString());
+                        string versionpath = Path.Combine(Config.InstallPath, "Versions", mostRecent.ToString());
                         RecursiveCopy(destination, versionpath, true);
+                    }
+
+                    if (download == mostRecent && !(download is VersionAudio)) {
+                        bool downloadingNewAudio = false;
+                        foreach (IDownloadable d in downloadQueue) {
+                            if (d is VersionAudio) {
+                                downloadingNewAudio = true;
+                                break;
+                            }
+                        }
+
+                        if (!downloadingNewAudio) {
+                            string versionpath = Path.Combine(Config.InstallPath, "Versions", mostRecent.ToString());
+                            string audioversionpath = Path.Combine(Config.InstallPath, "Versions", VersionAudio.GetMostRecentVersion().ToString());
+                            RecursiveCopy(audioversionpath, versionpath, true);
+                        }
                     }
 
                     File.Delete(currentFilepath);
