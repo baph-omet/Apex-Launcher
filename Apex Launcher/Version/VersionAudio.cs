@@ -116,5 +116,15 @@ namespace ApexLauncher {
         public override string ToString() {
             return "Audio v" + Number.ToString();
         }
+
+        /// <inheritdoc/>
+        public override bool Equals(object other) {
+            if (!(other is VersionAudio)) return false;
+            if (other is null) return false;
+            VersionAudio o = other as VersionAudio;
+            if (this == o) return true;
+            if (o.ToString().Equals(ToString())) return true;
+            return false;
+        }
     }
 }

@@ -17,10 +17,10 @@ namespace ApexLauncher {
     /// </summary>
     public partial class DownloadForm : Form {
         private readonly List<IDownloadable> downloadQueue;
-        private readonly VersionGameFiles baseVersion;
         private readonly VersionGameFiles mostRecent;
         private Thread dlThread;
         private string currentFilepath;
+        private bool finished;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadForm"/> class.
@@ -33,10 +33,6 @@ namespace ApexLauncher {
             foreach (IDownloadable d in downloads) {
                 if (d.Prerequisite != null && d.Prerequisite.NewerThanDownloaded()) {
                     downloadQueue.Add(d.Prerequisite);
-                    if (d.Prerequisite is VersionGameFiles) baseVersion = d.Prerequisite as VersionGameFiles;
-                } else if (d is VersionGameFiles) {
-                    VersionGameFiles vgf = d as VersionGameFiles;
-                    if (!vgf.IsPatch) baseVersion = vgf;
                 }
 
                 downloadQueue.Add(d);
@@ -44,9 +40,6 @@ namespace ApexLauncher {
                 if (d is VersionGameFiles) {
                     VersionGameFiles vgf = d as VersionGameFiles;
                     if (mostRecent == null || d.GreaterThan(mostRecent)) mostRecent = vgf;
-                    if (vgf.MinimumAudioVersion != null && !downloadQueue.Contains(vgf.MinimumAudioVersion) && (Config.CurrentAudioVersion is null || vgf.MinimumAudioVersion.GreaterThan(Config.CurrentAudioVersion))) {
-                        downloadQueue.Add(vgf.MinimumAudioVersion);
-                    }
                 }
             }
 
@@ -94,7 +87,7 @@ namespace ApexLauncher {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "For last-ditch error catching.")]
         public void Download() {
             try {
-                bool allFinished = true;
+                finished = true;
                 foreach (IDownloadable download in downloadQueue) {
                     string source = download.Location;
                     string destination = Path.Combine(Config.InstallPath, "Versions", download.ToString());
@@ -157,7 +150,7 @@ namespace ApexLauncher {
                     }
 
                     if (!succeeded) {
-                        allFinished = false;
+                        finished = false;
                         MessageBox.Show(
                             "The download couldn't be completed. Check your internet connection. If you think this is a program error, please report this to the Launcher's GitHub page.");
                         break;
@@ -213,14 +206,10 @@ namespace ApexLauncher {
                     File.Delete(currentFilepath);
                 }
 
-                if (allFinished) {
-                    QueueComplete?.Invoke(this, new EventArgs());
-                }
-
-                CloseForm();
+                if (finished) QueueComplete?.Invoke(this, new EventArgs());
             } catch (ThreadAbortException) { } catch (ThreadInterruptedException) { } catch (Exception e) {
                 new ErrorCatcher(e).ShowDialog();
-                CloseForm();
+                Aborted?.Invoke(this, new EventArgs());
             }
         }
 
@@ -286,7 +275,7 @@ namespace ApexLauncher {
         private void DownloadForm_Disposed(object sender, EventArgs e) {
             if (dlThread.IsAlive) {
                 dlThread.Abort();
-                Aborted?.Invoke(sender, new EventArgs());
+                if (!finished) Aborted?.Invoke(sender, new EventArgs());
             }
         }
 
@@ -298,6 +287,7 @@ namespace ApexLauncher {
 
             Program.Launcher.SetGameVersion(mostRecent);
             Program.Launcher.UpdateStatus("Ready to launch");
+            CloseForm();
         }
 
         private void DownloadForm_Aborted(object sender, EventArgs e) {
