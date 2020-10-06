@@ -2,7 +2,7 @@
 Welcome to the repository for the official launcher for fan game [Pokémon Apex](https://apex.iamvishnu.net). This launcher is written in C# for Windows.
 
 ## Issues
-If you have found an issue or have a suggestion about the **launcher only**, please report them here. If you would like to contribute code, feel free to submit a pull request for review.
+If you have found an issue or have a suggestion about the **launcher only**, please report them here. If you would like to contribute code, feel free to submit a pull request for review. Some antivirus programs can interfere with the launcher running, so if you have issues, make sure to check your antivirus software.
 
 Please read the [CONTRIBUTING.md](https://github.com/griffenx/Apex-Launcher/blob/master/CONTRIBUTING.md) file before submitting for report and pull request guidelines.
 
