@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Text;
 using System.Globalization;
 using System.IO;
 using System.Net;
@@ -160,6 +162,28 @@ namespace ApexLauncher {
             }
 
             return path;
+        }
+
+        /// <summary>
+        /// Check to see if the user has installed the game fonts.
+        /// </summary>
+        /// <returns>True if any of the game fonts are found to be installed, else false.</returns>
+        public static bool HasFontsInstalled() {
+            List<string> fontNames = new List<string>() {
+                "Power Clear",
+                "Power Green",
+                "Power Green Small Regular",
+                "Power Red and Blue Intl Regular",
+                "Power Red and Blue Regular",
+                "Power Red and Green Regular"
+            };
+
+            using InstalledFontCollection ifc = new InstalledFontCollection();
+            foreach (FontFamily f in ifc.Families) {
+                if (fontNames.Contains(f.Name)) return true;
+            }
+
+            return false;
         }
 
         [STAThread]
