@@ -109,4 +109,10 @@
 	<patch>true</patch>
 	<audioversion>1</audioversion>
   </version>
+  <version>
+	<channel>a</channel>
+	<number>9.3</number>
+	<location>http://www.mediafire.com/download/ix483a4vqfq0gm5/Pok%25C3%25A9mon_Apex_Alpha_Build_9.3.zip</location>
+	<audioversion>1</audioversion>
+  </version>
 </versions>
