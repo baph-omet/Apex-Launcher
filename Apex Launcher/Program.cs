@@ -4,13 +4,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
+using System.Threading;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace ApexLauncher {
     /// <summary>
@@ -143,10 +148,10 @@ namespace ApexLauncher {
                     if (j == preExtension.Length - 1 && preExtension[j] != ')') break;
                     if (j < preExtension.Length - 1) {
                         if (preExtension[j] == '(') {
-                            numbering = Convert.ToInt32(string.Join(string.Empty, digits), Program.Culture);
+                            numbering = Convert.ToInt32(string.Join(string.Empty, digits), Culture);
                         } else {
                             try {
-                                digits.Insert(0, Convert.ToInt16(preExtension[j].ToString(), Program.Culture));
+                                digits.Insert(0, Convert.ToInt16(preExtension[j].ToString(), Culture));
                             } catch (FormatException) { break; }
                         }
                     }
@@ -225,7 +230,43 @@ namespace ApexLauncher {
                 NetworkConnected = false;
             }
 
+            Properties.Settings.Default.DisableFontPrompt = false;
+
+            bool dis = Properties.Settings.Default.DisableFontPrompt;
+
+            if (!dis) {
+                if (!HasFontsInstalled()) {
+                    using FontInstallForm fif = new FontInstallForm();
+                    fif.ShowDialog();
+                    if (fif.Response != FontInstallResponse.Cancel) {
+                        Properties.Settings.Default.DisableFontPrompt = true;
+                    }
+
+                    if (fif.Response == FontInstallResponse.Install) {
+                        RegisterFonts(GetFontResourceNames());
+                        //GetFontResourceNames().ForEach(x => RegisterFont(x));
+                    }
+                } else {
+                    Properties.Settings.Default.DisableFontPrompt = true;
+                }
+
+                Properties.Settings.Default.Save();
+            }
+
             return;
+        }
+
+        private static List<string> GetFontResourceNames() {
+            List<string> resourceNames = new List<string>();
+
+            foreach (string file in Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Font"), "*.ttf")) resourceNames.Add(Path.GetFileName(file));
+
+            // foreach (string resourceName in Assembly.GetExecutingAssembly().GetManifestResourceNames()) resourceNames.Add(resourceName);
+
+            /*ResourceManager rm = new ResourceManager(typeof(Properties.Resources));
+            ResourceSet rset = rm.GetResourceSet(CultureInfo.InvariantCulture, false, true);
+            foreach (DictionaryEntry entry in rset) if (entry.Key.ToString().Contains("pkmn")) resourceNames.Add(entry.Value.ToString());*/
+            return resourceNames;
         }
 
         private static bool DownloadVersionManifests() {
@@ -258,6 +299,103 @@ namespace ApexLauncher {
             }
 
             return completed;
+        }
+
+        /*[DllImport("gdi32", EntryPoint = "AddFontResource", CharSet = CharSet.Unicode)]
+        private static extern int AddFontResourceA(string lpFileName);*/
+
+        [DllImport("gdi32.dll", CharSet = CharSet.Unicode)]
+        private static extern int AddFontResource(string lpszFilename);
+
+        /*[DllImport("gdi32.dll", CharSet = CharSet.Unicode)]
+        private static extern int CreateScalableFontResource(uint fdwHidden, string lpszFontRes, string lpszFontFile, string lpszCurrentPath);*/
+
+        /// <summary>
+        /// Installs font on the user's system and adds it to the registry so it's available on the next session
+        /// Your font must be included in your project with its build path set to 'Content' and its Copy property
+        /// set to 'Copy Always'.
+        /// </summary>
+        /// <param name="contentFontName">Your font to be passed as a resource (i.e. "myfont.tff").</param>
+        private static void RegisterFont(string contentFontName) {
+            // Creates the full path where your font will be installed
+            string fontDestination = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), contentFontName);
+
+            if (!File.Exists(fontDestination)) {
+                // Copies font to destination
+                bool isElevated;
+                using (WindowsIdentity identity = WindowsIdentity.GetCurrent()) {
+                    WindowsPrincipal principal = new WindowsPrincipal(identity);
+                    isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+                }
+
+                if (!isElevated) {
+                    ProcessStartInfo psi = new ProcessStartInfo("Copy.bat", $"{contentFontName} {fontDestination}") { Verb = "runas"};
+                    Process.Start(psi);
+                    Thread.Sleep(1000);
+                } else File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "Font", contentFontName), fontDestination, true);
+
+                // Retrieves font name
+                // Makes sure you reference System.Drawing
+                using PrivateFontCollection fontCol = new PrivateFontCollection();
+                fontCol.AddFontFile(fontDestination);
+                string actualFontName = fontCol.Families[0].Name;
+
+                // Add font
+                _ = AddFontResource(fontDestination);
+
+                // Add registry entry
+                if (isElevated) Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", actualFontName, contentFontName, RegistryValueKind.String);
+                else {
+                    ProcessStartInfo psi = new ProcessStartInfo(Path.Combine(Directory.GetCurrentDirectory(), "RegEdit.bat"), $"{actualFontName} {contentFontName}") { Verb = "runas" };
+                    Process.Start(psi);
+                    Thread.Sleep(1000);
+                }
+            }
+        }
+
+        private static void RegisterFonts(List<string> fontFiles) {
+            bool isElevated;
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent()) {
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+
+            // Copy font to destination
+            if (isElevated) {
+                fontFiles.ForEach(x => {
+                    string fontDestination = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), x);
+                    File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "Font", x), fontDestination, true);
+                });
+            } else {
+                ProcessStartInfo psi = new ProcessStartInfo("Copy.bat", Environment.GetFolderPath(Environment.SpecialFolder.Fonts)) { Verb = "runas" };
+                Process.Start(psi);
+                Thread.Sleep(1000);
+            }
+
+            List<string> lines = new List<string>() { "@echo off" };
+
+            // Registry stuff
+            fontFiles.ForEach(x => {
+                string fontDestination = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), x);
+
+                // Retrieves font name
+                // Makes sure you reference System.Drawing
+                using PrivateFontCollection fontCol = new PrivateFontCollection();
+                fontCol.AddFontFile(fontDestination);
+                string actualFontName = fontCol.Families[0].Name;
+
+                // Add font
+                _ = AddFontResource(fontDestination);
+                if (isElevated) Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", actualFontName, x, RegistryValueKind.String);
+                else lines.Add($@"REG ADD 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts' {actualFontName} /t REG_SZ {x}");
+            });
+
+            if (!isElevated) {
+                File.WriteAllLines(Path.Combine(Directory.GetCurrentDirectory(), "RegEdit.bat"), lines);
+                ProcessStartInfo psi = new ProcessStartInfo("RegEdit.bat") { Verb = "runas" };
+                Process.Start(psi);
+                Thread.Sleep(1000);
+            }
         }
     }
 }
