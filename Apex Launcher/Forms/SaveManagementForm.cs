@@ -36,7 +36,7 @@ namespace ApexLauncher {
 
         private string GetPath(string filename) {
             if (filename.Equals(currentSaveName, StringComparison.InvariantCulture)) filename = "Game.rxdata";
-            return savePath + filename;
+            return Path.Combine(savePath,filename);
         }
 
         private void CopyButton_Click(object sender, EventArgs e) {
