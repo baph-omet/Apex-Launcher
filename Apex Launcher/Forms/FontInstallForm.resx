@@ -117,4 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>Pokémon Apex uses dedicated font files to ensure correct text display. The launcher has detected that these font files are not installed. Would you like to install fonts now? This requires admin privileges.</value>
+  </data>
 </root>

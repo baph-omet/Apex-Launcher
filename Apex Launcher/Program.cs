@@ -244,7 +244,8 @@ namespace ApexLauncher {
 
                     if (fif.Response == FontInstallResponse.Install) {
                         RegisterFonts(GetFontResourceNames());
-                        //GetFontResourceNames().ForEach(x => RegisterFont(x));
+
+                        // GetFontResourceNames().ForEach(x => RegisterFont(x));
                     }
                 } else {
                     Properties.Settings.Default.DisableFontPrompt = true;
@@ -329,7 +330,7 @@ namespace ApexLauncher {
                 }
 
                 if (!isElevated) {
-                    ProcessStartInfo psi = new ProcessStartInfo("Copy.bat", $"{contentFontName} {fontDestination}") { Verb = "runas"};
+                    ProcessStartInfo psi = new ProcessStartInfo("Copy.bat", $"{contentFontName} {fontDestination}") { Verb = "runas" };
                     Process.Start(psi);
                     Thread.Sleep(1000);
                 } else File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "Font", contentFontName), fontDestination, true);

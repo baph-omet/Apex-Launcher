@@ -24,6 +24,7 @@ namespace ApexLauncher {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FontInstallForm));
             this.ButtonInstall = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.ButtonSuppress = new System.Windows.Forms.Button();
@@ -49,16 +50,14 @@ namespace ApexLauncher {
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(511, 26);
             this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "Pokémon Apex uses dedicated font files to ensure correct text display. The launch" +
-    "er has detected that these font files are not installed. Would you like to insta" +
-    "ll fonts now?";
+            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
             // ButtonSuppress
             // 
             this.ButtonSuppress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonSuppress.Location = new System.Drawing.Point(338, 56);
+            this.ButtonSuppress.Location = new System.Drawing.Point(325, 56);
             this.ButtonSuppress.Name = "ButtonSuppress";
-            this.ButtonSuppress.Size = new System.Drawing.Size(100, 23);
+            this.ButtonSuppress.Size = new System.Drawing.Size(113, 23);
             this.ButtonSuppress.TabIndex = 2;
             this.ButtonSuppress.Text = "Do Not Ask Again";
             this.ButtonSuppress.UseVisualStyleBackColor = true;
@@ -68,7 +67,7 @@ namespace ApexLauncher {
             // 
             this.ButtonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ButtonCancel.Location = new System.Drawing.Point(259, 56);
+            this.ButtonCancel.Location = new System.Drawing.Point(246, 56);
             this.ButtonCancel.Name = "ButtonCancel";
             this.ButtonCancel.Size = new System.Drawing.Size(73, 23);
             this.ButtonCancel.TabIndex = 3;
