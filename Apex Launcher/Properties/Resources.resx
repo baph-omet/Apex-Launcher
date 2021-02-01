@@ -121,4 +121,28 @@
   <data name="giratina" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\giratina.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pkmndp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\font\pkmndp.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pkmndpb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\font\pkmndpb.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pkmnem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\font\pkmnem.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pkmnemn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\font\pkmnemn.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pkmnems" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\font\pkmnems.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pkmnfl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\font\pkmnfl.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pkmnrs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\font\pkmnrs.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pkmnrsi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\font\pkmnrsi.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

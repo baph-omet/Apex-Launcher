@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -11,10 +12,12 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
+using ApexLauncher.Properties;
 using Microsoft.Win32;
 
 namespace ApexLauncher {
@@ -162,7 +165,7 @@ namespace ApexLauncher {
                 if (numbering >= 0) {
                     i = numbering + 1;
                     path = preExtension.Substring(0, preExtension.Length - 3 - numbering.ToString().Length) + " (" + i + ")." + extension;
-                } else path = preExtension + " (" + i + ")." + extension;
+                } else path = $"{preExtension} ({i}).{extension}";
                 i++;
             }
 
@@ -180,7 +183,7 @@ namespace ApexLauncher {
                 "Power Green Small Regular",
                 "Power Red and Blue Intl Regular",
                 "Power Red and Blue Regular",
-                "Power Red and Green Regular"
+                "Power Red and Green Regular",
             };
 
             using InstalledFontCollection ifc = new InstalledFontCollection();
@@ -192,7 +195,6 @@ namespace ApexLauncher {
         }
 
         [STAThread]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Last-ditch error catching.")]
         private static void Main() {
             try {
                 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
@@ -201,12 +203,11 @@ namespace ApexLauncher {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
+                CheckFonts();
                 Launcher = new Launcher();
                 Application.Run(Launcher);
             } catch (Exception e) {
-                using ErrorCatcher ec = new ErrorCatcher(e) {
-                    Enabled = true
-                };
+                using ErrorCatcher ec = new ErrorCatcher(e) { Enabled = true };
                 ec.ShowDialog();
             }
         }
@@ -230,20 +231,41 @@ namespace ApexLauncher {
                 NetworkConnected = false;
             }
 
-            bool dis = Properties.Settings.Default.DisableFontPrompt;
+            return;
+        }
+
+        private static void CheckFonts() {
+#if DEBUG
+            Settings.Default.DisableFontPrompt = false;
+#endif
+
+            bool dis = Settings.Default.DisableFontPrompt;
 
             if (!dis) {
                 if (!HasFontsInstalled()) {
                     using FontInstallForm fif = new FontInstallForm();
                     fif.ShowDialog();
-                    if (fif.Response != FontInstallResponse.Cancel) Properties.Settings.Default.DisableFontPrompt = true;
-                    if (fif.Response == FontInstallResponse.Install) RegisterFonts(GetFontResourceNames());
-                } else Properties.Settings.Default.DisableFontPrompt = true;
+                    if (fif.Response != FontInstallResponse.Cancel) Settings.Default.DisableFontPrompt = true;
+                    if (fif.Response == FontInstallResponse.Install) {
+                        ExtractFonts();
+                        RegisterFonts(GetFontResourceNames());
+                    }
+                } else Settings.Default.DisableFontPrompt = true;
 
-                Properties.Settings.Default.Save();
+                Settings.Default.Save();
             }
+        }
 
-            return;
+        private static void ExtractFonts() {
+            ResourceManager rm = new ResourceManager(typeof(Resources));
+            ResourceSet rs = rm.GetResourceSet(CultureInfo.CurrentCulture, true, true);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "Font");
+            Directory.CreateDirectory(path);
+            foreach (DictionaryEntry entry in rs) {
+                string key = entry.Key.ToString();
+                if (!key.Contains("pkmn")) continue;
+                File.WriteAllBytes(Path.Combine(path, $"{key}.ttf"), entry.Value as byte[]);
+            }
         }
 
         private static List<string> GetFontResourceNames() {
@@ -256,7 +278,7 @@ namespace ApexLauncher {
             bool completed;
             string[] files = new[] {
                 "http://www.mediafire.com/download/qkauu9oca3lcjw1/VersionManifest.xml",
-                "http://www.mediafire.com/download/zvooruhs1b3e4c9/VersionManifestAudio.xml"
+                "http://www.mediafire.com/download/zvooruhs1b3e4c9/VersionManifestAudio.xml",
             };
             try {
                 foreach (string file in files) {
@@ -307,7 +329,8 @@ namespace ApexLauncher {
                     File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "Font", x), fontDestination, true);
                 });
             } else {
-                ProcessStartInfo psi = new ProcessStartInfo("Copy.bat", Environment.GetFolderPath(Environment.SpecialFolder.Fonts)) { Verb = "runas" };
+                File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "Copy.bat"), $"@ECHO off{Environment.NewLine}COPY /Y /B \"{Directory.GetCurrentDirectory()}\\Font\\*.ttf\" {Environment.GetFolderPath(Environment.SpecialFolder.Fonts)}");
+                ProcessStartInfo psi = new ProcessStartInfo(Path.Combine(Directory.GetCurrentDirectory(), "Copy.bat")) { Verb = "runas" };
                 Process.Start(psi);
                 Thread.Sleep(1000);
             }

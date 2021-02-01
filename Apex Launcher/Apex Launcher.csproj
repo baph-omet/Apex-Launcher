@@ -115,6 +115,7 @@
     <Compile Include="Forms\Launcher.Designer.cs">
       <DependentUpon>Launcher.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\SaveManagementForm.cs">
@@ -173,9 +174,6 @@
       <Link>.editorconfig</Link>
     </None>
     <None Include="Apex Launcher.ruleset" />
-    <None Include="Copy.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -187,33 +185,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <AdditionalFiles Include="stylecop.json" />
-    <EmbeddedResource Include="Font\pkmndp.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Font\pkmndpb.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Font\pkmnem.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Font\pkmnemn.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Font\pkmnems.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Font\pkmnfl.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Font\pkmnrs.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Font\pkmnrsi.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <None Include="RegEdit.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="Font\pkmndp.ttf" />
+    <EmbeddedResource Include="Font\pkmndpb.ttf" />
+    <EmbeddedResource Include="Font\pkmnem.ttf" />
+    <EmbeddedResource Include="Font\pkmnemn.ttf" />
+    <EmbeddedResource Include="Font\pkmnems.ttf" />
+    <EmbeddedResource Include="Font\pkmnfl.ttf" />
+    <EmbeddedResource Include="Font\pkmnrs.ttf" />
+    <EmbeddedResource Include="Font\pkmnrsi.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -246,6 +225,10 @@
     <Error Condition="!Exists('..\packages\Fody.6.3.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.3.0\build\Fody.targets'))" />
   </Target>
   <Import Project="..\packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.3.0\build\Fody.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

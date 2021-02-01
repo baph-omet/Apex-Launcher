@@ -69,5 +69,85 @@ namespace ApexLauncher.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] pkmndp {
+            get {
+                object obj = ResourceManager.GetObject("pkmndp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] pkmndpb {
+            get {
+                object obj = ResourceManager.GetObject("pkmndpb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] pkmnem {
+            get {
+                object obj = ResourceManager.GetObject("pkmnem", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] pkmnemn {
+            get {
+                object obj = ResourceManager.GetObject("pkmnemn", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] pkmnems {
+            get {
+                object obj = ResourceManager.GetObject("pkmnems", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] pkmnfl {
+            get {
+                object obj = ResourceManager.GetObject("pkmnfl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] pkmnrs {
+            get {
+                object obj = ResourceManager.GetObject("pkmnrs", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] pkmnrsi {
+            get {
+                object obj = ResourceManager.GetObject("pkmnrsi", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
