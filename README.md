@@ -25,8 +25,6 @@ Implemented:
 
 * Save data management
 
-Planned:
-
 * Automatic font installation
 
 If you have any ideas for features you want to see in the launcher, feel free to recommend them on the issues page! Pull requests are welcome.
