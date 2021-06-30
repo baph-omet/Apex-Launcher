@@ -114,7 +114,7 @@ namespace ApexLauncher {
 
         /// <inheritdoc/>
         public override string ToString() {
-            return "Audio v" + Number.ToString();
+            return $"Audio v{Number}";
         }
 
         /// <inheritdoc/>

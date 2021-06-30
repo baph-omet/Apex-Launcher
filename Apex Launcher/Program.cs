@@ -96,10 +96,12 @@ namespace ApexLauncher {
         public static void DownloadVersion(IDownloadable v) {
             if (v is null) throw new ArgumentNullException(nameof(v));
             List<IDownloadable> queue = new List<IDownloadable>(new[] { v });
-            VersionGameFiles vgf = v as VersionGameFiles;
-            if (!Config.DisableAudioDownload && vgf.MinimumAudioVersion != null && vgf.MinimumAudioVersion.GreaterThan(Config.CurrentVersion)) {
-                DialogResult result = MessageBox.Show($"New audio version found: {vgf.MinimumAudioVersion}.\nDownload and install this update?\n(Note, audio updates are often large downloads)", "Audio Update Found", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes) queue.Add(vgf.MinimumAudioVersion);
+            if (v is VersionGameFiles) {
+                VersionGameFiles vgf = v as VersionGameFiles;
+                if (!Config.DisableAudioDownload && vgf?.MinimumAudioVersion != null && vgf.MinimumAudioVersion.GreaterThan(Config.CurrentVersion)) {
+                    DialogResult result = MessageBox.Show($"New audio version found: {vgf.MinimumAudioVersion}.\nDownload and install this update?\n(Note, audio updates are often large downloads)", "Audio Update Found", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes) queue.Add(vgf.MinimumAudioVersion);
+                }
             }
 
             downloadForm = new DownloadForm(queue);
@@ -197,6 +199,7 @@ namespace ApexLauncher {
         [STAThread]
         private static void Main() {
             try {
+                AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
                 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
                 Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
                 Initialize();
@@ -210,6 +213,12 @@ namespace ApexLauncher {
                 using ErrorCatcher ec = new ErrorCatcher(e) { Enabled = true };
                 ec.ShowDialog();
             }
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            using ErrorCatcher ec = new ErrorCatcher((Exception)e.ExceptionObject) { Enabled = true };
+            ec.ShowDialog();
         }
 
         private static void Initialize() {

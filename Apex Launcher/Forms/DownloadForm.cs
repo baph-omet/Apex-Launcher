@@ -84,16 +84,15 @@ namespace ApexLauncher {
         /// <summary>
         /// Main download method.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "For last-ditch error catching.")]
         public void Download() {
             try {
                 finished = true;
                 foreach (IDownloadable download in downloadQueue) {
                     string source = download.Location;
                     string destination = Path.Combine(Config.InstallPath, "Versions", download.ToString());
-                    currentFilepath = destination + ".zip";
+                    currentFilepath = $"{destination}.zip";
 
-                    Program.Launcher.UpdateStatus("Downloading " + download.ToString());
+                    Program.Launcher.UpdateStatus($"Downloading {download}");
                     Directory.CreateDirectory(destination);
                     bool succeeded = true;
 
@@ -118,8 +117,41 @@ namespace ApexLauncher {
                         continue;
                     }
 
+                    if (File.Exists(currentFilepath)) {
+                        while (true) {
+                            try {
+                                File.Delete(currentFilepath);
+                                break;
+                            } catch (UnauthorizedAccessException e) {
+                                DialogResult res = MessageBox.Show(
+                                    $"Couldn't get access to local file location at {Path.Combine(destination, currentFilepath)}. Another program might be using it. Would you like to try again?",
+                                    "Download Error",
+                                    MessageBoxButtons.RetryCancel,
+                                    MessageBoxIcon.Error);
+                                if (res == DialogResult.Cancel) throw e;
+                                Thread.Sleep(1000);
+                            }
+                        }
+                    }
+
                     using (Stream dlstream = fileresp.GetResponseStream()) {
-                        using FileStream outputStream = new FileStream(currentFilepath, FileMode.OpenOrCreate);
+                        FileStream outputStream;
+                        while (true) {
+                            try {
+                                outputStream = new FileStream(Path.Combine(destination, currentFilepath), FileMode.OpenOrCreate, FileAccess.Write);
+                                break;
+                            } catch (UnauthorizedAccessException e) {
+                                DialogResult res = MessageBox.Show(
+                                    $"Couldn't get access to local file location at {Path.Combine(destination, currentFilepath)}. Another program might be using it. Would you like to try again?",
+                                    "Download Error",
+                                    MessageBoxButtons.RetryCancel,
+                                    MessageBoxIcon.Error);
+                                if (res == DialogResult.Cancel) throw e;
+                                Thread.Sleep(1000);
+                            }
+                        }
+
+                        if (File.Exists(currentFilepath)) File.Delete(currentFilepath);
                         int buffersize = 10000;
                         try {
                             long bytesRead = 0;
@@ -131,14 +163,13 @@ namespace ApexLauncher {
                                 outputStream.Write(buffer, 0, length);
                                 UpdateProgress(Convert.ToInt32(100F * bytesRead / fileresp.ContentLength));
                                 UpdateProgressText(
-                                    $"Downloading {download} (Package {downloadQueue.IndexOf(download) + 1}/{downloadQueue.Count}) {bytesRead / 1048576}/{fileresp.ContentLength / 1048576} MB (" + Convert.ToInt16(100 * (double)bytesRead / fileresp.ContentLength, Program.Culture) + "%)...");
+                                    $"Downloading {download} (Package {downloadQueue.IndexOf(download) + 1}/{downloadQueue.Count}) {bytesRead / 1048576}/{fileresp.ContentLength / 1048576} MB ({Convert.ToInt16(100 * (double)bytesRead / fileresp.ContentLength, Program.Culture)}%)...");
                             }
                         } catch (WebException e) {
                             succeeded = false;
                             DialogResult res = MessageBox.Show(
                                 "An error has occurred during your download. Please check your network connection and try again.\n" +
-                                "If this error persists, please report this issue to the launcher's GitHub page. Click OK to copy the error " +
-                                "details to your clipboard or CANCEL to ignore this message.",
+                                "If this error persists, please report this issue to the launcher's GitHub page. Click OK to copy the error details to your clipboard or CANCEL to ignore this message.",
                                 "Download Error",
                                 MessageBoxButtons.OKCancel,
                                 MessageBoxIcon.Error);
@@ -146,13 +177,14 @@ namespace ApexLauncher {
                             Aborted?.Invoke(this, new EventArgs());
                             CloseForm();
                             return;
+                        } finally {
+                            outputStream.Dispose();
                         }
                     }
 
                     if (!succeeded) {
                         finished = false;
-                        MessageBox.Show(
-                            "The download couldn't be completed. Check your internet connection. If you think this is a program error, please report this to the Launcher's GitHub page.");
+                        MessageBox.Show("The download couldn't be completed. Check your internet connection. If you think this is a program error, please report this to the Launcher's GitHub page.");
                         break;
                     }
 
@@ -160,16 +192,14 @@ namespace ApexLauncher {
                     Program.Launcher.UpdateStatus("Extracting " + download.ToString());
                     try {
                         if (Directory.Exists(destination)) Directory.Delete(destination, true);
-                        UpdateProgressText("Download " + (downloadQueue.IndexOf(download) + 1) + "/" + downloadQueue.Count +
-                            " completed. Extracting...");
+                        UpdateProgressText($"Download {downloadQueue.IndexOf(download) + 1}/{downloadQueue.Count} completed. Extracting...");
                         ZipFile.ExtractToDirectory(currentFilepath, destination);
                     } catch (InvalidDataException) {
                         MessageBox.Show(
-                            "Could not unzip file\n" + destination + ".zip.\nThe file appears to be invalid. Please report this issue. In the meantime, try a manual download.",
+                            $"Could not unzip file\n{destination}.zip.\nThe file appears to be invalid. Please report this issue. In the meantime, try a manual download.",
                             "Apex Launcher Error",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
-
                         continue;
                     }
 
