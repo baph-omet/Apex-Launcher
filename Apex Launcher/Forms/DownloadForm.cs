@@ -196,7 +196,7 @@ namespace ApexLauncher {
                         ZipFile.ExtractToDirectory(currentFilepath, destination);
                     } catch (InvalidDataException) {
                         MessageBox.Show(
-                            $"Could not unzip file\n{destination}.zip.\nThe file appears to be invalid. Please report this issue. In the meantime, try a manual download.",
+                            $"Could not unzip file{Environment.NewLine}{destination}.zip.{Environment.NewLine}The file appears to be invalid. Please report this issue. In the meantime, try a manual download.",
                             "Apex Launcher Error",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
@@ -204,17 +204,26 @@ namespace ApexLauncher {
                     }
 
                     // Patching
-                    if (download is VersionGameFiles) {
-                        VersionGameFiles vgf = download as VersionGameFiles;
-                        if (vgf.IsPatch) {
-                            UpdateProgressText("Patching...");
-                            string versionpath = Path.Combine(Config.InstallPath, "Versions", download.Prerequisite.ToString());
-                            RecursiveCopy(versionpath, destination, false);
+                    try {
+                        if (download is VersionGameFiles) {
+                            VersionGameFiles vgf = download as VersionGameFiles;
+                            if (vgf.IsPatch) {
+                                UpdateProgressText("Patching...");
+                                string versionpath = Path.Combine(Config.InstallPath, "Versions", download.Prerequisite.ToString());
+                                RecursiveCopy(versionpath, destination, false);
+                            }
+                        } else if (download is VersionAudio) {
+                            VersionAudio va = download as VersionAudio;
+                            string versionpath = Path.Combine(Config.InstallPath, "Versions", mostRecent.ToString());
+                            RecursiveCopy(destination, versionpath, true);
                         }
-                    } else if (download is VersionAudio) {
-                        VersionAudio va = download as VersionAudio;
-                        string versionpath = Path.Combine(Config.InstallPath, "Versions", mostRecent.ToString());
-                        RecursiveCopy(destination, versionpath, true);
+                    } catch (DirectoryNotFoundException) {
+                        MessageBox.Show(
+                            $"Could not find download{Environment.NewLine}{destination}{Environment.NewLine}The file appears to be missing. It may have been quarantined by your antivirus software. Please check your antivirus settings and retry. If the issue persists, please report this error.",
+                            "Apex Launcher Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+                        continue;
                     }
 
                     if (download == mostRecent && !(download is VersionAudio)) {

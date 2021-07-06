@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace ApexLauncher {
     public partial class ErrorCatcher : Form {
@@ -33,7 +34,7 @@ namespace ApexLauncher {
         }
 
         private void LinkButton_Click(object sender, EventArgs e) {
-            Process.Start("https://github.com/griffenx/Apex-Launcher/issues/new" + $"?title={exception.GetType().Name} in {exception.TargetSite.Name}&body={Uri.EscapeDataString(DetailsBox.Text)}");
+            Process.Start("https://github.com/griffenx/Apex-Launcher/issues/new" + $"?title={exception.GetType().Name} in {exception.StackTrace.Split(Environment.NewLine).Last().Split(' ')[1]}&body={Uri.EscapeDataString(DetailsBox.Text)}");
         }
 
         private void ButtonViewIssues_Click(object sender, EventArgs e) {
