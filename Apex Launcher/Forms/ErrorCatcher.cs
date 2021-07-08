@@ -4,14 +4,21 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Linq;
 
 namespace ApexLauncher {
+    /// <summary>
+    /// Form for showing unhandled exceptions and allowing users to report to the GitHub.
+    /// </summary>
     public partial class ErrorCatcher : Form {
         private readonly Exception exception;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ErrorCatcher"/> class.
+        /// </summary>
+        /// <param name="e">The Exception that this form is catching.</param>
         public ErrorCatcher(Exception e) {
             exception = e;
             InitializeComponent();
@@ -34,11 +41,11 @@ namespace ApexLauncher {
         }
 
         private void LinkButton_Click(object sender, EventArgs e) {
-            Process.Start("https://github.com/griffenx/Apex-Launcher/issues/new" + $"?title={exception.GetType().Name} in {exception.StackTrace.Split(Environment.NewLine).Last().Split(' ')[1]}&body={Uri.EscapeDataString(DetailsBox.Text)}");
+            Process.Start("https://github.com/iamvishnu-media/Apex-Launcher/issues/new" + $"?title={exception.GetType().Name} in {exception.StackTrace.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Last().Split(' ')[1]}&body={Uri.EscapeDataString(DetailsBox.Text)}");
         }
 
         private void ButtonViewIssues_Click(object sender, EventArgs e) {
-            Process.Start("https://github.com/griffenx/Apex-Launcher/issues");
+            Process.Start("https://github.com/iamvishnu-media/Apex-Launcher/issues");
         }
     }
 }

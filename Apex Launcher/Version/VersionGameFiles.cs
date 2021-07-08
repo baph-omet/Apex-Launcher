@@ -30,7 +30,7 @@ namespace ApexLauncher {
         /// <summary>
         /// Release channel.
         /// </summary>
-        RELEASE
+        RELEASE,
     }
 
     /// <summary>

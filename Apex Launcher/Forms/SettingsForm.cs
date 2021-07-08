@@ -6,7 +6,13 @@ using System;
 using System.Windows.Forms;
 
 namespace ApexLauncher {
+    /// <summary>
+    /// Form for modifying Launcher settings.
+    /// </summary>
     public partial class SettingsForm : Form {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsForm"/> class.
+        /// </summary>
         public SettingsForm() {
             InitializeComponent();
 
@@ -43,9 +49,7 @@ namespace ApexLauncher {
         }
 
         private void BrowseButton_Click(object sender, EventArgs e) {
-            using FolderBrowserDialog fbd = new FolderBrowserDialog {
-                Description = "Choose a Folder"
-            };
+            using FolderBrowserDialog fbd = new FolderBrowserDialog { Description = "Choose a Folder" };
             fbd.ShowDialog();
 
             string selectedPath = fbd.SelectedPath;

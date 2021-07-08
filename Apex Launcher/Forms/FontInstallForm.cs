@@ -30,7 +30,7 @@ namespace ApexLauncher {
         /// <summary>
         /// Returned when user chooses to ignore font installation.
         /// </summary>
-        Ignore
+        Ignore,
     }
 
     /// <summary>

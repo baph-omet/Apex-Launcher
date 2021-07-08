@@ -1,28 +1,4 @@
 ﻿[*.cs]
 
-# CA1307: Specify StringComparison
-dotnet_diagnostic.CA1307.severity = none
-
-# CA1305: Specify IFormatProvider
-dotnet_diagnostic.CA1305.severity = none
-
 # SA1520: Use braces consistently
 dotnet_diagnostic.SA1520.severity = none
-
-# CA3075: Insecure DTD processing in XML
-dotnet_diagnostic.CA3075.severity = none
-
-# SA1128: Put constructor initializers on their own line
-dotnet_diagnostic.SA1128.severity = none
-
-# SA1001: Commas should be spaced correctly
-dotnet_diagnostic.SA1001.severity = none
-
-# SA1413: Use trailing comma in multi-line initializers
-dotnet_diagnostic.SA1413.severity = none
-
-# SA0001: XML comment analysis is disabled due to project configuration
-dotnet_diagnostic.SA0001.severity = none
-
-# CS0659: Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
-dotnet_diagnostic.CS0659.severity = none

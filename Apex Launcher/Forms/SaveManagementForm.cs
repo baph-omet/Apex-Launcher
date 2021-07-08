@@ -36,7 +36,7 @@ namespace ApexLauncher {
 
         private string GetPath(string filename) {
             if (filename.Equals(currentSaveName, StringComparison.InvariantCulture)) filename = "Game.rxdata";
-            return Path.Combine(savePath,filename);
+            return Path.Combine(savePath, filename);
         }
 
         private void CopyButton_Click(object sender, EventArgs e) {
@@ -131,7 +131,7 @@ namespace ApexLauncher {
                 using SaveFileDialog sfd = new SaveFileDialog {
                     AddExtension = true,
                     DefaultExt = ".rxdata",
-                    Filter = "RPGXP Data Files|*.rxdata"
+                    Filter = "RPGXP Data Files|*.rxdata",
                 };
                 sfd.ShowDialog();
                 if (sfd.FileName.Length > 0) File.Copy(GetPath(FileView.SelectedItems[0].SubItems[0].Text), sfd.FileName);
