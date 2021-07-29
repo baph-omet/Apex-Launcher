@@ -1,5 +1,5 @@
-﻿// <copyright file="GlobalSuppressions.cs" company="IAMVISHNU Media">
-// © Copyright by IAMVISHNU Media 2020 CC BY-NC-ND
+﻿// <copyright file="GlobalSuppressions.cs" company="Baphomet Media">
+// © Copyright by Baphomet Media 2020 CC BY-NC-ND
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;

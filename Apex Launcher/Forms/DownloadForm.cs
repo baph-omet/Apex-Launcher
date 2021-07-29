@@ -1,5 +1,5 @@
-﻿// <copyright file="DownloadForm.cs" company="IAMVISHNU Media">
-// © Copyright by IAMVISHNU Media 2020 CC BY-NC-ND
+﻿// <copyright file="DownloadForm.cs" company="Baphomet Media">
+// © Copyright by Baphomet Media 2020 CC BY-NC-ND
 // </copyright>
 
 using System;

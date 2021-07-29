@@ -1,5 +1,5 @@
-﻿// <copyright file="GithubBridge.cs" company="IAMVISHNU Media">
-// © Copyright by IAMVISHNU Media 2020 CC BY-NC-ND
+﻿// <copyright file="GithubBridge.cs" company="Baphomet Media">
+// © Copyright by Baphomet Media 2020 CC BY-NC-ND
 // </copyright>
 
 using System;
@@ -24,7 +24,7 @@ namespace ApexLauncher {
                 try {
                     wc.UseDefaultCredentials = true;
                     wc.Headers.Add("User-Agent: Other");
-                    string text = wc.DownloadString("https://api.github.com/repos/iamvishnu-media/Apex-Launcher/releases/latest");
+                    string text = wc.DownloadString("https://api.github.com/repos/baph-omet/Apex-Launcher/releases/latest");
 
                     JavaScriptSerializer jss = new JavaScriptSerializer();
                     Dictionary<string, object> json = jss.Deserialize<Dictionary<string, object>>(text);

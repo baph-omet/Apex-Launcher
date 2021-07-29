@@ -1,5 +1,5 @@
-﻿// <copyright file="AssemblyInfo.cs" company="IAMVISHNU Media">
-// © Copyright by IAMVISHNU Media 2020 CC BY-NC-ND
+﻿// <copyright file="AssemblyInfo.cs" company="Baphomet Media">
+// © Copyright by Baphomet Media 2020 CC BY-NC-ND
 // </copyright>
 
 using System.Reflection;
@@ -12,9 +12,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Apex Launcher")]
 [assembly: AssemblyDescription("The official launcher for Pokémon Apex")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("IAMVISHNU Media")]
+[assembly: AssemblyCompany("Baphomet Media")]
 [assembly: AssemblyProduct("Apex Launcher")]
-[assembly: AssemblyCopyright("Copyright © IAMVISHNU Media 2020")]
+[assembly: AssemblyCopyright("Copyright © Baphomet Media 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
