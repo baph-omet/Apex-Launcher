@@ -22,7 +22,7 @@ namespace ApexLauncher {
             InitializeComponent();
             if (!Program.NetworkConnected) {
                 TumblrBrowser.Hide();
-                RedditBrowser.Hide();
+                WikiBrowser.Hide();
                 ForumBrowser.Hide();
                 TabBox.Enabled = false;
             } else {
@@ -96,7 +96,7 @@ namespace ApexLauncher {
 
         private void Launcher_Shown(object sender, EventArgs e) {
             TumblrBrowser.IsWebBrowserContextMenuEnabled = false;
-            RedditBrowser.IsWebBrowserContextMenuEnabled = false;
+            WikiBrowser.IsWebBrowserContextMenuEnabled = false;
             ForumBrowser.IsWebBrowserContextMenuEnabled = false;
             VersionGameFiles vgf = Config.CurrentVersion;
             if (vgf != null) SetGameVersion(vgf);
@@ -113,19 +113,19 @@ namespace ApexLauncher {
         }
 
         private void DiscordLogo_Click(object sender, EventArgs e) {
-            Process.Start("https://apex.iamvishnu.net/discord");
+            Process.Start("https://baph.xyz/discord");
         }
 
         private void PictureBox1_Click(object sender, EventArgs e) {
-            Process.Start("https://forum.iamvishnu.net");
+            Process.Start("https://forum.baph.xyz");
         }
 
         private void WikiLogo_Click(object sender, EventArgs e) {
-            Process.Start("http://pokemonapex.wikia.com/wiki/Pok%C3%A9mon_Apex_Wikia");
+            Process.Start("https://pokemonapex.fandom.com/wiki/Pok%C3%A9mon_Apex_Wikia");
         }
 
         private void BrowserNavigation(object sender, WebBrowserNavigatingEventArgs e) {
-            if (loaded && !e.Url.Equals(((WebBrowser)sender).Url) && !e.Url.ToString().Contains("redditmedia") && e.Url.ToString().Contains(((WebBrowser)sender).Url.ToString())) {
+            if (loaded && !e.Url.Equals(((WebBrowser)sender).Url) && e.Url.ToString().Contains(((WebBrowser)sender).Url.ToString())) {
                 Process.Start(e.Url.ToString());
                 e.Cancel = true;
             } else if (loaded) {

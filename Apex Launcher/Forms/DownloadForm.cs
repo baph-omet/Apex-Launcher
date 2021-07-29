@@ -122,6 +122,23 @@ namespace ApexLauncher {
             }
         }
 
+        /// <summary>
+        /// Recursively copies directory and all contained files and directories to desired location.
+        /// </summary>
+        /// <param name="sourceDirectory">Directory to copy.</param>
+        /// <param name="destinationDirectory">Destination to copy to.</param>
+        /// <param name="overwriteFile">If true, existing files with same names in destination will be overwritten.</param>
+        private static void RecursiveCopy(string sourceDirectory, string destinationDirectory, bool overwriteFile = true) {
+            if (!Directory.Exists(destinationDirectory)) Directory.CreateDirectory(destinationDirectory);
+            foreach (string f in from string f in Directory.GetFiles(sourceDirectory)
+                                 where overwriteFile || !File.Exists(Path.Combine(destinationDirectory, Path.GetFileName(f)))
+                                 select f) {
+                File.Copy(f, Path.Combine(destinationDirectory, Path.GetFileName(f)), overwriteFile);
+            }
+
+            foreach (string d in Directory.GetDirectories(sourceDirectory)) RecursiveCopy(d, Path.Combine(destinationDirectory, Path.GetFileName(d)), overwriteFile);
+        }
+
         private HttpWebResponse GetResponse(string source) {
             HttpWebRequest filereq = (HttpWebRequest)WebRequest.Create(new Uri(source));
             HttpWebResponse fileresp = null;
@@ -298,23 +315,6 @@ namespace ApexLauncher {
                 Downloading = false;
                 Close();
             }
-        }
-
-        /// <summary>
-        /// Recursively copies directory and all contained files and directories to desired location.
-        /// </summary>
-        /// <param name="sourceDirectory">Directory to copy.</param>
-        /// <param name="destinationDirectory">Destination to copy to.</param>
-        /// <param name="overwriteFile">If true, existing files with same names in destination will be overwritten.</param>
-        private static void RecursiveCopy(string sourceDirectory, string destinationDirectory, bool overwriteFile = true) {
-            if (!Directory.Exists(destinationDirectory)) Directory.CreateDirectory(destinationDirectory);
-            foreach (string f in from string f in Directory.GetFiles(sourceDirectory)
-                                 where overwriteFile || !File.Exists(Path.Combine(destinationDirectory, Path.GetFileName(f)))
-                                 select f) {
-                File.Copy(f, Path.Combine(destinationDirectory, Path.GetFileName(f)), overwriteFile);
-            }
-
-            foreach (string d in Directory.GetDirectories(sourceDirectory)) RecursiveCopy(d, Path.Combine(destinationDirectory, Path.GetFileName(d)), overwriteFile);
         }
 
         private void DownloadForm_Disposed(object sender, EventArgs e) {

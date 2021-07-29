@@ -32,9 +32,6 @@
             this.UpdatesPage = new System.Windows.Forms.TabPage();
             this.NoConnectionLabel = new System.Windows.Forms.Label();
             this.TumblrBrowser = new System.Windows.Forms.WebBrowser();
-            this.CommunityPage = new System.Windows.Forms.TabPage();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.RedditBrowser = new System.Windows.Forms.WebBrowser();
             this.ForumPage = new System.Windows.Forms.TabPage();
             this.ForumBrowser = new System.Windows.Forms.WebBrowser();
             this.ForumLogo = new System.Windows.Forms.PictureBox();
@@ -44,13 +41,15 @@
             this.GameVersionLabel = new System.Windows.Forms.Label();
             this.LauncherTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.WikiLogo = new System.Windows.Forms.PictureBox();
+            this.WikiPage = new System.Windows.Forms.TabPage();
+            this.WikiBrowser = new System.Windows.Forms.WebBrowser();
             ((System.ComponentModel.ISupportInitialize)(this.DiscordLogo)).BeginInit();
             this.TabBox.SuspendLayout();
             this.UpdatesPage.SuspendLayout();
-            this.CommunityPage.SuspendLayout();
             this.ForumPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ForumLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WikiLogo)).BeginInit();
+            this.WikiPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // LaunchButton
@@ -99,8 +98,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabBox.Controls.Add(this.UpdatesPage);
-            this.TabBox.Controls.Add(this.CommunityPage);
             this.TabBox.Controls.Add(this.ForumPage);
+            this.TabBox.Controls.Add(this.WikiPage);
             this.TabBox.Location = new System.Drawing.Point(12, 12);
             this.TabBox.Name = "TabBox";
             this.TabBox.SelectedIndex = 0;
@@ -138,46 +137,9 @@
             this.TumblrBrowser.ScriptErrorsSuppressed = true;
             this.TumblrBrowser.Size = new System.Drawing.Size(1307, 446);
             this.TumblrBrowser.TabIndex = 0;
-            this.TumblrBrowser.Url = new System.Uri("https://pokemonapex.tumblr.com/#recentposts", System.UriKind.Absolute);
+            this.TumblrBrowser.Url = new System.Uri("https://apex.baph.xyz#recentposts", System.UriKind.Absolute);
             this.TumblrBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.BrowserLoaded);
             this.TumblrBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.BrowserNavigation);
-            // 
-            // CommunityPage
-            // 
-            this.CommunityPage.Controls.Add(this.webBrowser1);
-            this.CommunityPage.Controls.Add(this.RedditBrowser);
-            this.CommunityPage.Location = new System.Drawing.Point(4, 22);
-            this.CommunityPage.Name = "CommunityPage";
-            this.CommunityPage.Padding = new System.Windows.Forms.Padding(3);
-            this.CommunityPage.Size = new System.Drawing.Size(1313, 452);
-            this.CommunityPage.TabIndex = 1;
-            this.CommunityPage.Text = "Community Posts";
-            this.CommunityPage.UseVisualStyleBackColor = true;
-            // 
-            // webBrowser1
-            // 
-            this.webBrowser1.AllowWebBrowserDrop = false;
-            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser1.Location = new System.Drawing.Point(3, 3);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.ScriptErrorsSuppressed = true;
-            this.webBrowser1.Size = new System.Drawing.Size(1307, 446);
-            this.webBrowser1.TabIndex = 1;
-            this.webBrowser1.Url = new System.Uri("https://reddit.com/r/PokemonApex", System.UriKind.Absolute);
-            // 
-            // RedditBrowser
-            // 
-            this.RedditBrowser.AllowWebBrowserDrop = false;
-            this.RedditBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RedditBrowser.Location = new System.Drawing.Point(3, 3);
-            this.RedditBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.RedditBrowser.Name = "RedditBrowser";
-            this.RedditBrowser.ScriptErrorsSuppressed = true;
-            this.RedditBrowser.Size = new System.Drawing.Size(1307, 446);
-            this.RedditBrowser.TabIndex = 0;
-            this.RedditBrowser.Url = new System.Uri("https://reddit.com/r/PokemonApex", System.UriKind.Absolute);
-            this.RedditBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.BrowserNavigation);
             // 
             // ForumPage
             // 
@@ -199,7 +161,7 @@
             this.ForumBrowser.ScriptErrorsSuppressed = true;
             this.ForumBrowser.Size = new System.Drawing.Size(1313, 452);
             this.ForumBrowser.TabIndex = 2;
-            this.ForumBrowser.Url = new System.Uri("https://forum.iamvishnu.net", System.UriKind.Absolute);
+            this.ForumBrowser.Url = new System.Uri("https://forum.baph.xyz", System.UriKind.Absolute);
             // 
             // ForumLogo
             // 
@@ -279,6 +241,28 @@
             this.LauncherTooltip.SetToolTip(this.WikiLogo, "http://pokemonapex.wikia.com");
             this.WikiLogo.Click += new System.EventHandler(this.WikiLogo_Click);
             // 
+            // WikiPage
+            // 
+            this.WikiPage.Controls.Add(this.WikiBrowser);
+            this.WikiPage.Location = new System.Drawing.Point(4, 22);
+            this.WikiPage.Name = "WikiPage";
+            this.WikiPage.Size = new System.Drawing.Size(1313, 452);
+            this.WikiPage.TabIndex = 3;
+            this.WikiPage.Text = "Wiki";
+            this.WikiPage.UseVisualStyleBackColor = true;
+            // 
+            // WikiBrowser
+            // 
+            this.WikiBrowser.AllowWebBrowserDrop = false;
+            this.WikiBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.WikiBrowser.Location = new System.Drawing.Point(0, 0);
+            this.WikiBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.WikiBrowser.Name = "WikiBrowser";
+            this.WikiBrowser.ScriptErrorsSuppressed = true;
+            this.WikiBrowser.Size = new System.Drawing.Size(1313, 452);
+            this.WikiBrowser.TabIndex = 1;
+            this.WikiBrowser.Url = new System.Uri("https://pokemonapex.fandom.com/wiki/Pok%C3%A9mon_Apex_Wikia", System.UriKind.Absolute);
+            // 
             // Launcher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -306,10 +290,10 @@
             this.TabBox.ResumeLayout(false);
             this.UpdatesPage.ResumeLayout(false);
             this.UpdatesPage.PerformLayout();
-            this.CommunityPage.ResumeLayout(false);
             this.ForumPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ForumLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WikiLogo)).EndInit();
+            this.WikiPage.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -322,20 +306,19 @@
         private System.Windows.Forms.PictureBox DiscordLogo;
         private System.Windows.Forms.TabControl TabBox;
         private System.Windows.Forms.TabPage UpdatesPage;
-        private System.Windows.Forms.TabPage CommunityPage;
         private System.Windows.Forms.PictureBox ForumLogo;
         private System.Windows.Forms.Button SaveMgmtButton;
         private System.Windows.Forms.WebBrowser TumblrBrowser;
-        private System.Windows.Forms.WebBrowser RedditBrowser;
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.Label LauncherVersionLabel;
         private System.Windows.Forms.Label NoConnectionLabel;
         public System.Windows.Forms.Label GameVersionLabel;
         private System.Windows.Forms.ToolTip LauncherTooltip;
         private System.Windows.Forms.PictureBox WikiLogo;
-        private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.TabPage ForumPage;
         private System.Windows.Forms.WebBrowser ForumBrowser;
+        private System.Windows.Forms.TabPage WikiPage;
+        private System.Windows.Forms.WebBrowser WikiBrowser;
     }
 }
 
