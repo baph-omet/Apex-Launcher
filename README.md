@@ -3,12 +3,12 @@ Welcome to the repository for the official launcher for fan game [Pokémon Apex]
 
 ## Issues
 If you have found an issue or have a suggestion about the **launcher only**, please report them here. If you would like to contribute code, feel free to submit a pull request for review.
-## Antivirus
-Some antivirus programs can interfere with the launcher running or display a false virus warning. You may need to manually allow or whitelist the launcher in your antivirus settings. Please do not report such issues, as I have no control over them and do not provide tech support.
 
 Please read the [CONTRIBUTING.md](https://github.com/baph-omet/Apex-Launcher/blob/master/CONTRIBUTING.md) file before submitting for report and pull request guidelines.
 
 If you have an in-game issue with Apex, please report it on the [discord server](https://baph.xyz/discord).
+## Antivirus
+Some antivirus programs can interfere with the launcher running or display a false virus warning. You may need to manually allow or whitelist the launcher in your antivirus settings. Please do not report such issues, as I have no control over them and do not provide tech support.
 
 ## Features
 Implemented:
