@@ -116,4 +116,10 @@
 	<patch>true</patch>
 	<audioversion>1</audioversion>
   </version>
+  <version>
+	<channel>a</channel>
+	<number>10</number>
+	<location>https://www.mediafire.com/download/1d5su2bryjpugch/Pok%25C3%25A9mon_Apex_Alpha_Build_10.zip</location>
+	<audioversion>2</audioversion>
+  </version>
 </versions>
