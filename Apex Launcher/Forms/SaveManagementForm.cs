@@ -91,7 +91,7 @@ namespace ApexLauncher {
                 }
 
                 string oldfile = GetPath(FileView.SelectedItems[0].SubItems[0].Text);
-                using TextEntryForm tef = new TextEntryForm();
+                using TextEntryForm tef = new();
                 tef.ShowDialog();
                 foreach (char c in tef.Result) {
                     if (new[] { '/', '\\', '|', '>', '<', ':', '?', '*', '"' }.Contains(c)) {
@@ -128,7 +128,7 @@ namespace ApexLauncher {
 
         private void ExportButton_Click(object sender, EventArgs e) {
             if (FileView.SelectedItems.Count > 0) {
-                using SaveFileDialog sfd = new SaveFileDialog {
+                using SaveFileDialog sfd = new() {
                     AddExtension = true,
                     DefaultExt = ".rxdata",
                     Filter = "RPGXP Data Files|*.rxdata",
@@ -139,7 +139,7 @@ namespace ApexLauncher {
         }
 
         private void ImportButton_Click(object sender, EventArgs e) {
-            using OpenFileDialog ofd = new OpenFileDialog();
+            using OpenFileDialog ofd = new();
             ofd.AddExtension = true;
             ofd.DefaultExt = ".rxdata";
             ofd.Filter = "RPGXP Data Files|*.rxdata";

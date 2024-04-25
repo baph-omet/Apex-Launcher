@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -18,6 +19,7 @@ namespace ApexLauncher {
     public partial class DownloadForm : Form {
         private readonly List<IDownloadable> downloadQueue;
         private readonly VersionGameFiles mostRecent = Config.CurrentVersion;
+        private readonly HttpClient client = new();
         private Thread dlThread;
         private string currentFilepath;
         private bool finished;
@@ -27,9 +29,9 @@ namespace ApexLauncher {
         /// </summary>
         /// <param name="downloads">List of files to download.</param>
         public DownloadForm(List<IDownloadable> downloads) {
-            if (downloads is null) throw new ArgumentNullException(nameof(downloads));
+            ArgumentNullException.ThrowIfNull(downloads);
             InitializeComponent();
-            downloadQueue = new List<IDownloadable>();
+            downloadQueue = [];
             foreach (IDownloadable d in downloads) {
                 if (d.Prerequisite != null && d.Prerequisite.NewerThanDownloaded()) {
                     downloadQueue.Add(d.Prerequisite);
@@ -96,13 +98,13 @@ namespace ApexLauncher {
                     Directory.CreateDirectory(destination);
 
                     // Download
-                    HttpWebResponse fileresp = GetResponse(download.Location);
-                    if (fileresp.ContentLength <= 0) {
+                    /*HttpResponseMessage fileresp = GetResponse(download.Location);
+                    if (fileresp is null) {
                         MessageBox.Show($"Could not access file {download}. Package skipped.");
                         continue;
-                    }
+                    }*/
 
-                    if (!StreamFile(fileresp, download)) {
+                    if (!StreamFile(download)) {
                         finished = false;
                         MessageBox.Show("The download couldn't be completed. Check your internet connection. If you think this is a program error, please report this to the Launcher's GitHub page.");
                         break;
@@ -123,6 +125,14 @@ namespace ApexLauncher {
         }
 
         /// <summary>
+        /// Dispose this control.
+        /// </summary>
+        public new void Dispose() {
+            client.Dispose();
+            base.Dispose();
+        }
+
+        /// <summary>
         /// Recursively copies directory and all contained files and directories to desired location.
         /// </summary>
         /// <param name="sourceDirectory">Directory to copy.</param>
@@ -139,12 +149,10 @@ namespace ApexLauncher {
             foreach (string d in Directory.GetDirectories(sourceDirectory)) RecursiveCopy(d, Path.Combine(destinationDirectory, Path.GetFileName(d)), overwriteFile);
         }
 
-        private HttpWebResponse GetResponse(string source) {
-            HttpWebRequest filereq = (HttpWebRequest)WebRequest.Create(new Uri(source));
-            HttpWebResponse fileresp = null;
+        private HttpResponseMessage GetResponse(string source) {
+            HttpResponseMessage response = null;
             try {
-                fileresp = (HttpWebResponse)filereq.GetResponse();
-                if (filereq.ContentLength > 0) fileresp.ContentLength = filereq.ContentLength;
+                response = client.GetAsync(new Uri(source)).Result;
             } catch (WebException) {
                 MessageBox.Show(
                     "Network exception encountered when trying to start your download. You might not have a connection to the internet," +
@@ -154,12 +162,14 @@ namespace ApexLauncher {
                 CloseForm();
             }
 
-            return fileresp;
+            return response;
         }
 
-        private bool StreamFile(HttpWebResponse fileresp, IDownloadable download) {
+        private bool StreamFile(IDownloadable download) {
             bool succeeded = true;
-            using (Stream dlstream = fileresp.GetResponseStream()) {
+
+            HttpResponseMessage response = client.GetAsync(download.Location).Result;
+            using (Stream dlstream = response.Content.ReadAsStream()) {
                 FileStream outputStream;
                 while (true) {
                     try {
@@ -185,9 +195,9 @@ namespace ApexLauncher {
                         length = dlstream.Read(buffer, 0, buffersize);
                         bytesRead += length;
                         outputStream.Write(buffer, 0, length);
-                        UpdateProgress(Convert.ToInt32(100F * bytesRead / fileresp.ContentLength));
+                        UpdateProgress(Convert.ToInt32(100F * bytesRead / dlstream.Length));
                         UpdateProgressText(
-                            $"Downloading {download} (Package {downloadQueue.IndexOf(download) + 1}/{downloadQueue.Count}) {bytesRead / 1048576}/{fileresp.ContentLength / 1048576} MB ({Convert.ToInt16(100 * (double)bytesRead / fileresp.ContentLength, Program.Culture)}%)...");
+                            $"Downloading {download} (Package {downloadQueue.IndexOf(download) + 1}/{downloadQueue.Count}) {bytesRead / 1048576}/{dlstream.Length / 1048576} MB ({Convert.ToInt16(100 * (double)bytesRead / dlstream.Length, Program.Culture)}%)...");
                     }
                 } catch (WebException e) {
                     succeeded = false;
@@ -250,7 +260,7 @@ namespace ApexLauncher {
                 return false;
             }
 
-            if (download == mostRecent && !(download is VersionAudio)) {
+            if (download == mostRecent && download is not VersionAudio) {
                 bool downloadingNewAudio = false;
                 foreach (IDownloadable d in downloadQueue) {
                     if (d is VersionAudio) {
@@ -284,7 +294,7 @@ namespace ApexLauncher {
             if (DownloadProgressBar.InvokeRequired) {
                 UP d = UpdateProgress;
                 try {
-                    Invoke(d, new object[] { progress });
+                    Invoke(d, [progress]);
                 } catch (ObjectDisposedException) { }
             } else if (progress >= 0) DownloadProgressBar.Value = progress;
         }
@@ -298,7 +308,7 @@ namespace ApexLauncher {
             if (ProgressLabel.InvokeRequired) {
                 UPT d = UpdateProgressText;
                 try {
-                    Invoke(d, new object[] { message });
+                    Invoke(d, [message]);
                 } catch (ObjectDisposedException) { }
             } else ProgressLabel.Text = message;
         }
@@ -319,7 +329,7 @@ namespace ApexLauncher {
 
         private void DownloadForm_Disposed(object sender, EventArgs e) {
             if (dlThread.IsAlive) {
-                dlThread.Abort();
+                dlThread.Interrupt();
                 if (!finished) Aborted?.Invoke(sender, new EventArgs());
             }
         }
@@ -336,7 +346,7 @@ namespace ApexLauncher {
         }
 
         private void DownloadForm_Aborted(object sender, EventArgs e) {
-            if (dlThread.IsAlive) dlThread.Abort();
+            if (dlThread.IsAlive) dlThread.Interrupt();
             Downloading = false;
             CloseForm();
             Program.Launcher.UpdateStatus("Download aborted");
@@ -346,7 +356,7 @@ namespace ApexLauncher {
             if (!Program.Downloading) return true;
             DialogResult res = MessageBox.Show("There is a download in progress. Are you sure you want to cancel?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (res == DialogResult.Yes) {
-                dlThread.Abort();
+                dlThread.Interrupt();
                 try { File.Delete(currentFilepath); } catch (IOException) { }
                 Downloading = false;
                 Program.Launcher.UpdateStatus("Download cancelled.");
@@ -361,7 +371,12 @@ namespace ApexLauncher {
         }
 
         private void DownloadForm_FormClosing(object sender, FormClosingEventArgs e) {
-            if (!PromptCancelDownload()) e.Cancel = true;
+            if (!PromptCancelDownload()) {
+                e.Cancel = true;
+                return;
+            }
+
+            client.Dispose();
         }
     }
 }

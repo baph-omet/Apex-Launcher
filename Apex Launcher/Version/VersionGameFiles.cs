@@ -91,7 +91,7 @@ namespace ApexLauncher {
         /// <param name="name">The string to get.</param>
         /// <returns>A <see cref="Channel"/> enum if found, else <see cref="Channel.NONE"/>.</returns>
         public static Channel GetChannelFromString(string name) {
-            if (name is null) throw new ArgumentNullException(nameof(name));
+            ArgumentNullException.ThrowIfNull(name);
             switch (name.ToLower(Program.Culture)[0]) {
                 case '1':
                 case 'a':
@@ -113,7 +113,7 @@ namespace ApexLauncher {
         /// <param name="str">String to parse.</param>
         /// <returns>A version instance parsed from string.</returns>
         public static VersionGameFiles FromString(string str) {
-            if (str is null) throw new ArgumentNullException(nameof(str));
+            ArgumentNullException.ThrowIfNull(str);
             if (!File.Exists(Path.Combine(Config.InstallPath, "Versions", "VersionManifest.xml"))) {
                 string[] split = str.Split(' ');
                 Channel channel = split[0] switch
@@ -121,7 +121,7 @@ namespace ApexLauncher {
                     "ALPHA" => Channel.ALPHA,
                     "BETA" => Channel.BETA,
                     "RELEASE" => Channel.RELEASE,
-                    _ => Channel.NONE
+                    _ => Channel.NONE,
                 };
 
                 bool patch = false;
@@ -145,9 +145,9 @@ namespace ApexLauncher {
         /// </summary>
         /// <returns>List of all version objects.</returns>
         public static List<VersionGameFiles> GetAllVersions() {
-            List<VersionGameFiles> versions = new List<VersionGameFiles>();
+            List<VersionGameFiles> versions = [];
 
-            XmlDocument doc = new XmlDocument();
+            XmlDocument doc = new();
             doc.Load(Path.Combine(Config.InstallPath, "Versions", "VersionManifest.xml"));
 
             foreach (XmlNode node in doc.GetElementsByTagName("version")) {
@@ -244,7 +244,7 @@ namespace ApexLauncher {
             if (obj == null) return false;
             if (!GetType().Equals(obj.GetType())) return false;
             if (obj == this) return true;
-            if (!(obj is VersionGameFiles)) return false;
+            if (obj is not VersionGameFiles) return false;
             if (((VersionGameFiles)obj).ToString().Equals(ToString())) return true;
             return false;
         }

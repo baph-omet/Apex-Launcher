@@ -11,22 +11,17 @@ namespace ApexLauncher {
     /// <summary>
     /// Object that represents a version of the game's audio files.
     /// </summary>
-    public class VersionAudio : IDownloadable {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VersionAudio"/> class.
-        /// </summary>
-        /// <param name="number">Version number.</param>
-        /// <param name="location">Remote download location.</param>
-        public VersionAudio(double number, string location) {
-            Location = location;
-            Number = number;
-        }
+    /// <remarks>
+    /// Initializes a new instance of the <see cref="VersionAudio"/> class.
+    /// </remarks>
+    /// <param name="number">Version number.</param>
+    /// <param name="location">Remote download location.</param>
+    public class VersionAudio(double number, string location) : IDownloadable {
+        /// <inheritdoc/>
+        public string Location { get; } = location;
 
         /// <inheritdoc/>
-        public string Location { get; }
-
-        /// <inheritdoc/>
-        public double Number { get; }
+        public double Number { get; } = number;
 
         /// <inheritdoc/>
         public IDownloadable Prerequisite { get; }
@@ -38,7 +33,7 @@ namespace ApexLauncher {
         /// <returns>A cooresponding audio version based on the string, if it exists.</returns>
         /// <exception cref="ArgumentNullException">Thrown if argument is null.</exception>
         public static VersionAudio FromString(string str) {
-            if (str is null) throw new ArgumentNullException(nameof(str));
+            ArgumentNullException.ThrowIfNull(str);
 
             int number = Convert.ToInt32(str.Replace("Audio v", string.Empty));
 
@@ -51,8 +46,8 @@ namespace ApexLauncher {
         /// </summary>
         /// <returns>List of all <see cref="VersionAudio"/> objects.</returns>
         public static List<VersionAudio> GetAllVersions() {
-            List<VersionAudio> versions = new List<VersionAudio>();
-            XmlDocument doc = new XmlDocument();
+            List<VersionAudio> versions = [];
+            XmlDocument doc = new();
             doc.Load(Path.Combine(Config.InstallPath, "Versions", "VersionManifestAudio.xml"));
             foreach (XmlNode node in doc.GetElementsByTagName("version")) {
                 string location = string.Empty;
@@ -119,12 +114,17 @@ namespace ApexLauncher {
 
         /// <inheritdoc/>
         public override bool Equals(object other) {
-            if (!(other is VersionAudio)) return false;
+            if (other is not VersionAudio) return false;
             if (other is null) return false;
             VersionAudio o = other as VersionAudio;
             if (this == o) return true;
             if (o.ToString().Equals(ToString())) return true;
             return false;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode() {
+            return base.GetHashCode();
         }
     }
 }

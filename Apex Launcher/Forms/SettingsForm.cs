@@ -49,7 +49,7 @@ namespace ApexLauncher {
         }
 
         private void BrowseButton_Click(object sender, EventArgs e) {
-            using FolderBrowserDialog fbd = new FolderBrowserDialog { Description = "Choose a Folder" };
+            using FolderBrowserDialog fbd = new() { Description = "Choose a Folder" };
             fbd.ShowDialog();
 
             string selectedPath = fbd.SelectedPath;

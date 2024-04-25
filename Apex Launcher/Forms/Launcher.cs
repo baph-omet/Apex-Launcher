@@ -23,7 +23,6 @@ namespace ApexLauncher {
             if (!Program.NetworkConnected) {
                 TumblrBrowser.Hide();
                 WikiBrowser.Hide();
-                ForumBrowser.Hide();
                 TabBox.Enabled = false;
             } else {
                 NoConnectionLabel.Hide();
@@ -49,7 +48,7 @@ namespace ApexLauncher {
         public void UpdateStatus(string message) {
             if (StatusLabel.InvokeRequired) {
                 US d = UpdateStatus;
-                Invoke(d, new object[] { message });
+                Invoke(d, [message]);
             } else StatusLabel.Text = message;
         }
 
@@ -58,10 +57,10 @@ namespace ApexLauncher {
         /// </summary>
         /// <param name="v">Version to set.</param>
         public void SetGameVersion(VersionGameFiles v) {
-            if (v is null) throw new ArgumentNullException(nameof(v));
+            ArgumentNullException.ThrowIfNull(v);
             if (GameVersionLabel.InvokeRequired) {
                 SGV d = SetGameVersion;
-                Invoke(d, new object[] { v });
+                Invoke(d, [v]);
             } else GameVersionLabel.Text = "Build: " + v.ToString();
         }
 
@@ -74,7 +73,7 @@ namespace ApexLauncher {
         }
 
         private void SettingsButton_Click(object sender, EventArgs e) {
-            using SettingsForm settings = new SettingsForm();
+            using SettingsForm settings = new();
             settings.ShowDialog();
         }
 
@@ -90,14 +89,13 @@ namespace ApexLauncher {
         }
 
         private void SaveMgmtButton_Click(object sender, EventArgs e) {
-            using SaveManagementForm saves = new SaveManagementForm();
+            using SaveManagementForm saves = new();
             saves.ShowDialog();
         }
 
         private void Launcher_Shown(object sender, EventArgs e) {
             TumblrBrowser.IsWebBrowserContextMenuEnabled = false;
             WikiBrowser.IsWebBrowserContextMenuEnabled = false;
-            ForumBrowser.IsWebBrowserContextMenuEnabled = false;
             VersionGameFiles vgf = Config.CurrentVersion;
             if (vgf != null) SetGameVersion(vgf);
             LauncherVersionLabel.Text = "Launcher v" + Program.GetLauncherVersion();

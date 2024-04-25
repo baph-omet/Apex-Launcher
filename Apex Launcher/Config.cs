@@ -26,6 +26,8 @@ namespace ApexLauncher {
 
         private static bool disableAudioDownload;
 
+        private static bool disableFontPrompt;
+
         /// <summary>
         /// Gets or sets the currently installed version of the game's files.
         /// </summary>
@@ -97,6 +99,20 @@ namespace ApexLauncher {
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether font installation prompt is suppressed.
+        /// </summary>
+        public static bool DisableFontPrompt {
+            get {
+                return disableFontPrompt;
+            }
+
+            set {
+                disableFontPrompt = value;
+                if (loaded) SaveConfig();
+            }
+        }
+
         private static string Filepath => Path.Combine(Directory.GetCurrentDirectory(), "config.txt");
 
         /// <summary>
@@ -136,7 +152,7 @@ namespace ApexLauncher {
         /// Save configuration variables to underlying file.
         /// </summary>
         public static void SaveConfig() {
-            List<string> lines = new List<string>();
+            List<string> lines = [];
             foreach (PropertyInfo pi in typeof(Config).GetProperties()) lines.Add($"{pi.Name}={pi.GetValue(null)}");
             File.WriteAllLines(Filepath, lines);
         }
@@ -146,7 +162,7 @@ namespace ApexLauncher {
         /// </summary>
         public static void CreateConfig() {
             using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("ApexLauncher.config.txt");
-            using FileStream fileStream = new FileStream(Filepath, FileMode.CreateNew);
+            using FileStream fileStream = new(Filepath, FileMode.CreateNew);
             for (int i = 0; i < stream.Length; i++) fileStream.WriteByte((byte)stream.ReadByte());
         }
 
@@ -154,9 +170,8 @@ namespace ApexLauncher {
         /// Gets a block of text that contains system data for debugging.
         /// </summary>
         /// <returns>String block that contains a bunch of system information.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Typically used only in debugging.")]
         public static string GetSystemConfigurationPaste() {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine("# Configuration");
             sb.AppendLine($"* Current Launcher Version: {Assembly.GetExecutingAssembly().GetName().Version}");
             sb.AppendLine($"* Current Game Version: {CurrentVersion}");
