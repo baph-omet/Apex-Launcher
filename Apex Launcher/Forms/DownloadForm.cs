@@ -8,7 +8,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -19,7 +18,6 @@ namespace ApexLauncher {
     public partial class DownloadForm : Form {
         private readonly List<IDownloadable> downloadQueue;
         private readonly VersionGameFiles mostRecent = Config.CurrentVersion;
-        private readonly HttpClient client = new();
         private Thread dlThread;
         private string currentFilepath;
         private bool finished;
@@ -98,13 +96,13 @@ namespace ApexLauncher {
                     Directory.CreateDirectory(destination);
 
                     // Download
-                    /*HttpResponseMessage fileresp = GetResponse(download.Location);
-                    if (fileresp is null) {
+                    HttpWebResponse fileresp = GetResponse(download.Location);
+                    if (fileresp.ContentLength <= 0) {
                         MessageBox.Show($"Could not access file {download}. Package skipped.");
                         continue;
-                    }*/
+                    }
 
-                    if (!StreamFile(download)) {
+                    if (!StreamFile(fileresp, download)) {
                         finished = false;
                         MessageBox.Show("The download couldn't be completed. Check your internet connection. If you think this is a program error, please report this to the Launcher's GitHub page.");
                         break;
@@ -125,14 +123,6 @@ namespace ApexLauncher {
         }
 
         /// <summary>
-        /// Dispose this control.
-        /// </summary>
-        public new void Dispose() {
-            client.Dispose();
-            base.Dispose();
-        }
-
-        /// <summary>
         /// Recursively copies directory and all contained files and directories to desired location.
         /// </summary>
         /// <param name="sourceDirectory">Directory to copy.</param>
@@ -149,10 +139,14 @@ namespace ApexLauncher {
             foreach (string d in Directory.GetDirectories(sourceDirectory)) RecursiveCopy(d, Path.Combine(destinationDirectory, Path.GetFileName(d)), overwriteFile);
         }
 
-        private HttpResponseMessage GetResponse(string source) {
-            HttpResponseMessage response = null;
+        private HttpWebResponse GetResponse(string source) {
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
+            HttpWebRequest filereq = (HttpWebRequest)WebRequest.Create(new Uri(source));
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
+            HttpWebResponse fileresp = null;
             try {
-                response = client.GetAsync(new Uri(source)).Result;
+                fileresp = (HttpWebResponse)filereq.GetResponse();
+                if (filereq.ContentLength > 0) fileresp.ContentLength = filereq.ContentLength;
             } catch (WebException) {
                 MessageBox.Show(
                     "Network exception encountered when trying to start your download. You might not have a connection to the internet," +
@@ -162,26 +156,24 @@ namespace ApexLauncher {
                 CloseForm();
             }
 
-            return response;
+            return fileresp;
         }
 
-        private bool StreamFile(IDownloadable download) {
+        private bool StreamFile(HttpWebResponse fileresp, IDownloadable download) {
             bool succeeded = true;
-
-            HttpResponseMessage response = client.GetAsync(download.Location).Result;
-            using (Stream dlstream = response.Content.ReadAsStream()) {
+            using (Stream dlstream = fileresp.GetResponseStream()) {
                 FileStream outputStream;
                 while (true) {
                     try {
                         outputStream = new FileStream(currentFilepath, FileMode.OpenOrCreate, FileAccess.Write);
                         break;
-                    } catch (UnauthorizedAccessException e) {
+                    } catch (UnauthorizedAccessException) {
                         DialogResult res = MessageBox.Show(
                             $"Couldn't get access to local file location at {currentFilepath}. Another program might be using it. Would you like to try again?",
                             "Download Error",
                             MessageBoxButtons.RetryCancel,
                             MessageBoxIcon.Error);
-                        if (res == DialogResult.Cancel) throw e;
+                        if (res == DialogResult.Cancel) throw;
                         Thread.Sleep(1000);
                     }
                 }
@@ -195,9 +187,9 @@ namespace ApexLauncher {
                         length = dlstream.Read(buffer, 0, buffersize);
                         bytesRead += length;
                         outputStream.Write(buffer, 0, length);
-                        UpdateProgress(Convert.ToInt32(100F * bytesRead / dlstream.Length));
+                        UpdateProgress(Convert.ToInt32(100F * bytesRead / fileresp.ContentLength));
                         UpdateProgressText(
-                            $"Downloading {download} (Package {downloadQueue.IndexOf(download) + 1}/{downloadQueue.Count}) {bytesRead / 1048576}/{dlstream.Length / 1048576} MB ({Convert.ToInt16(100 * (double)bytesRead / dlstream.Length, Program.Culture)}%)...");
+                            $"Downloading {download} (Package {downloadQueue.IndexOf(download) + 1}/{downloadQueue.Count}) {bytesRead / 1048576}/{fileresp.ContentLength / 1048576} MB ({Convert.ToInt16(100 * (double)bytesRead / fileresp.ContentLength, Program.Culture)}%)...");
                     }
                 } catch (WebException e) {
                     succeeded = false;
@@ -371,12 +363,7 @@ namespace ApexLauncher {
         }
 
         private void DownloadForm_FormClosing(object sender, FormClosingEventArgs e) {
-            if (!PromptCancelDownload()) {
-                e.Cancel = true;
-                return;
-            }
-
-            client.Dispose();
+            if (!PromptCancelDownload()) e.Cancel = true;
         }
     }
 }

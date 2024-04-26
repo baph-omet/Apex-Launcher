@@ -48,7 +48,6 @@ namespace ApexLauncher {
                         using Stream stream = client.GetStreamAsync(downloadUrl).Result;
                         string fileName = $"ApexLauncherv{tag}.exe";
                         using FileStream fileStream = File.Create(fileName);
-                        //stream.Seek(0, SeekOrigin.Begin);
                         stream.CopyTo(fileStream);
                         fileStream.Close();
                         stream.Close();

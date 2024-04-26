@@ -73,7 +73,7 @@ namespace ApexLauncher {
                     GetSaveFiles();
                     if (FileView.Items.Count > 0) {
                         if (FileView.Items.Count > i) FileView.Items[i].Selected = true;
-                        else FileView.Items[FileView.Items.Count - 1].Selected = true;
+                        else FileView.Items[^1].Selected = true;
                         FileView.Select();
                     }
                 }
@@ -146,7 +146,7 @@ namespace ApexLauncher {
             ofd.ShowDialog();
 
             if (ofd.FileName.Length > 0) {
-                string newfilename = Program.GetNextAvailableFilePath(GetPath(ofd.FileName.Split('\\')[ofd.FileName.Split('\\').Length - 1]));
+                string newfilename = Program.GetNextAvailableFilePath(GetPath(ofd.FileName.Split('\\')[^1]));
 
                 File.Copy(ofd.FileName, newfilename);
 

@@ -41,9 +41,7 @@
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <PropertyGroup>
-    <NoWin32Manifest>true</NoWin32Manifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <ManifestCertificateThumbprint>EBB9493FFF7685DC2AFC229607EEF6AC90CE1406</ManifestCertificateThumbprint>
   </PropertyGroup>
@@ -99,5 +97,8 @@
   </ItemGroup>
   <PropertyGroup>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <AssemblyVersion>1.8.0</AssemblyVersion>
+    <FileVersion>1.8.0</FileVersion>
   </PropertyGroup>
 </Project>

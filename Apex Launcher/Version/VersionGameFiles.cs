@@ -36,51 +36,43 @@ namespace ApexLauncher {
     /// <summary>
     /// Object representing a version of the game files.
     /// </summary>
-    public class VersionGameFiles : IDownloadable {
+    /// <remarks>
+    /// Initializes a new instance of the <see cref="VersionGameFiles"/> class.
+    /// </remarks>
+    /// <param name="channel">Release channel.</param>
+    /// <param name="number">Version number.</param>
+    /// <param name="location">Remote download location.</param>
+    /// <param name="audioVersion">Audio version.</param>
+    /// <param name="ispatch">Whether this version is a patch only.</param>
+    public class VersionGameFiles(Channel channel, double number, string location, VersionAudio audioVersion, bool ispatch = false) : IDownloadable {
         private VersionGameFiles prereq;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VersionGameFiles"/> class.
-        /// </summary>
-        /// <param name="channel">Release channel.</param>
-        /// <param name="number">Version number.</param>
-        /// <param name="location">Remote download location.</param>
-        /// <param name="audioVersion">Audio version.</param>
-        /// <param name="ispatch">Whether this version is a patch only.</param>
-        public VersionGameFiles(Channel channel, double number, string location, VersionAudio audioVersion, bool ispatch = false) {
-            Channel = channel;
-            Number = number;
-            Location = location;
-            IsPatch = ispatch;
-            MinimumAudioVersion = audioVersion;
-        }
 
         /// <summary>
         /// Gets release channel.
         /// </summary>
-        public Channel Channel { get; }
+        public Channel Channel { get; } = channel;
 
         /// <inheritdoc/>
-        public double Number { get; }
+        public double Number { get; } = number;
 
         /// <inheritdoc/>
-        public string Location { get; }
+        public string Location { get; } = location;
 
         /// <summary>
         /// Gets a value indicating whether this version is a patch only.
         /// </summary>
-        public bool IsPatch { get; }
+        public bool IsPatch { get; } = ispatch;
 
         /// <summary>
         /// Gets the minimum audio version needed for this game version.
         /// </summary>
-        public VersionAudio MinimumAudioVersion { get; }
+        public VersionAudio MinimumAudioVersion { get; } = audioVersion;
 
         /// <inheritdoc/>
         public IDownloadable Prerequisite {
             get {
                 if (!IsPatch) return null;
-                if (prereq == null) prereq = GetPreviousVersion(true);
+                prereq ??= GetPreviousVersion(true);
                 return prereq;
             }
         }
@@ -92,19 +84,12 @@ namespace ApexLauncher {
         /// <returns>A <see cref="Channel"/> enum if found, else <see cref="Channel.NONE"/>.</returns>
         public static Channel GetChannelFromString(string name) {
             ArgumentNullException.ThrowIfNull(name);
-            switch (name.ToLower(Program.Culture)[0]) {
-                case '1':
-                case 'a':
-                    return Channel.ALPHA;
-                case '2':
-                case 'b':
-                    return Channel.BETA;
-                case '3':
-                case 'r':
-                    return Channel.RELEASE;
-                default:
-                    return Channel.NONE;
-            }
+            return name.ToLower(Program.Culture)[0] switch {
+                '1' or 'a' => Channel.ALPHA,
+                '2' or 'b' => Channel.BETA,
+                '3' or 'r' => Channel.RELEASE,
+                _ => Channel.NONE,
+            };
         }
 
         /// <summary>
@@ -127,9 +112,9 @@ namespace ApexLauncher {
                 bool patch = false;
                 double number = 0.0;
                 try {
-                    if (str.EndsWith("p")) {
+                    if (str.EndsWith('p')) {
                         patch = true;
-                        number = Convert.ToDouble(split[1].Substring(0, split[1].Length - 2));
+                        number = Convert.ToDouble(split[1][..^2]);
                     } else number = Convert.ToDouble(split[1]);
                 } catch (FormatException) { }
 

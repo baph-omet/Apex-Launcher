@@ -3,50 +3,50 @@
   <version>
     <channel>a</channel>
     <number>3.1</number>
-    <location>http://www.mediafire.com/download/80cr722yh1hj345/Pok%C3%A9mon_Apex_Alpha_Build_3.1.zip</location>
+    <location>https://www.mediafire.com/download/80cr722yh1hj345/Pok%C3%A9mon_Apex_Alpha_Build_3.1.zip</location>
   </version>
   <version>
     <channel>a</channel>
     <number>3.2</number>
-    <location>http://www.mediafire.com/download/airff2swbk9w73j/Pok%C3%A9mon_Apex_Alpha_Build_3.2.zip</location>
+    <location>https://www.mediafire.com/download/airff2swbk9w73j/Pok%C3%A9mon_Apex_Alpha_Build_3.2.zip</location>
   </version>
   <version>
     <channel>a</channel>
     <number>4</number>
-    <location>http://www.mediafire.com/download/49cl5rsq4h3scc3/Pok%C3%A9mon_Apex_Alpha_Build_4.zip</location>
+    <location>https://www.mediafire.com/download/49cl5rsq4h3scc3/Pok%C3%A9mon_Apex_Alpha_Build_4.zip</location>
   </version>
   <version>
     <channel>a</channel>
     <number>5</number>
-    <location>http://www.mediafire.com/download/pyxn57jzojvy4a3/Pok%C3%A9mon_Apex_Alpha_Build_5.zip</location>
+    <location>https://www.mediafire.com/download/pyxn57jzojvy4a3/Pok%C3%A9mon_Apex_Alpha_Build_5.zip</location>
   </version>
   <version>
     <channel>a</channel>
     <number>5.1</number>
-    <location>http://www.mediafire.com/download/28h1a6bl8qyagm3/Pok%C3%A9mon_Apex_Alpha_Build_5.1_%28Patch%29.zip</location>
+    <location>https://www.mediafire.com/download/28h1a6bl8qyagm3/Pok%C3%A9mon_Apex_Alpha_Build_5.1_%28Patch%29.zip</location>
     <patch>true</patch>
   </version>
   <version>
     <channel>a</channel>
     <number>5.2</number>
-    <location>http://www.mediafire.com/download/m0ktkdra503p11l/Pok%C3%A9mon_Apex_Alpha_Build_5.2.zip</location>
+    <location>https://www.mediafire.com/download/m0ktkdra503p11l/Pok%C3%A9mon_Apex_Alpha_Build_5.2.zip</location>
     <patch>true</patch>
   </version>
   <version>
     <channel>a</channel>
     <number>6</number>
-    <location>http://www.mediafire.com/download/91d50jx1nl42aj0/Pok%C3%A9mon_Apex_Alpha_Build_6.zip</location>
+    <location>https://www.mediafire.com/download/91d50jx1nl42aj0/Pok%C3%A9mon_Apex_Alpha_Build_6.zip</location>
   </version>
   <version>
     <channel>a</channel>
     <number>6.1</number>
-    <location>http://www.mediafire.com/download/37wvqn8cwo36dyz/Pok%C3%A9mon_Apex_Alpha_Build_6.1.zip</location>
+    <location>https://www.mediafire.com/download/37wvqn8cwo36dyz/Pok%C3%A9mon_Apex_Alpha_Build_6.1.zip</location>
     <patch>true</patch>
   </version>
   <version>
     <channel>a</channel>
     <number>6.2</number>
-    <location>http://www.mediafire.com/download/z9dyrrrlrrkr2iy/Pok%C3%A9mon_Apex_Alpha_Build_6.2.zip</location>
+    <location>https://www.mediafire.com/download/z9dyrrrlrrkr2iy/Pok%C3%A9mon_Apex_Alpha_Build_6.2.zip</location>
     <patch>true</patch>
   </version>
   <version>
@@ -92,27 +92,27 @@
   <version>
     <channel>a</channel>
     <number>9</number>
-    <location>http://www.mediafire.com/download/92ch69veg8tr7pf/Pokémon+Apex+Alpha+Build+9.zip</location>
+    <location>https://www.mediafire.com/download/92ch69veg8tr7pf/Pokémon+Apex+Alpha+Build+9.zip</location>
     <audioversion>1</audioversion>
   </version>
   <version>
 	<channel>a</channel>
 	<number>9.1</number>
-	<location>http://www.mediafire.com/download/1006bifo75vfx6u/Pokémon+Apex+Alpha+Build+9.1.zip</location>
+	<location>https://www.mediafire.com/download/1006bifo75vfx6u/Pokémon+Apex+Alpha+Build+9.1.zip</location>
 	<patch>true</patch>
 	<audioversion>1</audioversion>
   </version>
   <version>
 	<channel>a</channel>
 	<number>9.2</number>
-	<location>http://www.mediafire.com/download/rni3toebjonluid/Pok%25C3%25A9mon_Apex_Alpha_Build_9.2.zip</location>
+	<location>https://www.mediafire.com/download/rni3toebjonluid/Pok%25C3%25A9mon_Apex_Alpha_Build_9.2.zip</location>
 	<patch>true</patch>
 	<audioversion>1</audioversion>
   </version>
   <version>
 	<channel>a</channel>
 	<number>9.3</number>
-	<location>http://www.mediafire.com/download/ix483a4vqfq0gm5/Pok%25C3%25A9mon_Apex_Alpha_Build_9.3.zip</location>
+	<location>https://www.mediafire.com/download/ix483a4vqfq0gm5/Pok%25C3%25A9mon_Apex_Alpha_Build_9.3.zip</location>
 	<patch>true</patch>
 	<audioversion>1</audioversion>
   </version>
@@ -121,5 +121,12 @@
 	<number>10</number>
 	<location>https://www.mediafire.com/download/1d5su2bryjpugch/Pok%25C3%25A9mon_Apex_Alpha_Build_10.zip</location>
 	<audioversion>2</audioversion>
+  </version>
+  <version>
+	<channel>a</channel>
+	<number>10.1</number>
+	<location>https://www.mediafire.com/download/f66satjg8wma65x/Pokémon+Apex+Alpha+Build+10.1.zip</location>
+	<audioversion>2</audioversion>
+	<patch>true</patch>
   </version>
 </versions>

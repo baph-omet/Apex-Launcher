@@ -23,254 +23,273 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Launcher));
-            this.LaunchButton = new System.Windows.Forms.Button();
-            this.SettingsButton = new System.Windows.Forms.Button();
-            this.DiscordLogo = new System.Windows.Forms.PictureBox();
-            this.TabBox = new System.Windows.Forms.TabControl();
-            this.UpdatesPage = new System.Windows.Forms.TabPage();
-            this.NoConnectionLabel = new System.Windows.Forms.Label();
-            this.TumblrBrowser = new System.Windows.Forms.WebBrowser();
-            this.WikiPage = new System.Windows.Forms.TabPage();
-            this.WikiBrowser = new System.Windows.Forms.WebBrowser();
-            this.ForumLogo = new System.Windows.Forms.PictureBox();
-            this.SaveMgmtButton = new System.Windows.Forms.Button();
-            this.StatusLabel = new System.Windows.Forms.Label();
-            this.LauncherVersionLabel = new System.Windows.Forms.Label();
-            this.GameVersionLabel = new System.Windows.Forms.Label();
-            this.LauncherTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.WikiLogo = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.DiscordLogo)).BeginInit();
-            this.TabBox.SuspendLayout();
-            this.UpdatesPage.SuspendLayout();
-            this.WikiPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ForumLogo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WikiLogo)).BeginInit();
-            this.SuspendLayout();
+            LaunchButton = new System.Windows.Forms.Button();
+            SettingsButton = new System.Windows.Forms.Button();
+            DiscordLogo = new System.Windows.Forms.PictureBox();
+            TabBox = new System.Windows.Forms.TabControl();
+            UpdatesPage = new System.Windows.Forms.TabPage();
+            NoConnectionLabel = new System.Windows.Forms.Label();
+            TumblrBrowser = new System.Windows.Forms.WebBrowser();
+            WikiPage = new System.Windows.Forms.TabPage();
+            WikiBrowser = new System.Windows.Forms.WebBrowser();
+            ForumLogo = new System.Windows.Forms.PictureBox();
+            SaveMgmtButton = new System.Windows.Forms.Button();
+            StatusLabel = new System.Windows.Forms.Label();
+            LauncherVersionLabel = new System.Windows.Forms.Label();
+            GameVersionLabel = new System.Windows.Forms.Label();
+            LauncherTooltip = new System.Windows.Forms.ToolTip(components);
+            WikiLogo = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)DiscordLogo).BeginInit();
+            TabBox.SuspendLayout();
+            UpdatesPage.SuspendLayout();
+            WikiPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ForumLogo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)WikiLogo).BeginInit();
+            SuspendLayout();
             // 
             // LaunchButton
             // 
-            this.LaunchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.LaunchButton.Enabled = false;
-            this.LaunchButton.Font = new System.Drawing.Font("Lucida Console", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LaunchButton.Location = new System.Drawing.Point(1038, 516);
-            this.LaunchButton.Name = "LaunchButton";
-            this.LaunchButton.Size = new System.Drawing.Size(295, 122);
-            this.LaunchButton.TabIndex = 0;
-            this.LaunchButton.Text = "Launch Game";
-            this.LauncherTooltip.SetToolTip(this.LaunchButton, "Launch the game!");
-            this.LaunchButton.UseVisualStyleBackColor = true;
-            this.LaunchButton.Click += new System.EventHandler(this.LaunchButton_Click);
+            LaunchButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            LaunchButton.Enabled = false;
+            LaunchButton.Font = new System.Drawing.Font("Lucida Console", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            LaunchButton.Location = new System.Drawing.Point(1211, 595);
+            LaunchButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            LaunchButton.Name = "LaunchButton";
+            LaunchButton.Size = new System.Drawing.Size(344, 141);
+            LaunchButton.TabIndex = 0;
+            LaunchButton.Text = "Launch Game";
+            LauncherTooltip.SetToolTip(LaunchButton, "Launch the game!");
+            LaunchButton.UseVisualStyleBackColor = true;
+            LaunchButton.Click += LaunchButton_Click;
             // 
             // SettingsButton
             // 
-            this.SettingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SettingsButton.Font = new System.Drawing.Font("Lucida Console", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SettingsButton.Location = new System.Drawing.Point(779, 516);
-            this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(253, 58);
-            this.SettingsButton.TabIndex = 2;
-            this.SettingsButton.Text = "Settings";
-            this.LauncherTooltip.SetToolTip(this.SettingsButton, "Change launcher settings here.");
-            this.SettingsButton.UseVisualStyleBackColor = true;
-            this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
+            SettingsButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            SettingsButton.Font = new System.Drawing.Font("Lucida Console", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            SettingsButton.Location = new System.Drawing.Point(909, 595);
+            SettingsButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            SettingsButton.Name = "SettingsButton";
+            SettingsButton.Size = new System.Drawing.Size(295, 67);
+            SettingsButton.TabIndex = 2;
+            SettingsButton.Text = "Settings";
+            LauncherTooltip.SetToolTip(SettingsButton, "Change launcher settings here.");
+            SettingsButton.UseVisualStyleBackColor = true;
+            SettingsButton.Click += SettingsButton_Click;
             // 
             // DiscordLogo
             // 
-            this.DiscordLogo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DiscordLogo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("DiscordLogo.BackgroundImage")));
-            this.DiscordLogo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DiscordLogo.Location = new System.Drawing.Point(12, 516);
-            this.DiscordLogo.Name = "DiscordLogo";
-            this.DiscordLogo.Size = new System.Drawing.Size(250, 122);
-            this.DiscordLogo.TabIndex = 3;
-            this.DiscordLogo.TabStop = false;
-            this.LauncherTooltip.SetToolTip(this.DiscordLogo, "Join our Discord server to chat with the community!");
-            this.DiscordLogo.Click += new System.EventHandler(this.DiscordLogo_Click);
+            DiscordLogo.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            DiscordLogo.BackgroundImage = (System.Drawing.Image)resources.GetObject("DiscordLogo.BackgroundImage");
+            DiscordLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            DiscordLogo.Cursor = System.Windows.Forms.Cursors.Hand;
+            DiscordLogo.Location = new System.Drawing.Point(14, 595);
+            DiscordLogo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            DiscordLogo.Name = "DiscordLogo";
+            DiscordLogo.Size = new System.Drawing.Size(292, 141);
+            DiscordLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            DiscordLogo.TabIndex = 3;
+            DiscordLogo.TabStop = false;
+            LauncherTooltip.SetToolTip(DiscordLogo, "Join our Discord server to chat with the community!");
+            DiscordLogo.Click += DiscordLogo_Click;
             // 
             // TabBox
             // 
-            this.TabBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TabBox.Controls.Add(this.UpdatesPage);
-            this.TabBox.Controls.Add(this.WikiPage);
-            this.TabBox.Location = new System.Drawing.Point(12, 12);
-            this.TabBox.Name = "TabBox";
-            this.TabBox.SelectedIndex = 0;
-            this.TabBox.Size = new System.Drawing.Size(1321, 478);
-            this.TabBox.TabIndex = 4;
+            TabBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            TabBox.Controls.Add(UpdatesPage);
+            TabBox.Controls.Add(WikiPage);
+            TabBox.Location = new System.Drawing.Point(14, 14);
+            TabBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            TabBox.Name = "TabBox";
+            TabBox.SelectedIndex = 0;
+            TabBox.Size = new System.Drawing.Size(1541, 552);
+            TabBox.TabIndex = 4;
             // 
             // UpdatesPage
             // 
-            this.UpdatesPage.Controls.Add(this.NoConnectionLabel);
-            this.UpdatesPage.Controls.Add(this.TumblrBrowser);
-            this.UpdatesPage.Location = new System.Drawing.Point(4, 22);
-            this.UpdatesPage.Name = "UpdatesPage";
-            this.UpdatesPage.Padding = new System.Windows.Forms.Padding(3);
-            this.UpdatesPage.Size = new System.Drawing.Size(1313, 452);
-            this.UpdatesPage.TabIndex = 0;
-            this.UpdatesPage.Text = "Game Updates";
-            this.UpdatesPage.UseVisualStyleBackColor = true;
+            UpdatesPage.Controls.Add(NoConnectionLabel);
+            UpdatesPage.Controls.Add(TumblrBrowser);
+            UpdatesPage.Location = new System.Drawing.Point(4, 24);
+            UpdatesPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            UpdatesPage.Name = "UpdatesPage";
+            UpdatesPage.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            UpdatesPage.Size = new System.Drawing.Size(1533, 524);
+            UpdatesPage.TabIndex = 0;
+            UpdatesPage.Text = "Game Updates";
+            UpdatesPage.UseVisualStyleBackColor = true;
             // 
             // NoConnectionLabel
             // 
-            this.NoConnectionLabel.AutoSize = true;
-            this.NoConnectionLabel.Location = new System.Drawing.Point(16, 19);
-            this.NoConnectionLabel.Name = "NoConnectionLabel";
-            this.NoConnectionLabel.Size = new System.Drawing.Size(284, 13);
-            this.NoConnectionLabel.TabIndex = 1;
-            this.NoConnectionLabel.Text = "Could not connect to the internet. Can\'t check for updates.";
+            NoConnectionLabel.AutoSize = true;
+            NoConnectionLabel.Location = new System.Drawing.Point(19, 22);
+            NoConnectionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            NoConnectionLabel.Name = "NoConnectionLabel";
+            NoConnectionLabel.Size = new System.Drawing.Size(318, 15);
+            NoConnectionLabel.TabIndex = 1;
+            NoConnectionLabel.Text = "Could not connect to the internet. Can't check for updates.";
             // 
             // TumblrBrowser
             // 
-            this.TumblrBrowser.AllowWebBrowserDrop = false;
-            this.TumblrBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TumblrBrowser.Location = new System.Drawing.Point(3, 3);
-            this.TumblrBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.TumblrBrowser.Name = "TumblrBrowser";
-            this.TumblrBrowser.ScriptErrorsSuppressed = true;
-            this.TumblrBrowser.Size = new System.Drawing.Size(1307, 446);
-            this.TumblrBrowser.TabIndex = 0;
-            this.TumblrBrowser.Url = new System.Uri("https://apex.baph.xyz#recentposts", System.UriKind.Absolute);
-            this.TumblrBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.BrowserLoaded);
-            this.TumblrBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.BrowserNavigation);
+            TumblrBrowser.AllowWebBrowserDrop = false;
+            TumblrBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            TumblrBrowser.Location = new System.Drawing.Point(4, 3);
+            TumblrBrowser.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            TumblrBrowser.MinimumSize = new System.Drawing.Size(23, 23);
+            TumblrBrowser.Name = "TumblrBrowser";
+            TumblrBrowser.ScriptErrorsSuppressed = true;
+            TumblrBrowser.Size = new System.Drawing.Size(1525, 518);
+            TumblrBrowser.TabIndex = 0;
+            TumblrBrowser.Url = new System.Uri("https://apex.baph.xyz/#recentposts", System.UriKind.Absolute);
+            TumblrBrowser.DocumentCompleted += BrowserLoaded;
+            TumblrBrowser.Navigating += BrowserNavigation;
             // 
             // WikiPage
             // 
-            this.WikiPage.Controls.Add(this.WikiBrowser);
-            this.WikiPage.Location = new System.Drawing.Point(4, 22);
-            this.WikiPage.Name = "WikiPage";
-            this.WikiPage.Size = new System.Drawing.Size(1313, 452);
-            this.WikiPage.TabIndex = 3;
-            this.WikiPage.Text = "Wiki";
-            this.WikiPage.UseVisualStyleBackColor = true;
+            WikiPage.Controls.Add(WikiBrowser);
+            WikiPage.Location = new System.Drawing.Point(4, 24);
+            WikiPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            WikiPage.Name = "WikiPage";
+            WikiPage.Size = new System.Drawing.Size(1533, 524);
+            WikiPage.TabIndex = 3;
+            WikiPage.Text = "Wiki";
+            WikiPage.UseVisualStyleBackColor = true;
             // 
             // WikiBrowser
             // 
-            this.WikiBrowser.AllowWebBrowserDrop = false;
-            this.WikiBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.WikiBrowser.Location = new System.Drawing.Point(0, 0);
-            this.WikiBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.WikiBrowser.Name = "WikiBrowser";
-            this.WikiBrowser.ScriptErrorsSuppressed = true;
-            this.WikiBrowser.Size = new System.Drawing.Size(1313, 452);
-            this.WikiBrowser.TabIndex = 1;
-            this.WikiBrowser.Url = new System.Uri("https://pokemonapex.fandom.com/wiki/Pok%C3%A9mon_Apex_Wikia", System.UriKind.Absolute);
+            WikiBrowser.AllowWebBrowserDrop = false;
+            WikiBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            WikiBrowser.IsWebBrowserContextMenuEnabled = false;
+            WikiBrowser.Location = new System.Drawing.Point(0, 0);
+            WikiBrowser.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            WikiBrowser.MinimumSize = new System.Drawing.Size(23, 23);
+            WikiBrowser.Name = "WikiBrowser";
+            WikiBrowser.ScriptErrorsSuppressed = true;
+            WikiBrowser.Size = new System.Drawing.Size(1533, 524);
+            WikiBrowser.TabIndex = 1;
+            WikiBrowser.Url = new System.Uri("https://pokemonapex.fandom.com/wiki/Pok%C3%A9mon_Apex_Wikia", System.UriKind.Absolute);
             // 
             // ForumLogo
             // 
-            this.ForumLogo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ForumLogo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ForumLogo.Image = ((System.Drawing.Image)(resources.GetObject("ForumLogo.Image")));
-            this.ForumLogo.Location = new System.Drawing.Point(268, 516);
-            this.ForumLogo.Name = "ForumLogo";
-            this.ForumLogo.Size = new System.Drawing.Size(249, 122);
-            this.ForumLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ForumLogo.TabIndex = 6;
-            this.ForumLogo.TabStop = false;
-            this.LauncherTooltip.SetToolTip(this.ForumLogo, "https://baph.xyz");
-            this.ForumLogo.Click += new System.EventHandler(this.PictureBox1_Click);
+            ForumLogo.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            ForumLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            ForumLogo.Cursor = System.Windows.Forms.Cursors.Hand;
+            ForumLogo.Image = (System.Drawing.Image)resources.GetObject("ForumLogo.Image");
+            ForumLogo.Location = new System.Drawing.Point(313, 595);
+            ForumLogo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            ForumLogo.Name = "ForumLogo";
+            ForumLogo.Size = new System.Drawing.Size(290, 141);
+            ForumLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            ForumLogo.TabIndex = 6;
+            ForumLogo.TabStop = false;
+            LauncherTooltip.SetToolTip(ForumLogo, "Baphomet Media");
+            ForumLogo.Click += PictureBox1_Click;
             // 
             // SaveMgmtButton
             // 
-            this.SaveMgmtButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SaveMgmtButton.Font = new System.Drawing.Font("Lucida Console", 14.25F, System.Drawing.FontStyle.Bold);
-            this.SaveMgmtButton.Location = new System.Drawing.Point(779, 580);
-            this.SaveMgmtButton.Name = "SaveMgmtButton";
-            this.SaveMgmtButton.Size = new System.Drawing.Size(253, 58);
-            this.SaveMgmtButton.TabIndex = 7;
-            this.SaveMgmtButton.Text = "Manage Saves";
-            this.LauncherTooltip.SetToolTip(this.SaveMgmtButton, "Manage game save files.");
-            this.SaveMgmtButton.UseVisualStyleBackColor = true;
-            this.SaveMgmtButton.Click += new System.EventHandler(this.SaveMgmtButton_Click);
+            SaveMgmtButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            SaveMgmtButton.Font = new System.Drawing.Font("Lucida Console", 14.25F, System.Drawing.FontStyle.Bold);
+            SaveMgmtButton.Location = new System.Drawing.Point(909, 669);
+            SaveMgmtButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            SaveMgmtButton.Name = "SaveMgmtButton";
+            SaveMgmtButton.Size = new System.Drawing.Size(295, 67);
+            SaveMgmtButton.TabIndex = 7;
+            SaveMgmtButton.Text = "Manage Saves";
+            LauncherTooltip.SetToolTip(SaveMgmtButton, "Manage game save files.");
+            SaveMgmtButton.UseVisualStyleBackColor = true;
+            SaveMgmtButton.Click += SaveMgmtButton_Click;
             // 
             // StatusLabel
             // 
-            this.StatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.StatusLabel.AutoSize = true;
-            this.StatusLabel.Font = new System.Drawing.Font("Lucida Console", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StatusLabel.ForeColor = System.Drawing.Color.White;
-            this.StatusLabel.Location = new System.Drawing.Point(12, 643);
-            this.StatusLabel.Name = "StatusLabel";
-            this.StatusLabel.Size = new System.Drawing.Size(174, 19);
-            this.StatusLabel.TabIndex = 8;
-            this.StatusLabel.Text = "Ready to Launch";
-            this.StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            StatusLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            StatusLabel.AutoSize = true;
+            StatusLabel.Font = new System.Drawing.Font("Lucida Console", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            StatusLabel.ForeColor = System.Drawing.Color.White;
+            StatusLabel.Location = new System.Drawing.Point(14, 742);
+            StatusLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            StatusLabel.Name = "StatusLabel";
+            StatusLabel.Size = new System.Drawing.Size(174, 19);
+            StatusLabel.TabIndex = 8;
+            StatusLabel.Text = "Ready to Launch";
+            StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // LauncherVersionLabel
             // 
-            this.LauncherVersionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.LauncherVersionLabel.AutoSize = true;
-            this.LauncherVersionLabel.ForeColor = System.Drawing.Color.White;
-            this.LauncherVersionLabel.Location = new System.Drawing.Point(1248, 500);
-            this.LauncherVersionLabel.Name = "LauncherVersionLabel";
-            this.LauncherVersionLabel.Size = new System.Drawing.Size(85, 13);
-            this.LauncherVersionLabel.TabIndex = 9;
-            this.LauncherVersionLabel.Text = "Launcher v1.4.0";
-            this.LauncherTooltip.SetToolTip(this.LauncherVersionLabel, "Your current launcher version.");
+            LauncherVersionLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            LauncherVersionLabel.AutoSize = true;
+            LauncherVersionLabel.ForeColor = System.Drawing.Color.White;
+            LauncherVersionLabel.Location = new System.Drawing.Point(1456, 577);
+            LauncherVersionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LauncherVersionLabel.Name = "LauncherVersionLabel";
+            LauncherVersionLabel.Size = new System.Drawing.Size(89, 15);
+            LauncherVersionLabel.TabIndex = 9;
+            LauncherVersionLabel.Text = "Launcher v1.4.0";
+            LauncherTooltip.SetToolTip(LauncherVersionLabel, "Your current launcher version.");
             // 
             // GameVersionLabel
             // 
-            this.GameVersionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.GameVersionLabel.AutoSize = true;
-            this.GameVersionLabel.Font = new System.Drawing.Font("Lucida Console", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GameVersionLabel.ForeColor = System.Drawing.Color.White;
-            this.GameVersionLabel.Location = new System.Drawing.Point(1093, 646);
-            this.GameVersionLabel.Name = "GameVersionLabel";
-            this.GameVersionLabel.Size = new System.Drawing.Size(240, 19);
-            this.GameVersionLabel.TabIndex = 10;
-            this.GameVersionLabel.Text = "Loading Build Info...";
-            this.GameVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.LauncherTooltip.SetToolTip(this.GameVersionLabel, "Your currently installed game version. Updated automatically.");
+            GameVersionLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            GameVersionLabel.AutoSize = true;
+            GameVersionLabel.Font = new System.Drawing.Font("Lucida Console", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            GameVersionLabel.ForeColor = System.Drawing.Color.White;
+            GameVersionLabel.Location = new System.Drawing.Point(1275, 745);
+            GameVersionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            GameVersionLabel.Name = "GameVersionLabel";
+            GameVersionLabel.Size = new System.Drawing.Size(240, 19);
+            GameVersionLabel.TabIndex = 10;
+            GameVersionLabel.Text = "Loading Build Info...";
+            GameVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            LauncherTooltip.SetToolTip(GameVersionLabel, "Your currently installed game version. Updated automatically.");
             // 
             // WikiLogo
             // 
-            this.WikiLogo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.WikiLogo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.WikiLogo.Image = ((System.Drawing.Image)(resources.GetObject("WikiLogo.Image")));
-            this.WikiLogo.Location = new System.Drawing.Point(523, 516);
-            this.WikiLogo.Name = "WikiLogo";
-            this.WikiLogo.Size = new System.Drawing.Size(250, 122);
-            this.WikiLogo.TabIndex = 11;
-            this.WikiLogo.TabStop = false;
-            this.LauncherTooltip.SetToolTip(this.WikiLogo, "http://pokemonapex.wikia.com");
-            this.WikiLogo.Click += new System.EventHandler(this.WikiLogo_Click);
+            WikiLogo.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            WikiLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            WikiLogo.Cursor = System.Windows.Forms.Cursors.Hand;
+            WikiLogo.Image = (System.Drawing.Image)resources.GetObject("WikiLogo.Image");
+            WikiLogo.Location = new System.Drawing.Point(610, 595);
+            WikiLogo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            WikiLogo.Name = "WikiLogo";
+            WikiLogo.Size = new System.Drawing.Size(292, 141);
+            WikiLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            WikiLogo.TabIndex = 11;
+            WikiLogo.TabStop = false;
+            LauncherTooltip.SetToolTip(WikiLogo, "http://pokemonapex.wikia.com");
+            WikiLogo.Click += WikiLogo_Click;
             // 
             // Launcher
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(1345, 674);
-            this.Controls.Add(this.WikiLogo);
-            this.Controls.Add(this.GameVersionLabel);
-            this.Controls.Add(this.LauncherVersionLabel);
-            this.Controls.Add(this.StatusLabel);
-            this.Controls.Add(this.SaveMgmtButton);
-            this.Controls.Add(this.ForumLogo);
-            this.Controls.Add(this.TabBox);
-            this.Controls.Add(this.DiscordLogo);
-            this.Controls.Add(this.SettingsButton);
-            this.Controls.Add(this.LaunchButton);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1361, 198);
-            this.Name = "Launcher";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Apex Launcher";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Launcher_FormClosing);
-            this.Shown += new System.EventHandler(this.Launcher_Shown);
-            ((System.ComponentModel.ISupportInitialize)(this.DiscordLogo)).EndInit();
-            this.TabBox.ResumeLayout(false);
-            this.UpdatesPage.ResumeLayout(false);
-            this.UpdatesPage.PerformLayout();
-            this.WikiPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ForumLogo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WikiLogo)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            BackColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            ClientSize = new System.Drawing.Size(1569, 778);
+            Controls.Add(WikiLogo);
+            Controls.Add(GameVersionLabel);
+            Controls.Add(LauncherVersionLabel);
+            Controls.Add(StatusLabel);
+            Controls.Add(SaveMgmtButton);
+            Controls.Add(ForumLogo);
+            Controls.Add(TabBox);
+            Controls.Add(DiscordLogo);
+            Controls.Add(SettingsButton);
+            Controls.Add(LaunchButton);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MinimumSize = new System.Drawing.Size(1585, 222);
+            Name = "Launcher";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "Apex Launcher";
+            FormClosing += Launcher_FormClosing;
+            Shown += Launcher_Shown;
+            ((System.ComponentModel.ISupportInitialize)DiscordLogo).EndInit();
+            TabBox.ResumeLayout(false);
+            UpdatesPage.ResumeLayout(false);
+            UpdatesPage.PerformLayout();
+            WikiPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)ForumLogo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)WikiLogo).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
