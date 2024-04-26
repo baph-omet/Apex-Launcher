@@ -27,7 +27,7 @@ namespace ApexLauncher {
         }
 
         private void Initialize() {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine("# Exception Details");
             sb.AppendLine(exception.ToString());
             sb.AppendLine();

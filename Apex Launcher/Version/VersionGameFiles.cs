@@ -36,51 +36,43 @@ namespace ApexLauncher {
     /// <summary>
     /// Object representing a version of the game files.
     /// </summary>
-    public class VersionGameFiles : IDownloadable {
+    /// <remarks>
+    /// Initializes a new instance of the <see cref="VersionGameFiles"/> class.
+    /// </remarks>
+    /// <param name="channel">Release channel.</param>
+    /// <param name="number">Version number.</param>
+    /// <param name="location">Remote download location.</param>
+    /// <param name="audioVersion">Audio version.</param>
+    /// <param name="ispatch">Whether this version is a patch only.</param>
+    public class VersionGameFiles(Channel channel, double number, string location, VersionAudio audioVersion, bool ispatch = false) : IDownloadable {
         private VersionGameFiles prereq;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VersionGameFiles"/> class.
-        /// </summary>
-        /// <param name="channel">Release channel.</param>
-        /// <param name="number">Version number.</param>
-        /// <param name="location">Remote download location.</param>
-        /// <param name="audioVersion">Audio version.</param>
-        /// <param name="ispatch">Whether this version is a patch only.</param>
-        public VersionGameFiles(Channel channel, double number, string location, VersionAudio audioVersion, bool ispatch = false) {
-            Channel = channel;
-            Number = number;
-            Location = location;
-            IsPatch = ispatch;
-            MinimumAudioVersion = audioVersion;
-        }
 
         /// <summary>
         /// Gets release channel.
         /// </summary>
-        public Channel Channel { get; }
+        public Channel Channel { get; } = channel;
 
         /// <inheritdoc/>
-        public double Number { get; }
+        public double Number { get; } = number;
 
         /// <inheritdoc/>
-        public string Location { get; }
+        public string Location { get; } = location;
 
         /// <summary>
         /// Gets a value indicating whether this version is a patch only.
         /// </summary>
-        public bool IsPatch { get; }
+        public bool IsPatch { get; } = ispatch;
 
         /// <summary>
         /// Gets the minimum audio version needed for this game version.
         /// </summary>
-        public VersionAudio MinimumAudioVersion { get; }
+        public VersionAudio MinimumAudioVersion { get; } = audioVersion;
 
         /// <inheritdoc/>
         public IDownloadable Prerequisite {
             get {
                 if (!IsPatch) return null;
-                if (prereq == null) prereq = GetPreviousVersion(true);
+                prereq ??= GetPreviousVersion(true);
                 return prereq;
             }
         }
@@ -91,20 +83,13 @@ namespace ApexLauncher {
         /// <param name="name">The string to get.</param>
         /// <returns>A <see cref="Channel"/> enum if found, else <see cref="Channel.NONE"/>.</returns>
         public static Channel GetChannelFromString(string name) {
-            if (name is null) throw new ArgumentNullException(nameof(name));
-            switch (name.ToLower(Program.Culture)[0]) {
-                case '1':
-                case 'a':
-                    return Channel.ALPHA;
-                case '2':
-                case 'b':
-                    return Channel.BETA;
-                case '3':
-                case 'r':
-                    return Channel.RELEASE;
-                default:
-                    return Channel.NONE;
-            }
+            ArgumentNullException.ThrowIfNull(name);
+            return name.ToLower(Program.Culture)[0] switch {
+                '1' or 'a' => Channel.ALPHA,
+                '2' or 'b' => Channel.BETA,
+                '3' or 'r' => Channel.RELEASE,
+                _ => Channel.NONE,
+            };
         }
 
         /// <summary>
@@ -113,7 +98,7 @@ namespace ApexLauncher {
         /// <param name="str">String to parse.</param>
         /// <returns>A version instance parsed from string.</returns>
         public static VersionGameFiles FromString(string str) {
-            if (str is null) throw new ArgumentNullException(nameof(str));
+            ArgumentNullException.ThrowIfNull(str);
             if (!File.Exists(Path.Combine(Config.InstallPath, "Versions", "VersionManifest.xml"))) {
                 string[] split = str.Split(' ');
                 Channel channel = split[0] switch
@@ -121,15 +106,15 @@ namespace ApexLauncher {
                     "ALPHA" => Channel.ALPHA,
                     "BETA" => Channel.BETA,
                     "RELEASE" => Channel.RELEASE,
-                    _ => Channel.NONE
+                    _ => Channel.NONE,
                 };
 
                 bool patch = false;
                 double number = 0.0;
                 try {
-                    if (str.EndsWith("p")) {
+                    if (str.EndsWith('p')) {
                         patch = true;
-                        number = Convert.ToDouble(split[1].Substring(0, split[1].Length - 2));
+                        number = Convert.ToDouble(split[1][..^2]);
                     } else number = Convert.ToDouble(split[1]);
                 } catch (FormatException) { }
 
@@ -145,9 +130,9 @@ namespace ApexLauncher {
         /// </summary>
         /// <returns>List of all version objects.</returns>
         public static List<VersionGameFiles> GetAllVersions() {
-            List<VersionGameFiles> versions = new List<VersionGameFiles>();
+            List<VersionGameFiles> versions = [];
 
-            XmlDocument doc = new XmlDocument();
+            XmlDocument doc = new();
             doc.Load(Path.Combine(Config.InstallPath, "Versions", "VersionManifest.xml"));
 
             foreach (XmlNode node in doc.GetElementsByTagName("version")) {
@@ -244,7 +229,7 @@ namespace ApexLauncher {
             if (obj == null) return false;
             if (!GetType().Equals(obj.GetType())) return false;
             if (obj == this) return true;
-            if (!(obj is VersionGameFiles)) return false;
+            if (obj is not VersionGameFiles) return false;
             if (((VersionGameFiles)obj).ToString().Equals(ToString())) return true;
             return false;
         }

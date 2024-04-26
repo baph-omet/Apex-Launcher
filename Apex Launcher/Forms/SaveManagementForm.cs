@@ -73,7 +73,7 @@ namespace ApexLauncher {
                     GetSaveFiles();
                     if (FileView.Items.Count > 0) {
                         if (FileView.Items.Count > i) FileView.Items[i].Selected = true;
-                        else FileView.Items[FileView.Items.Count - 1].Selected = true;
+                        else FileView.Items[^1].Selected = true;
                         FileView.Select();
                     }
                 }
@@ -91,7 +91,7 @@ namespace ApexLauncher {
                 }
 
                 string oldfile = GetPath(FileView.SelectedItems[0].SubItems[0].Text);
-                using TextEntryForm tef = new TextEntryForm();
+                using TextEntryForm tef = new();
                 tef.ShowDialog();
                 foreach (char c in tef.Result) {
                     if (new[] { '/', '\\', '|', '>', '<', ':', '?', '*', '"' }.Contains(c)) {
@@ -128,7 +128,7 @@ namespace ApexLauncher {
 
         private void ExportButton_Click(object sender, EventArgs e) {
             if (FileView.SelectedItems.Count > 0) {
-                using SaveFileDialog sfd = new SaveFileDialog {
+                using SaveFileDialog sfd = new() {
                     AddExtension = true,
                     DefaultExt = ".rxdata",
                     Filter = "RPGXP Data Files|*.rxdata",
@@ -139,14 +139,14 @@ namespace ApexLauncher {
         }
 
         private void ImportButton_Click(object sender, EventArgs e) {
-            using OpenFileDialog ofd = new OpenFileDialog();
+            using OpenFileDialog ofd = new();
             ofd.AddExtension = true;
             ofd.DefaultExt = ".rxdata";
             ofd.Filter = "RPGXP Data Files|*.rxdata";
             ofd.ShowDialog();
 
             if (ofd.FileName.Length > 0) {
-                string newfilename = Program.GetNextAvailableFilePath(GetPath(ofd.FileName.Split('\\')[ofd.FileName.Split('\\').Length - 1]));
+                string newfilename = Program.GetNextAvailableFilePath(GetPath(ofd.FileName.Split('\\')[^1]));
 
                 File.Copy(ofd.FileName, newfilename);
 

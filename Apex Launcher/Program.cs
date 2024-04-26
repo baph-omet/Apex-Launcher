@@ -11,6 +11,7 @@ using System.Drawing.Text;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
@@ -94,8 +95,8 @@ namespace ApexLauncher {
         /// </summary>
         /// <param name="v">Version to download.</param>
         public static void DownloadVersion(IDownloadable v) {
-            if (v is null) throw new ArgumentNullException(nameof(v));
-            List<IDownloadable> queue = new List<IDownloadable>(new[] { v });
+            ArgumentNullException.ThrowIfNull(v);
+            List<IDownloadable> queue = new([v]);
             if (v is VersionGameFiles) {
                 VersionGameFiles vgf = v as VersionGameFiles;
                 if (!Config.DisableAudioDownload && vgf?.MinimumAudioVersion != null && vgf.MinimumAudioVersion.GreaterThan(Config.CurrentVersion)) {
@@ -116,7 +117,7 @@ namespace ApexLauncher {
         /// <returns>True if the current user has write access to specified folder.</returns>
         public static bool HasWriteAccess(string folderPath) {
             try {
-                System.Security.AccessControl.DirectorySecurity ds = Directory.GetAccessControl(folderPath);
+                System.Security.AccessControl.DirectorySecurity ds = new DirectoryInfo(folderPath).GetAccessControl();
                 return true;
             } catch (UnauthorizedAccessException) {
                 return false;
@@ -129,7 +130,7 @@ namespace ApexLauncher {
         /// <returns>A string version of the game launcher version.</returns>
         public static string GetLauncherVersion() {
             string v = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            return v.Substring(0, v.Length - 2);
+            return v[..^2];
         }
 
         /// <summary>
@@ -138,16 +139,16 @@ namespace ApexLauncher {
         /// <param name="path">Path to check.</param>
         /// <returns>The first available numbered filepath relative to the specified path.</returns>
         public static string GetNextAvailableFilePath(string path) {
-            if (path is null) throw new ArgumentNullException(nameof(path));
+            ArgumentNullException.ThrowIfNull(path);
             path = path.Replace('/', '\\');
 
             int i = 1;
             while (File.Exists(path) && i < 1000000) {
-                string extension = path.Split('.')[path.Split('.').Length - 1];
-                string preExtension = path.Substring(0, path.Length - extension.Length - 1);
+                string extension = path.Split('.')[^1];
+                string preExtension = path[..(path.Length - extension.Length - 1)];
 
                 int numbering = -1;
-                List<int> digits = new List<int>();
+                List<int> digits = [];
                 int j = preExtension.Length - 1;
                 while (preExtension[j] != '\\' && numbering < 0) {
                     if (j == preExtension.Length - 1 && preExtension[j] != ')') break;
@@ -166,7 +167,7 @@ namespace ApexLauncher {
 
                 if (numbering >= 0) {
                     i = numbering + 1;
-                    path = preExtension.Substring(0, preExtension.Length - 3 - numbering.ToString().Length) + " (" + i + ")." + extension;
+                    path = preExtension[..(preExtension.Length - 3 - numbering.ToString().Length)] + " (" + i + ")." + extension;
                 } else path = $"{preExtension} ({i}).{extension}";
                 i++;
             }
@@ -179,16 +180,16 @@ namespace ApexLauncher {
         /// </summary>
         /// <returns>True if any of the game fonts are found to be installed, else false.</returns>
         public static bool HasFontsInstalled() {
-            List<string> fontNames = new List<string>() {
+            List<string> fontNames = [
                 "Power Clear",
                 "Power Green",
                 "Power Green Small Regular",
                 "Power Red and Blue Intl Regular",
                 "Power Red and Blue Regular",
                 "Power Red and Green Regular",
-            };
+            ];
 
-            using InstalledFontCollection ifc = new InstalledFontCollection();
+            using InstalledFontCollection ifc = new();
             foreach (FontFamily f in ifc.Families) {
                 if (fontNames.Contains(f.Name)) return true;
             }
@@ -210,14 +211,14 @@ namespace ApexLauncher {
                 Launcher = new Launcher();
                 Application.Run(Launcher);
             } catch (Exception e) {
-                using ErrorCatcher ec = new ErrorCatcher(e) { Enabled = true };
+                using ErrorCatcher ec = new(e) { Enabled = true };
                 ec.ShowDialog();
             }
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            using ErrorCatcher ec = new ErrorCatcher((Exception)e.ExceptionObject) { Enabled = true };
+            using ErrorCatcher ec = new((Exception)e.ExceptionObject) { Enabled = true };
             ec.ShowDialog();
         }
 
@@ -245,57 +246,59 @@ namespace ApexLauncher {
 
         private static void CheckFonts() {
 #if DEBUG
-            Settings.Default.DisableFontPrompt = false;
+            Config.DisableFontPrompt = false;
 #endif
 
-            bool dis = Settings.Default.DisableFontPrompt;
+            bool dis = Config.DisableFontPrompt;
 
             if (!dis) {
                 if (!HasFontsInstalled()) {
-                    using FontInstallForm fif = new FontInstallForm();
+                    using FontInstallForm fif = new();
                     fif.ShowDialog();
-                    if (fif.Response != FontInstallResponse.Cancel) Settings.Default.DisableFontPrompt = true;
+                    if (fif.Response != FontInstallResponse.Cancel) Config.DisableFontPrompt = true;
                     if (fif.Response == FontInstallResponse.Install) {
                         ExtractFonts();
-                        RegisterFonts(GetFontResourceNames());
+                        foreach (string fontName in GetFontResourceNames()) {
+                            Process.Start(new ProcessStartInfo() {
+                                FileName = "fontview",
+                                Arguments = fontName,
+                                CreateNoWindow = true,
+                                WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Font"),
+                            });
+                        }
                     }
-                } else Settings.Default.DisableFontPrompt = true;
-
-                Settings.Default.Save();
+                } else Config.DisableFontPrompt = true;
             }
         }
 
         private static void ExtractFonts() {
-            ResourceManager rm = new ResourceManager(typeof(Resources));
+            ResourceManager rm = new(typeof(Resources));
             ResourceSet rs = rm.GetResourceSet(CultureInfo.CurrentCulture, true, true);
             string path = Path.Combine(Directory.GetCurrentDirectory(), "Font");
             Directory.CreateDirectory(path);
             foreach (DictionaryEntry entry in rs) {
                 string key = entry.Key.ToString();
-                if (!key.Contains("pkmn")) continue;
-                File.WriteAllBytes(Path.Combine(path, $"{key}.ttf"), entry.Value as byte[]);
+                if (key.Contains("pkmn")) File.WriteAllBytes(Path.Combine(path, $"{key}.ttf"), entry.Value as byte[]);
             }
         }
 
         private static List<string> GetFontResourceNames() {
-            List<string> resourceNames = new List<string>();
+            List<string> resourceNames = [];
             foreach (string file in Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Font"), "*.ttf")) resourceNames.Add(Path.GetFileName(file));
             return resourceNames;
         }
 
         private static bool DownloadVersionManifests() {
             bool completed;
-            string[] files = new[] {
+            string[] files = [
                 "http://www.mediafire.com/download/qkauu9oca3lcjw1/VersionManifest.xml",
                 "http://www.mediafire.com/download/zvooruhs1b3e4c9/VersionManifestAudio.xml",
-            };
+            ];
             try {
+                HttpClient client = new();
                 foreach (string file in files) {
-                    HttpWebRequest filereq = (HttpWebRequest)WebRequest.Create(new Uri(file));
-                    HttpWebResponse fileresp = (HttpWebResponse)filereq.GetResponse();
-                    if (filereq.ContentLength > 0) fileresp.ContentLength = filereq.ContentLength;
-                    using Stream dlstream = fileresp.GetResponseStream();
-                    using FileStream outputStream = new FileStream(Path.Combine(Config.InstallPath, "Versions", Path.GetFileName(file)), FileMode.OpenOrCreate);
+                    using Stream dlstream = client.GetStreamAsync(file).Result;
+                    using FileStream outputStream = new(Path.Combine(Config.InstallPath, "Versions", Path.GetFileName(file)), FileMode.OpenOrCreate);
                     int buffersize = 1000;
                     long bytesRead = 0;
                     int length = 1;
@@ -313,65 +316,6 @@ namespace ApexLauncher {
             }
 
             return completed;
-        }
-
-        /*[DllImport("gdi32", EntryPoint = "AddFontResource", CharSet = CharSet.Unicode)]
-        private static extern int AddFontResourceA(string lpFileName);*/
-
-        [DllImport("gdi32.dll", CharSet = CharSet.Unicode)]
-        private static extern int AddFontResource(string lpszFilename);
-
-        /*[DllImport("gdi32.dll", CharSet = CharSet.Unicode)]
-        private static extern int CreateScalableFontResource(uint fdwHidden, string lpszFontRes, string lpszFontFile, string lpszCurrentPath);*/
-
-        private static void RegisterFonts(List<string> fontFiles) {
-            bool isElevated;
-            using (WindowsIdentity identity = WindowsIdentity.GetCurrent()) {
-                WindowsPrincipal principal = new WindowsPrincipal(identity);
-                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
-            }
-
-            // Copy font to destination
-            if (isElevated) {
-                fontFiles.ForEach(x => {
-                    string fontDestination = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), x);
-                    File.Copy(Path.Combine(Directory.GetCurrentDirectory(), "Font", x), fontDestination, true);
-                });
-            } else {
-                File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "Copy.bat"), $"@ECHO off{Environment.NewLine}COPY /Y /B \"{Directory.GetCurrentDirectory()}\\Font\\*.ttf\" {Environment.GetFolderPath(Environment.SpecialFolder.Fonts)}");
-                ProcessStartInfo psi = new ProcessStartInfo(Path.Combine(Directory.GetCurrentDirectory(), "Copy.bat")) { Verb = "runas" };
-                Process.Start(psi);
-                Thread.Sleep(1000);
-            }
-
-            List<string> lines = new List<string>() { "@echo off" };
-
-            // Registry stuff
-            fontFiles.ForEach(x => {
-                string fontDestination = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), x);
-
-                // Retrieves font name
-                // Makes sure you reference System.Drawing
-                using PrivateFontCollection fontCol = new PrivateFontCollection();
-                fontCol.AddFontFile(fontDestination);
-                string actualFontName = fontCol.Families[0].Name;
-
-                // Add font
-                _ = AddFontResource(fontDestination);
-                if (isElevated) Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", actualFontName, x, RegistryValueKind.String);
-                else lines.Add($@"REG ADD ""HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts"" /v ""{actualFontName}"" /t REG_SZ /d {x} /f");
-            });
-
-            if (!isElevated) {
-                File.WriteAllLines(Path.Combine(Directory.GetCurrentDirectory(), "RegEdit.bat"), lines);
-                ProcessStartInfo psi = new ProcessStartInfo("RegEdit.bat") { Verb = "runas" };
-                Process.Start(psi);
-                Thread.Sleep(1000);
-            }
-
-            string[] files = new[] { "Copy.bat", "RegEdit.bat" };
-            foreach (string f in files) if (File.Exists(f)) File.Delete(f);
-            Directory.Delete(Path.Combine(Directory.GetCurrentDirectory(), "Font"), true);
         }
     }
 }

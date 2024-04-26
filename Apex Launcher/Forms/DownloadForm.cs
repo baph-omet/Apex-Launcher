@@ -27,9 +27,9 @@ namespace ApexLauncher {
         /// </summary>
         /// <param name="downloads">List of files to download.</param>
         public DownloadForm(List<IDownloadable> downloads) {
-            if (downloads is null) throw new ArgumentNullException(nameof(downloads));
+            ArgumentNullException.ThrowIfNull(downloads);
             InitializeComponent();
-            downloadQueue = new List<IDownloadable>();
+            downloadQueue = [];
             foreach (IDownloadable d in downloads) {
                 if (d.Prerequisite != null && d.Prerequisite.NewerThanDownloaded()) {
                     downloadQueue.Add(d.Prerequisite);
@@ -140,7 +140,9 @@ namespace ApexLauncher {
         }
 
         private HttpWebResponse GetResponse(string source) {
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
             HttpWebRequest filereq = (HttpWebRequest)WebRequest.Create(new Uri(source));
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
             HttpWebResponse fileresp = null;
             try {
                 fileresp = (HttpWebResponse)filereq.GetResponse();
@@ -165,13 +167,13 @@ namespace ApexLauncher {
                     try {
                         outputStream = new FileStream(currentFilepath, FileMode.OpenOrCreate, FileAccess.Write);
                         break;
-                    } catch (UnauthorizedAccessException e) {
+                    } catch (UnauthorizedAccessException) {
                         DialogResult res = MessageBox.Show(
                             $"Couldn't get access to local file location at {currentFilepath}. Another program might be using it. Would you like to try again?",
                             "Download Error",
                             MessageBoxButtons.RetryCancel,
                             MessageBoxIcon.Error);
-                        if (res == DialogResult.Cancel) throw e;
+                        if (res == DialogResult.Cancel) throw;
                         Thread.Sleep(1000);
                     }
                 }
@@ -250,7 +252,7 @@ namespace ApexLauncher {
                 return false;
             }
 
-            if (download == mostRecent && !(download is VersionAudio)) {
+            if (download == mostRecent && download is not VersionAudio) {
                 bool downloadingNewAudio = false;
                 foreach (IDownloadable d in downloadQueue) {
                     if (d is VersionAudio) {
@@ -284,7 +286,7 @@ namespace ApexLauncher {
             if (DownloadProgressBar.InvokeRequired) {
                 UP d = UpdateProgress;
                 try {
-                    Invoke(d, new object[] { progress });
+                    Invoke(d, [progress]);
                 } catch (ObjectDisposedException) { }
             } else if (progress >= 0) DownloadProgressBar.Value = progress;
         }
@@ -298,7 +300,7 @@ namespace ApexLauncher {
             if (ProgressLabel.InvokeRequired) {
                 UPT d = UpdateProgressText;
                 try {
-                    Invoke(d, new object[] { message });
+                    Invoke(d, [message]);
                 } catch (ObjectDisposedException) { }
             } else ProgressLabel.Text = message;
         }
@@ -319,7 +321,7 @@ namespace ApexLauncher {
 
         private void DownloadForm_Disposed(object sender, EventArgs e) {
             if (dlThread.IsAlive) {
-                dlThread.Abort();
+                dlThread.Interrupt();
                 if (!finished) Aborted?.Invoke(sender, new EventArgs());
             }
         }
@@ -336,7 +338,7 @@ namespace ApexLauncher {
         }
 
         private void DownloadForm_Aborted(object sender, EventArgs e) {
-            if (dlThread.IsAlive) dlThread.Abort();
+            if (dlThread.IsAlive) dlThread.Interrupt();
             Downloading = false;
             CloseForm();
             Program.Launcher.UpdateStatus("Download aborted");
@@ -346,7 +348,7 @@ namespace ApexLauncher {
             if (!Program.Downloading) return true;
             DialogResult res = MessageBox.Show("There is a download in progress. Are you sure you want to cancel?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (res == DialogResult.Yes) {
-                dlThread.Abort();
+                dlThread.Interrupt();
                 try { File.Delete(currentFilepath); } catch (IOException) { }
                 Downloading = false;
                 Program.Launcher.UpdateStatus("Download cancelled.");

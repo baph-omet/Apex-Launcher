@@ -5,3 +5,4 @@ installpath=
 keepLauncherOpen=false
 disableGameFonts=false
 disableAudioDownload=false
+disableFontPrompt=false
