@@ -264,7 +264,7 @@ namespace ApexLauncher {
                 if (!downloadingNewAudio) {
                     string versionpath = Path.Combine(Config.InstallPath, "Versions", mostRecent.ToString());
                     string audioversionpath = Path.Combine(Config.InstallPath, "Versions", VersionAudio.GetMostRecentVersion().ToString());
-                    RecursiveCopy(audioversionpath, versionpath, true);
+                    if (Directory.Exists(audioversionpath)) RecursiveCopy(audioversionpath, versionpath, true);
                 }
             }
 

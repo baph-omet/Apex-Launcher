@@ -82,7 +82,7 @@ namespace ApexLauncher {
 
             VersionAudio mostRecentAudio = VersionAudio.GetMostRecentVersion();
             if (!Config.DisableAudioDownload && mostRecentAudio.GreaterThan(Config.CurrentAudioVersion)) {
-                DialogResult result = MessageBox.Show($"New audio version found: {mostRecentAudio}.\nDownload and install this update?\n(Note, audio updates are often large downloads)", "Audio Update Found", MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show($"New audio version found: {mostRecentAudio}.\nDownload and install this update?", "Audio Update Found", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes) DownloadVersion(mostRecentAudio);
             }
 
@@ -100,8 +100,7 @@ namespace ApexLauncher {
             if (v is VersionGameFiles) {
                 VersionGameFiles vgf = v as VersionGameFiles;
                 if (!Config.DisableAudioDownload && vgf?.MinimumAudioVersion != null && vgf.MinimumAudioVersion.GreaterThan(Config.CurrentVersion)) {
-                    DialogResult result = MessageBox.Show($"New audio version found: {vgf.MinimumAudioVersion}.\nDownload and install this update?\n(Note, audio updates are often large downloads)", "Audio Update Found", MessageBoxButtons.YesNo);
-                    if (result == DialogResult.Yes) queue.Add(vgf.MinimumAudioVersion);
+                    queue.Add(vgf.MinimumAudioVersion);
                 }
             }
 

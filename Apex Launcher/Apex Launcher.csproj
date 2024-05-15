@@ -97,7 +97,7 @@
   <PropertyGroup>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <NoWin32Manifest>true</NoWin32Manifest>
-    <AssemblyVersion>1.8.0</AssemblyVersion>
-    <FileVersion>1.8.0</FileVersion>
+    <AssemblyVersion>1.8.1</AssemblyVersion>
+    <FileVersion>1.8.1</FileVersion>
   </PropertyGroup>
 </Project>
