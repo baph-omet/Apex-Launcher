@@ -129,4 +129,11 @@
 	<audioversion>2</audioversion>
 	<patch>true</patch>
   </version>
+  <version>
+	<channel>a</channel>
+	<number>10.2</number>
+	<location>https://www.mediafire.com/download/spyomewoxftyla4/Pok%25C3%25A9mon_Apex_Alpha_Build_10.2.zip/file</location>
+	<audioversion>2</audioversion>
+	<patch>true</patch>
+  </version>
 </versions>
