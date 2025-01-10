@@ -215,8 +215,7 @@ namespace ApexLauncher {
             }
         }
 
-        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) {
             using ErrorCatcher ec = new((Exception)e.ExceptionObject) { Enabled = true };
             ec.ShowDialog();
         }
@@ -310,8 +309,10 @@ namespace ApexLauncher {
                 }
 
                 completed = true;
-            } catch (WebException) {
-                completed = false;
+            } catch (Exception e) {
+                if (e is WebException or HttpRequestException) {
+                    completed = false;
+                } else throw;
             }
 
             return completed;

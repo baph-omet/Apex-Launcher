@@ -129,6 +129,7 @@ namespace ApexLauncher {
         /// <param name="destinationDirectory">Destination to copy to.</param>
         /// <param name="overwriteFile">If true, existing files with same names in destination will be overwritten.</param>
         private static void RecursiveCopy(string sourceDirectory, string destinationDirectory, bool overwriteFile = true) {
+            if (!Directory.Exists(sourceDirectory)) throw new DirectoryNotFoundException(sourceDirectory);
             if (!Directory.Exists(destinationDirectory)) Directory.CreateDirectory(destinationDirectory);
             foreach (string f in from string f in Directory.GetFiles(sourceDirectory)
                                  where overwriteFile || !File.Exists(Path.Combine(destinationDirectory, Path.GetFileName(f)))
