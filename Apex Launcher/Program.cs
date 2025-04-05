@@ -17,6 +17,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using ApexLauncher.Properties;
 using Microsoft.Win32;
@@ -234,7 +235,7 @@ namespace ApexLauncher {
             }
 
             try {
-                NetworkConnected = DownloadVersionManifests();
+                NetworkConnected = DownloadVersionManifests().Result;
             } catch (WebException) {
                 NetworkConnected = false;
             }
@@ -286,16 +287,18 @@ namespace ApexLauncher {
             return resourceNames;
         }
 
-        private static bool DownloadVersionManifests() {
+        private static async Task<bool> DownloadVersionManifests() {
             bool completed;
             string[] files = [
-                "http://www.mediafire.com/download/qkauu9oca3lcjw1/VersionManifest.xml",
-                "http://www.mediafire.com/download/zvooruhs1b3e4c9/VersionManifestAudio.xml",
+                "https://raw.githubusercontent.com/baph-omet/Apex-Launcher/refs/heads/master/Apex%20Launcher/VersionManifest.xml",
+                "https://raw.githubusercontent.com/baph-omet/Apex-Launcher/refs/heads/master/Apex%20Launcher/VersionManifestAudio.xml",
             ];
             try {
                 HttpClient client = new();
                 foreach (string file in files) {
-                    using Stream dlstream = client.GetStreamAsync(file).Result;
+                    HttpResponseMessage response = await client.GetAsync(file);
+                    string body = await response.Content.ReadAsStringAsync();
+                    using Stream dlstream = await client.GetStreamAsync(file);
                     using FileStream outputStream = new(Path.Combine(Config.InstallPath, "Versions", Path.GetFileName(file)), FileMode.OpenOrCreate);
                     int buffersize = 1000;
                     long bytesRead = 0;
@@ -310,7 +313,7 @@ namespace ApexLauncher {
 
                 completed = true;
             } catch (Exception e) {
-                if (e is WebException or HttpRequestException) {
+                if (e is WebException or HttpRequestException || (e is AggregateException && e.InnerException is WebException or HttpRequestException)) {
                     completed = false;
                 } else throw;
             }

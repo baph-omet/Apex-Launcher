@@ -119,20 +119,20 @@
   <version>
 	<channel>a</channel>
 	<number>10</number>
-	<location>https://www.mediafire.com/download/1d5su2bryjpugch/Pok%25C3%25A9mon_Apex_Alpha_Build_10.zip</location>
+	<location>https://baphometmediafilestorage.blob.core.windows.net/site/Pokémon Apex/Build 10/Pokémon Apex Alpha Build 10.zip</location>
 	<audioversion>2</audioversion>
   </version>
   <version>
 	<channel>a</channel>
 	<number>10.1</number>
-	<location>https://www.mediafire.com/download/f66satjg8wma65x/Pokémon+Apex+Alpha+Build+10.1.zip</location>
+	<location>https://baphometmediafilestorage.blob.core.windows.net/site/Pokémon Apex/Build 10/Pokémon Apex Alpha Build 10.1.zip</location>
 	<audioversion>2</audioversion>
 	<patch>true</patch>
   </version>
   <version>
 	<channel>a</channel>
 	<number>10.2</number>
-	<location>https://www.mediafire.com/download/spyomewoxftyla4/Pok%25C3%25A9mon_Apex_Alpha_Build_10.2.zip/file</location>
+	<location>https://baphometmediafilestorage.blob.core.windows.net/site/Pokémon Apex/Build 10/Pokémon Apex Alpha Build 10.2.zip</location>
 	<audioversion>2</audioversion>
 	<patch>true</patch>
   </version>

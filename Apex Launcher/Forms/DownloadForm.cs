@@ -8,7 +8,9 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ApexLauncher {
@@ -151,7 +153,7 @@ namespace ApexLauncher {
             } catch (WebException) {
                 MessageBox.Show(
                     "Network exception encountered when trying to start your download. You might not have a connection to the internet," +
-                    " or access to the download link is restricted. If you think tihs is a program error, please report it to the Launcher's GitHub page.");
+                    " or access to the download link is restricted. If you think this is a program error, please report it to the Launcher's GitHub page.");
                 Aborted?.Invoke(this, new EventArgs());
                 Downloading = false;
                 CloseForm();
