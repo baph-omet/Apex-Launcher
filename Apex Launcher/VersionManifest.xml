@@ -136,4 +136,11 @@
 	<audioversion>2</audioversion>
 	<patch>true</patch>
   </version>
+	<version>
+		<channel>a</channel>
+		<number>10.3</number>
+		<location>https://baphometmediafilestorage.blob.core.windows.net/site/Pokémon Apex/Build 10/Pokémon Apex Alpha Build 10.3.zip</location>
+		<audioversion>2</audioversion>
+		<patch>true</patch>
+	</version>
 </versions>
