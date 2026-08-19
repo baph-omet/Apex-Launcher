@@ -143,4 +143,11 @@
 		<audioversion>2</audioversion>
 		<patch>true</patch>
 	</version>
+	<version>
+		<channel>a</channel>
+		<number>10.4</number>
+		<location>https://baphometmediafilestorage.blob.core.windows.net/site/Pok%C3%A9mon%20Apex/Build%2010/Pok%C3%A9mon%20Apex%20Alpha%20Build%2010.4.zip</location>
+		<audioversion>2</audioversion>
+		<patch>true</patch>
+	</version>
 </versions>
